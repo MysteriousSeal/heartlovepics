@@ -143,7 +143,7 @@
         @include('partials.empty-state-suggestions', [
             'message' => 'No images to display yet.',
             'suggestions' => array_values(array_filter([
-                (! auth()->check() || auth()->user()->canPost())
+                (auth()->check() && auth()->user()->canUploadImages())
                     ? ['label' => 'Upload an image', 'url' => route('profile.images.create')]
                     : null,
                 ['label' => 'Explore tags', 'url' => route('gallery.tags')],

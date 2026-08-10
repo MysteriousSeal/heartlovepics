@@ -1,5 +1,5 @@
 <div class="site-auth">
-    @if (! auth()->check() || auth()->user()->canPost())
+    @if (auth()->check() && auth()->user()->canUploadImages())
         <a href="{{ route('profile.images.create') }}" class="site-upload-btn" title="Upload image" aria-label="Upload image">
             <svg class="site-upload-icon" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
                 <path d="M8 3.5v9M3.5 8h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>

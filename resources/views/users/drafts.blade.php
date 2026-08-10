@@ -17,7 +17,7 @@
                 @include('partials.empty-state-suggestions', [
                     'message' => 'You have no draft images.',
                     'suggestions' => array_values(array_filter([
-                        auth()->user()->canPost()
+                        auth()->user()->canUploadImages()
                             ? ['label' => 'Upload a new image', 'url' => route('profile.images.create')]
                             : null,
                         ['label' => 'View your uploads', 'url' => route('users.show', $user)],

@@ -29,7 +29,7 @@
                         : $user->username . ' has not shared any images yet.',
                     'suggestions' => $isOwner
                         ? array_values(array_filter([
-                            $user->canPost()
+                            $user->canUploadImages()
                                 ? ['label' => 'Upload your first image', 'url' => route('profile.images.create')]
                                 : null,
                             ['label' => 'Browse the gallery for inspiration', 'url' => route('home')],

@@ -113,6 +113,15 @@ class User extends Authenticatable
         return ! $this->is_banned;
     }
 
+    /**
+     * Separate from canPost(), which also gates comments and shouts — this
+     * is specifically whether the user may create new image posts.
+     */
+    public function canUploadImages(): bool
+    {
+        return $this->is_admin && ! $this->is_banned;
+    }
+
     public function hasAvatar(): bool
     {
         return (bool) $this->avatar_path;

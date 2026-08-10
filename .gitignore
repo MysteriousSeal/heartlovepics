@@ -1,6 +1,7 @@
 *.log
 .DS_Store
 .env
+/.claude/settings.local.json
 /database/*.sqlite
 /database/backups/
 .env.backup

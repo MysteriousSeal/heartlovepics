@@ -249,8 +249,8 @@ class UserImageController extends Controller
     {
         $user ??= auth()->user();
 
-        if ($user?->is_banned) {
-            return redirect()->route('home');
+        if (! $user?->canUploadImages()) {
+            return redirect()->route('home')->with('error', 'Uploading is currently limited to admins.');
         }
 
         return null;

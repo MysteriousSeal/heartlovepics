@@ -35,7 +35,7 @@
                         <li><a href="{{ route('register') }}">Create account</a></li>
                         <li><a href="{{ route('login') }}">Log in</a></li>
                     @else
-                        @if (auth()->user()->canPost())
+                        @if (auth()->user()->canUploadImages())
                             <li><a href="{{ route('profile.images.create') }}">Upload image</a></li>
                         @endif
                         <li><a href="{{ route('users.show', auth()->user()) }}">Your profile</a></li>
