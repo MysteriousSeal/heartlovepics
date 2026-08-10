@@ -24,12 +24,34 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.3</span>
+                        <time class="changelog-date" datetime="2026-08-10">August 10, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            Redesigned the Terms of Use and Privacy Policy pages with section
+                            cards, a table of contents, and clearer hierarchy.
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            Redesigned the tags index with stats, A–Z grouping, ranked “most used”
+                            cards, and a cleaner toolbar.
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.2</span>
                         <time class="changelog-date" datetime="2026-08-10">August 10, 2026</time>
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-fix">Polish</span>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
                             Post edit page: moved the &ldquo;Original artist&rdquo; field&rsquo;s hint
                             text below the input, to match the Alt text field.
                         </li>
