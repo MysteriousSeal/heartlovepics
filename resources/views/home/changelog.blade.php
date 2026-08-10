@@ -6,22 +6,61 @@
 @section('robots', 'noindex, follow')
 
 @section('content')
-    <article class="static-page">
-        <h1>Changelog</h1>
-        <p class="static-page-updated">What's changed, newest first.</p>
+    <article class="static-page changelog-page">
+        <header class="changelog-hero">
+            <p class="changelog-kicker">Product updates</p>
+            <h1>Changelog</h1>
+            <p class="changelog-lede">
+                What&rsquo;s new on HeartLovePics — fixes, features, and polish. Newest first.
+            </p>
+            <div class="changelog-current">
+                <span class="changelog-current-label">Current version</span>
+                <span class="changelog-current-version">v{{ config('app.version') }}</span>
+            </div>
+        </header>
 
-        <div class="changelog-entry">
-            <h3 class="changelog-entry-heading">
-                <span class="changelog-version">v1.0.1</span>
-                <time class="changelog-date" datetime="2026-08-10">August 10, 2026</time>
-            </h3>
-            <ul>
-                <li>Added this changelog page, and a version number in the footer.</li>
-            </ul>
-        </div>
+        <ol class="changelog-timeline">
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.2</span>
+                        <time class="changelog-date" datetime="2026-08-10">August 10, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Polish</span>
+                            Post edit page: moved the &ldquo;Original artist&rdquo; field&rsquo;s hint
+                            text below the input, to match the Alt text field.
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            Redesigned the changelog page with a timeline layout, release cards,
+                            and a current-version badge.
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.1</span>
+                        <time class="changelog-date" datetime="2026-08-10">August 10, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            Added this changelog page, and a version number in the footer.
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ol>
 
         <p class="static-page-back">
-            <a href="{{ route('home') }}">&larr; Back to gallery</a>
+            <a href="{{ route('home') }}" class="changelog-back-link">&larr; Back to gallery</a>
         </p>
     </article>
 @endsection

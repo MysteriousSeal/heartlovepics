@@ -219,7 +219,6 @@
 
 <div class="form-group">
     <label for="artist_name">Original artist</label>
-    <p class="form-hint">Credit the artist who created this piece, if it isn't your own work.</p>
     <input
         type="text"
         id="artist_name"
@@ -229,6 +228,7 @@
         placeholder="Artist name"
         maxlength="100"
     >
+    <p class="form-hint">Credit the artist who created this piece, if it isn't your own work.</p>
     @error('artist_name')
         <p class="form-error">{{ $message }}</p>
     @enderror

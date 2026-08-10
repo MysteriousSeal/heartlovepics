@@ -1525,30 +1525,230 @@ img {
     margin-top: 2rem;
 }
 
-.changelog-entry + .changelog-entry {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
+/* Changelog */
+.changelog-page {
+    max-width: 40rem;
+}
+
+.changelog-hero {
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.changelog-kicker {
+    margin: 0 0 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.changelog-page h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+}
+
+.changelog-lede {
+    margin: 0.625rem 0 0;
+    max-width: 32rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.changelog-current {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+    padding: 0.4rem 0.75rem 0.4rem 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.changelog-current-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.changelog-current-version {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    padding: 0.15rem 0.5rem;
+    background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+}
+
+.changelog-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.changelog-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.4375rem;
+    top: 0.35rem;
+    bottom: 0.35rem;
+    width: 1px;
+    background: var(--border);
+}
+
+.changelog-entry {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+    gap: 1rem;
+    margin: 0;
+    padding: 0 0 1.5rem;
+}
+
+.changelog-entry:last-child {
+    padding-bottom: 0;
+}
+
+.changelog-entry-marker {
+    position: relative;
+    z-index: 1;
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-top: 0.35rem;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 3px var(--bg);
+}
+
+.changelog-entry:first-child .changelog-entry-marker {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.changelog-entry-card {
+    min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 1rem 1.125rem 1.125rem;
 }
 
 .changelog-entry-heading {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
-    margin: 0 0 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    margin: 0 0 0.875rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
 }
 
 .changelog-version {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
     color: var(--text);
+    letter-spacing: -0.01em;
 }
 
 .changelog-date {
     font-size: 0.8125rem;
     color: var(--text-muted);
     white-space: nowrap;
+}
+
+.changelog-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.changelog-list li {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem 0.625rem;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+}
+
+.changelog-list li + li {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border);
+}
+
+.changelog-tag {
+    flex: 0 0 auto;
+    display: inline-block;
+    margin-top: 0.15rem;
+    padding: 0.12rem 0.45rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    background: var(--bg);
+}
+
+.changelog-tag-feature {
+    color: var(--accent-hover);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+    background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+
+.changelog-tag-fix {
+    color: var(--text);
+    border-color: var(--border);
+    background: color-mix(in srgb, var(--text) 4%, var(--surface));
+}
+
+.changelog-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    transition: color 0.15s ease;
+}
+
+.changelog-back-link:hover {
+    color: var(--accent-hover);
+}
+
+@media (max-width: 520px) {
+    .changelog-page h1 {
+        font-size: 1.5rem;
+    }
+
+    .changelog-entry {
+        gap: 0.75rem;
+    }
+
+    .changelog-entry-card {
+        padding: 0.875rem 0.875rem 1rem;
+    }
+
+    .changelog-entry-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 /* Masonry Gallery */

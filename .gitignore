@@ -2,6 +2,7 @@
 .DS_Store
 .env
 /database/*.sqlite
+/database/backups/
 .env.backup
 .env.production
 .phpactor.json

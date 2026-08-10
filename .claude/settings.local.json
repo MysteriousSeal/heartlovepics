@@ -171,7 +171,10 @@
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('tags unchanged \\(no tags key sent\\):', d['tags']\\)\")",
       "Bash(sqlite3 --version)",
       "Bash(php -r \"echo \\(new PDO\\('sqlite:database/database.sqlite'\\)\\)->query\\('select sqlite_version\\(\\)'\\)->fetchColumn\\(\\);\")",
-      "Bash(git commit -m 'Initial commit *)"
+      "Bash(git commit -m 'Initial commit *)",
+      "Bash(php -l /Users/colas/HeartLovePics/resources/views/partials/image-form.blade.php)",
+      "Bash(sqlite3 database/database.sqlite .dump)",
+      "Bash(sqlite3 /Users/colas/HeartLovePics/database/database.sqlite \".tables\")"
     ]
   }
 }
