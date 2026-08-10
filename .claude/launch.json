@@ -1,0 +1,11 @@
+{
+    "version": "0.0.1",
+    "configurations": [
+        {
+            "name": "heartlovepics",
+            "runtimeExecutable": "php",
+            "runtimeArgs": ["-d", "max_file_uploads=50", "artisan", "serve"],
+            "port": 8000
+        }
+    ]
+}

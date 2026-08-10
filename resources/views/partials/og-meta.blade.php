@@ -1,0 +1,14 @@
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HeartLovePics">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ $url }}">
+@if (! empty($image))
+    <meta property="og:image" content="{{ $image }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ $image }}">
+@else
+    <meta name="twitter:card" content="summary">
+@endif
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
