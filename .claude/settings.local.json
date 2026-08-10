@@ -170,7 +170,8 @@
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(d['alt_text']\\)\")",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('tags unchanged \\(no tags key sent\\):', d['tags']\\)\")",
       "Bash(sqlite3 --version)",
-      "Bash(php -r \"echo \\(new PDO\\('sqlite:database/database.sqlite'\\)\\)->query\\('select sqlite_version\\(\\)'\\)->fetchColumn\\(\\);\")"
+      "Bash(php -r \"echo \\(new PDO\\('sqlite:database/database.sqlite'\\)\\)->query\\('select sqlite_version\\(\\)'\\)->fetchColumn\\(\\);\")",
+      "Bash(git commit -m 'Initial commit *)"
     ]
   }
 }

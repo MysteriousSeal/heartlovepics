@@ -30,6 +30,7 @@
                     <li><a href="{{ route('pages.terms') }}">Terms of use</a></li>
                     <li><a href="{{ route('pages.privacy') }}">Privacy policy</a></li>
                     <li><a href="{{ route('sitemap') }}">XML sitemap</a></li>
+                    <li><a href="{{ route('pages.changelog') }}">Changelog</a></li>
                     @guest
                         <li><a href="{{ route('register') }}">Create account</a></li>
                         <li><a href="{{ route('login') }}">Log in</a></li>
@@ -70,6 +71,8 @@
                 <a href="{{ route('home') }}">HeartLovePics</a>
                 <span class="site-footer-copy-sep" aria-hidden="true">·</span>
                 <span class="site-footer-copy-note">A quiet place for photo stories</span>
+                <span class="site-footer-copy-sep" aria-hidden="true">·</span>
+                <a href="{{ route('pages.changelog') }}" class="site-footer-version">v{{ config('app.version') }}</a>
             </p>
         </div>
     </div>

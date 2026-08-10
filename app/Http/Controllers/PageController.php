@@ -15,4 +15,9 @@ class PageController extends Controller
     {
         return view('home.terms');
     }
+
+    public function changelog(): View
+    {
+        return view('home.changelog');
+    }
 }

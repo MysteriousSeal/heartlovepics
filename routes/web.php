@@ -38,6 +38,7 @@ Route::get('/sitemap-users.xml', [SitemapController::class, 'users'])->name('sit
 Route::get('/sitemap-artists.xml', [SitemapController::class, 'artists'])->name('sitemap.artists');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('pages.privacy');
 Route::get('/terms', [PageController::class, 'terms'])->name('pages.terms');
+Route::get('/changelog', [PageController::class, 'changelog'])->name('pages.changelog');
 Route::post('/preferences/nsfw', [PreferenceController::class, 'updateNsfw'])->name('preferences.nsfw');
 Route::post('/preferences/theme', [PreferenceController::class, 'updateTheme'])->name('preferences.theme');
 Route::get('/tags/suggest', [TagController::class, 'suggest'])->name('tags.suggest');
