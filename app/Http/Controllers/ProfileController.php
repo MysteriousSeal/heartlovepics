@@ -19,8 +19,11 @@ use App\Support\GalleryColumns;
 use App\Support\HtmlSanitizer;
 use App\Support\NsfwPreference;
 use App\Support\Sparkline;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -374,6 +377,10 @@ class ProfileController extends Controller
             $data['password'] = $request->input('password');
         }
 
+        if ($request->filled('username')) {
+            $data['username'] = $request->input('username');
+        }
+
         if ($request->has('bio')) {
             // clean() returns null for markup that carries no visible text.
             $data['bio'] = HtmlSanitizer::clean($request->input('bio'));
@@ -384,5 +391,37 @@ class ProfileController extends Controller
         return redirect()
             ->route('users.show', $user)
             ->with('success', 'Profile updated.');
+    }
+
+    /**
+     * Live "is this username available" check used while editing the profile
+     * form — same format rules as registration, minus the current user's own
+     * row from the uniqueness check.
+     */
+    public function checkUsername(Request $request): JsonResponse
+    {
+        $validator = Validator::make(
+            ['username' => trim((string) $request->query('username'))],
+            [
+                'username' => [
+                    'required',
+                    'string',
+                    'min:3',
+                    'max:30',
+                    'alpha_dash',
+                    Rule::unique('users', 'username')->ignore($request->user()->id),
+                    Rule::notIn(['admin']),
+                ],
+            ],
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'available' => false,
+                'message' => $validator->errors()->first('username'),
+            ]);
+        }
+
+        return response()->json(['available' => true]);
     }
 }

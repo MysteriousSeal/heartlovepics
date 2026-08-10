@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Support\HtmlSanitizer;
 use Closure;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class UpdateProfileRequest extends FormRequest
@@ -19,6 +20,15 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'username' => [
+                'required',
+                'string',
+                'min:3',
+                'max:30',
+                'alpha_dash',
+                Rule::unique('users', 'username')->ignore($this->user()->id),
+                Rule::notIn(['admin']),
+            ],
             'avatar' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp', 'max:5120'],
             'banner' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp', 'max:8192'],
             'bio' => [

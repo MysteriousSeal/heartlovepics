@@ -15,6 +15,28 @@
             @method('PUT')
 
             <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    class="form-control"
+                    value="{{ old('username', $user->username) }}"
+                    required
+                    minlength="3"
+                    maxlength="30"
+                    autocomplete="username"
+                    data-check-url="{{ route('profile.check-username') }}"
+                    data-current-username="{{ $user->username }}"
+                >
+                <p class="username-availability-status" id="username-availability" aria-live="polite"></p>
+                <p class="form-hint">Letters, numbers, dashes, and underscores only. Changing this changes your profile URL — old links to your current profile will stop working.</p>
+                @error('username')
+                    <p class="form-error">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label for="banner">Profile banner</label>
                 <div class="profile-edit-banner-preview">
                     @if ($user->hasBanner())
@@ -112,4 +134,5 @@
 @push('scripts')
     <script src="{{ asset('js/vendor/quill.js') }}"></script>
     <script src="{{ asset('js/bio-editor.js') }}" defer></script>
+    <script src="{{ asset('js/username-availability.js') }}" defer></script>
 @endpush

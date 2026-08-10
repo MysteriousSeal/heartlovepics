@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/users/{user}/stats', [ProfileController::class, 'stats'])->name('users.stats');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/check-username', [ProfileController::class, 'checkUsername'])->name('profile.check-username');
     Route::get('/profile/images/{image}/edit', [UserImageController::class, 'edit'])->name('profile.images.edit');
     Route::put('/profile/images/{image}', [UserImageController::class, 'update'])->name('profile.images.update');
     Route::patch('/profile/images/{image}/publish', [UserImageController::class, 'publish'])->name('profile.images.publish');
