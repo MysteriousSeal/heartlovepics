@@ -72,6 +72,8 @@
                 <span class="site-footer-copy-sep" aria-hidden="true">·</span>
                 <span class="site-footer-copy-note">A quiet place for photo stories</span>
                 <span class="site-footer-copy-sep" aria-hidden="true">·</span>
+                <span class="site-footer-copy-note">Made from scratch with ❤️</span>
+                <span class="site-footer-copy-sep" aria-hidden="true">·</span>
                 <a href="{{ route('pages.changelog') }}" class="site-footer-version">v{{ config('app.version') }}</a>
             </p>
         </div>

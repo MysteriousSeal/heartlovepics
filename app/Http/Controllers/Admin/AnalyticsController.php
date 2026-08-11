@@ -122,7 +122,7 @@ class AnalyticsController extends Controller
      */
     private function buildCharts(?CarbonInterface $since): array
     {
-        $query = SiteVisit::query()->select(['user_id', 'user_agent']);
+        $query = SiteVisit::query()->select(['user_id', 'user_agent', 'country']);
         $this->applyRange($query, $since);
         $rows = $query->get();
 
@@ -134,6 +134,7 @@ class AnalyticsController extends Controller
         $osCounts = [];
         $deviceCounts = [];
         $browserCounts = [];
+        $countryCounts = [];
         $botCounts = ['Human' => 0, 'Bot' => 0];
 
         foreach ($rows as $row) {
@@ -148,10 +149,12 @@ class AnalyticsController extends Controller
             $os = $parsed['os'] === '—' ? 'Unknown' : $parsed['os'];
             $device = $parsed['device'];
             $browser = $parsed['browser'];
+            $country = filled($row->country) ? (string) $row->country : 'Unknown';
 
             $osCounts[$os] = ($osCounts[$os] ?? 0) + 1;
             $deviceCounts[$device] = ($deviceCounts[$device] ?? 0) + 1;
             $browserCounts[$browser] = ($browserCounts[$browser] ?? 0) + 1;
+            $countryCounts[$country] = ($countryCounts[$country] ?? 0) + 1;
 
             if ($parsed['is_bot']) {
                 $botCounts['Bot']++;
@@ -164,6 +167,10 @@ class AnalyticsController extends Controller
             'auth' => array_merge(
                 ['title' => 'Users vs guests'],
                 DonutChart::fromCounts($authCounts, 2),
+            ),
+            'country' => array_merge(
+                ['title' => 'Country'],
+                DonutChart::fromCounts($countryCounts),
             ),
             'os' => array_merge(
                 ['title' => 'Operating system'],
