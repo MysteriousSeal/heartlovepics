@@ -42,6 +42,11 @@
             @if ($image->is_nsfw)
                 <span class="badge badge-nsfw">NSFW</span>
             @endif
+            @if ($image->hasDescription())
+                <span class="badge badge-has-description" title="Description is set">Desc</span>
+            @else
+                <span class="badge badge-no-description" title="No description yet">No desc</span>
+            @endif
             · {{ $image->updated_at->format('M j, Y') }}
         </div>
         <div class="card-actions">

@@ -5535,6 +5535,10 @@ a.admin-recent-image-link:hover {
 }
 
 .admin-image-card .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
     font-size: 0.75rem;
     color: var(--text-muted);
     margin-top: 0.25rem;
@@ -5584,6 +5588,26 @@ a.admin-recent-image-link:hover {
 .badge-banned {
     background: #f5e0e0;
     color: #a33;
+}
+
+.badge-has-description {
+    background: #e4eef8;
+    color: #2f5f8f;
+}
+
+.badge-no-description {
+    background: #f5efe0;
+    color: #8a6a1f;
+}
+
+[data-theme='dark'] .badge-has-description {
+    background: color-mix(in srgb, #5b9bd5 22%, var(--surface));
+    color: #9ec5e8;
+}
+
+[data-theme='dark'] .badge-no-description {
+    background: color-mix(in srgb, #c9a227 20%, var(--surface));
+    color: #e0c56a;
 }
 
 .content-rating-locked {
