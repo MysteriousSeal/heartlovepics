@@ -51,6 +51,36 @@
             @endforeach
         </nav>
 
+        <section class="admin-analytics-stats" aria-label="Summary for {{ $ranges[$range] }}">
+            <div class="admin-analytics-stat">
+                <span class="admin-analytics-stat-label">Page views</span>
+                <span class="admin-analytics-stat-value">{{ number_format($visits->total()) }}</span>
+            </div>
+            <div class="admin-analytics-stat">
+                <span class="admin-analytics-stat-label">Unique visitors</span>
+                <span class="admin-analytics-stat-value">{{ number_format($rangeVisitors['total']) }}</span>
+            </div>
+            <div class="admin-analytics-stat">
+                <span class="admin-analytics-stat-label">Logged in</span>
+                <span class="admin-analytics-stat-value">{{ number_format($rangeVisitors['users']) }}</span>
+            </div>
+            <div class="admin-analytics-stat">
+                <span class="admin-analytics-stat-label">Guests</span>
+                <span class="admin-analytics-stat-value">{{ number_format($rangeVisitors['guests']) }}</span>
+            </div>
+            <div class="admin-analytics-stat">
+                <span class="admin-analytics-stat-label">Bots</span>
+                <span class="admin-analytics-stat-value">{{ number_format($rangeVisitors['bots']) }}</span>
+            </div>
+            <div class="admin-analytics-stat admin-analytics-stat-live {{ $activeNow['total'] > 0 ? 'is-live' : '' }}">
+                <span class="admin-analytics-stat-label">Active now</span>
+                <span class="admin-analytics-stat-value">
+                    <span class="admin-active-now-dot" aria-hidden="true"></span>
+                    {{ number_format($activeNow['total']) }}
+                </span>
+            </div>
+        </section>
+
         @if ($visits->isEmpty())
             <div class="admin-list-empty empty-state">
                 <p>
@@ -64,120 +94,127 @@
             </div>
         @else
             @if (! empty($charts))
-                <section class="admin-analytics-charts" aria-label="Visit breakdown charts for {{ $ranges[$range] }}">
-                    @foreach ($charts as $chart)
-                        @include('partials.admin-donut-chart', ['chart' => $chart])
-                    @endforeach
+                <section class="admin-analytics-section" aria-label="Visit breakdown charts for {{ $ranges[$range] }}">
+                    <header class="admin-analytics-section-header">
+                        <h3 class="admin-analytics-section-title">Breakdown</h3>
+                        <p class="admin-analytics-section-desc">Who and what showed up · {{ $ranges[$range] }}</p>
+                    </header>
+                    <div class="admin-analytics-charts">
+                        @foreach ($charts as $chart)
+                            @include('partials.admin-donut-chart', ['chart' => $chart])
+                        @endforeach
+                    </div>
                 </section>
             @endif
 
-            <div class="admin-dashboard-section-header admin-dashboard-section-header-row">
-                <div>
-                    <h3 class="admin-dashboard-section-title">Visits</h3>
-                    <p class="admin-dashboard-section-desc">
-                        Page views for {{ strtolower($ranges[$range]) }}.
+            <section class="admin-analytics-section">
+                <header class="admin-analytics-section-header admin-analytics-section-header-row">
+                    <div>
+                        <h3 class="admin-analytics-section-title">Visit log</h3>
+                        <p class="admin-analytics-section-desc">
+                            Page views for {{ strtolower($ranges[$range]) }}.
+                        </p>
+                    </div>
+                    <p class="admin-result-count admin-analytics-result-count">
+                        {{ $visits->firstItem() }}&ndash;{{ $visits->lastItem() }}
+                        of {{ number_format($visits->total()) }}
                     </p>
+                </header>
+
+                <div class="admin-visits-table admin-list-table">
+                    <div class="admin-visits-head" aria-hidden="true">
+                        <span>Date &amp; time</span>
+                        <span>Path</span>
+                        <span>Referrer</span>
+                        <span>Location</span>
+                        <span>Browser</span>
+                        <span>Device</span>
+                        <span>OS</span>
+                        <span>Bot</span>
+                        <span>IP address</span>
+                        <span>Username</span>
+                    </div>
+
+                    <ul class="admin-visits-list">
+                        @foreach ($visits as $visit)
+                            <li class="admin-visits-row {{ $visit->is_bot ? 'is-bot' : '' }}">
+                                <time class="admin-visits-date" datetime="{{ $visit->created_at->toIso8601String() }}">
+                                    {{ $visit->created_at->format('M j, Y g:i A') }}
+                                </time>
+                                <span class="admin-visits-path" @if ($visit->path) title="{{ $visit->path }}" @endif>
+                                    {{ $visit->path ?: '—' }}
+                                </span>
+                                <span class="admin-visits-referrer" @if ($visit->referrer) title="{{ $visit->referrer }}" @endif>
+                                    @if ($visit->referrer)
+                                        @php
+                                            $referrerHost = parse_url($visit->referrer, PHP_URL_HOST);
+                                            $referrerLabel = $referrerHost
+                                                ? \Illuminate\Support\Str::of($referrerHost)->replaceStart('www.', '')->toString()
+                                                : \Illuminate\Support\Str::limit($visit->referrer, 40);
+                                        @endphp
+                                        {{ $referrerLabel }}
+                                    @else
+                                        &mdash;
+                                    @endif
+                                </span>
+                                <span class="admin-visits-location" title="{{ $visit->location_label }}">
+                                    {{ $visit->location_label }}
+                                </span>
+                                <span class="admin-visits-browser" @if ($visit->user_agent) title="{{ $visit->user_agent }}" @endif>
+                                    {{ $visit->browser }}
+                                </span>
+                                <span class="admin-visits-device">
+                                    {{ $visit->device }}
+                                </span>
+                                <span class="admin-visits-os">
+                                    {{ $visit->os }}
+                                </span>
+                                <span class="admin-visits-bot">
+                                    @if ($visit->is_bot)
+                                        <span class="badge badge-bot">Bot</span>
+                                    @else
+                                        <span class="admin-visits-bot-no">No</span>
+                                    @endif
+                                </span>
+                                <span class="admin-visits-ip">
+                                    {{ $visit->ip_address ?: '—' }}
+                                </span>
+                                <span class="admin-visits-username">
+                                    @if ($visit->user)
+                                        <a href="{{ route('users.show', $visit->user) }}" target="_blank" rel="noopener noreferrer">{{ $visit->user->username }}</a>
+                                    @else
+                                        &mdash;
+                                    @endif
+                                </span>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-            </div>
 
-            <p class="admin-result-count">
-                Showing {{ $visits->firstItem() }}&ndash;{{ $visits->lastItem() }} of {{ number_format($visits->total()) }}
-                {{ \Illuminate\Support\Str::plural('visit', $visits->total()) }}
-            </p>
-
-            <div class="admin-visits-table admin-list-table">
-                <div class="admin-visits-head" aria-hidden="true">
-                    <span>Date &amp; time</span>
-                    <span>Path</span>
-                    <span>Referrer</span>
-                    <span>Location</span>
-                    <span>Browser</span>
-                    <span>Device</span>
-                    <span>OS</span>
-                    <span>Bot</span>
-                    <span>IP address</span>
-                    <span>Username</span>
-                </div>
-
-                <ul class="admin-visits-list">
-                    @foreach ($visits as $visit)
-                        <li class="admin-visits-row {{ $visit->is_bot ? 'is-bot' : '' }}">
-                            <time class="admin-visits-date" datetime="{{ $visit->created_at->toIso8601String() }}">
-                                {{ $visit->created_at->format('M j, Y g:i A') }}
-                            </time>
-                            <span class="admin-visits-path" @if ($visit->path) title="{{ $visit->path }}" @endif>
-                                {{ $visit->path ?: '—' }}
-                            </span>
-                            <span class="admin-visits-referrer" @if ($visit->referrer) title="{{ $visit->referrer }}" @endif>
-                                @if ($visit->referrer)
-                                    @php
-                                        $referrerHost = parse_url($visit->referrer, PHP_URL_HOST);
-                                        $referrerLabel = $referrerHost
-                                            ? \Illuminate\Support\Str::of($referrerHost)->replaceStart('www.', '')->toString()
-                                            : \Illuminate\Support\Str::limit($visit->referrer, 40);
-                                    @endphp
-                                    {{ $referrerLabel }}
-                                @else
-                                    &mdash;
-                                @endif
-                            </span>
-                            <span class="admin-visits-location" title="{{ $visit->location_label }}">
-                                {{ $visit->location_label }}
-                            </span>
-                            <span class="admin-visits-browser" @if ($visit->user_agent) title="{{ $visit->user_agent }}" @endif>
-                                {{ $visit->browser }}
-                            </span>
-                            <span class="admin-visits-device">
-                                {{ $visit->device }}
-                            </span>
-                            <span class="admin-visits-os">
-                                {{ $visit->os }}
-                            </span>
-                            <span class="admin-visits-bot">
-                                @if ($visit->is_bot)
-                                    <span class="badge badge-bot">Bot</span>
-                                @else
-                                    <span class="admin-visits-bot-no">No</span>
-                                @endif
-                            </span>
-                            <span class="admin-visits-ip">
-                                {{ $visit->ip_address ?: '—' }}
-                            </span>
-                            <span class="admin-visits-username">
-                                @if ($visit->user)
-                                    <a href="{{ route('users.show', $visit->user) }}" target="_blank" rel="noopener noreferrer">{{ $visit->user->username }}</a>
-                                @else
-                                    &mdash;
-                                @endif
-                            </span>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-
-            @if ($visits->hasPages())
-                <div class="pagination">
-                    @if ($visits->onFirstPage())
-                        <span>&laquo;</span>
-                    @else
-                        <a href="{{ $visits->previousPageUrl() }}">&laquo;</a>
-                    @endif
-
-                    @foreach ($visits->getUrlRange(1, $visits->lastPage()) as $page => $url)
-                        @if ($page == $visits->currentPage())
-                            <span class="active">{{ $page }}</span>
+                @if ($visits->hasPages())
+                    <div class="pagination">
+                        @if ($visits->onFirstPage())
+                            <span>&laquo;</span>
                         @else
-                            <a href="{{ $url }}">{{ $page }}</a>
+                            <a href="{{ $visits->previousPageUrl() }}">&laquo;</a>
                         @endif
-                    @endforeach
 
-                    @if ($visits->hasMorePages())
-                        <a href="{{ $visits->nextPageUrl() }}">&raquo;</a>
-                    @else
-                        <span>&raquo;</span>
-                    @endif
-                </div>
-            @endif
+                        @foreach ($visits->getUrlRange(1, $visits->lastPage()) as $page => $url)
+                            @if ($page == $visits->currentPage())
+                                <span class="active">{{ $page }}</span>
+                            @else
+                                <a href="{{ $url }}">{{ $page }}</a>
+                            @endif
+                        @endforeach
+
+                        @if ($visits->hasMorePages())
+                            <a href="{{ $visits->nextPageUrl() }}">&raquo;</a>
+                        @else
+                            <span>&raquo;</span>
+                        @endif
+                    </div>
+                @endif
+            </section>
         @endif
     </div>
 @endsection
