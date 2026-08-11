@@ -5933,6 +5933,11 @@ a.admin-recent-image-link:hover {
     border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
 }
 
+.admin-list-chip-muted {
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
 .admin-list-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -6554,6 +6559,129 @@ a.admin-analytics-tab:hover {
     color: var(--text-muted);
     background: var(--bg);
     border: 1px solid var(--border);
+}
+
+/* Analytics donut charts */
+.admin-analytics-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.admin-donut-card {
+    margin: 0;
+    padding: 1rem 1.125rem 1.125rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.admin-donut-title {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+}
+
+.admin-donut-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-donut {
+    position: relative;
+    width: 9.5rem;
+    height: 9.5rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.admin-donut-hole {
+    position: absolute;
+    inset: 28%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.admin-donut-total {
+    font-size: 1rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1.1;
+}
+
+.admin-donut-total-label {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.admin-donut-legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.admin-donut-legend-item {
+    display: grid;
+    grid-template-columns: 0.65rem minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.8125rem;
+}
+
+.admin-donut-swatch {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.admin-donut-legend-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text);
+}
+
+.admin-donut-legend-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.admin-donut-legend-percent {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.admin-donut-legend-count {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.admin-donut-legend-empty {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
 }
 
 .admin-visits-table {

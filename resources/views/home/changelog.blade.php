@@ -24,6 +24,42 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.17</span>
+                        <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            <span class="changelog-text">Admin analytics includes donut charts for users vs guests.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            <span class="changelog-text">Admin analytics includes donut charts for operating system.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            <span class="changelog-text">Admin analytics includes donut charts for device type.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            <span class="changelog-text">Admin analytics includes donut charts for browser.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            <span class="changelog-text">Admin analytics includes donut charts for bot vs human traffic.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            <span class="changelog-text">Admin analytics can be filtered by all time, last 30 days, last 7 days, or last 24 hours.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.16</span>
                         <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
                     </header>
