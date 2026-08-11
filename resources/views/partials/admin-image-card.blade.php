@@ -1,13 +1,17 @@
 @php
     $showDelete = $showDelete ?? true;
+    $extraCount = $image->additionalImages->count();
 @endphp
 
-<div class="admin-image-card">
+<article class="admin-image-card">
     <div class="thumb">
-        <img src="{{ $image->thumbnail_url }}" alt="{{ $image->alt_text ?? $image->title }}">
-        @if ($image->additionalImages->isNotEmpty())
-            <div class="admin-image-card-extras" aria-label="{{ $image->additionalImages->count() }} more {{ \Illuminate\Support\Str::plural('image', $image->additionalImages->count()) }}">
-                @foreach ($image->additionalImages as $extra)
+        <img src="{{ $image->thumbnail_url }}" alt="{{ $image->alt_text ?? $image->title }}" loading="lazy">
+        @if ($extraCount > 0)
+            <span class="admin-image-card-count" aria-label="{{ $extraCount }} more {{ \Illuminate\Support\Str::plural('image', $extraCount) }}">
+                +{{ number_format($extraCount) }}
+            </span>
+            <div class="admin-image-card-extras" aria-hidden="true">
+                @foreach ($image->additionalImages->take(6) as $extra)
                     <div class="admin-image-card-extra">
                         <img src="{{ $extra->thumbnail_url }}" alt="" loading="lazy">
                     </div>
@@ -25,14 +29,23 @@
                 <span>Anonymous</span>
             @endif
         </p>
+        @if ($image->hasArtistCredit())
+            <p class="admin-image-card-artist">
+                artist
+                @if ($image->artist)
+                    <a href="{{ route('gallery.artist', $image->artist->name) }}" target="_blank" rel="noopener noreferrer">{{ $image->artist->name }}</a>
+                @else
+                    <span>{{ $image->artist_name }}</span>
+                @endif
+            </p>
+        @endif
         @if (isset($image->likes_count) || isset($image->comments_count))
             <p class="admin-image-card-stats">
-                {{ number_format($image->views) }} {{ \Illuminate\Support\Str::plural('view', $image->views) }}
-                &middot; {{ number_format($image->likes_count ?? 0) }} {{ \Illuminate\Support\Str::plural('like', $image->likes_count ?? 0) }}
-                &middot; {{ number_format($image->comments_count ?? 0) }} {{ \Illuminate\Support\Str::plural('comment', $image->comments_count ?? 0) }}
-                @if (isset($image->collections_count))
-                    &middot; {{ number_format($image->collections_count) }} {{ \Illuminate\Support\Str::plural('collection', $image->collections_count) }}
-                @endif
+                <span title="Views">{{ number_format($image->views) }} views</span>
+                <span aria-hidden="true">·</span>
+                <span title="Likes">{{ number_format($image->likes_count ?? 0) }} likes</span>
+                <span aria-hidden="true">·</span>
+                <span title="Comments">{{ number_format($image->comments_count ?? 0) }} comments</span>
             </p>
         @endif
         <div class="card-meta">
@@ -47,7 +60,9 @@
             @else
                 <span class="badge badge-no-description" title="No description yet">No desc</span>
             @endif
-            · {{ $image->updated_at->format('M j, Y') }}
+            <time class="admin-image-card-date" datetime="{{ $image->updated_at->toIso8601String() }}">
+                {{ $image->updated_at->format('M j, Y') }}
+            </time>
         </div>
         <div class="card-actions">
             @if ($image->is_published)
@@ -68,4 +83,4 @@
             @endif
         </div>
     </div>
-</div>
+</article>

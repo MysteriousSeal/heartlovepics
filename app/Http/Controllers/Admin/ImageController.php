@@ -25,7 +25,7 @@ class ImageController extends Controller
     public function index(Request $request): View
     {
         $query = Image::query()
-            ->with(['user', 'additionalImages'])
+            ->with(['user', 'artist', 'additionalImages'])
             ->withCount(['likes', 'comments', 'collections']);
 
         if ($search = $request->string('search')->trim()->toString()) {
@@ -54,7 +54,7 @@ class ImageController extends Controller
             default => $query->latest(),
         };
 
-        $images = $query->paginate(16)->withQueryString();
+        $images = $query->paginate(30)->withQueryString();
 
         return view('admin.images.index', compact('images', 'sort'));
     }
