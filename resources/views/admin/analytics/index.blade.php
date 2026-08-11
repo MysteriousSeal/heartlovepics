@@ -26,14 +26,18 @@
                 <span>Date &amp; time</span>
                 <span>Path</span>
                 <span>Referrer</span>
-                <span>User agent</span>
+                <span>Location</span>
+                <span>Browser</span>
+                <span>Device</span>
+                <span>OS</span>
+                <span>Bot</span>
                 <span>IP address</span>
                 <span>Username</span>
             </div>
 
             <ul class="admin-visits-list">
                 @foreach ($visits as $visit)
-                    <li class="admin-visits-row">
+                    <li class="admin-visits-row {{ $visit->is_bot ? 'is-bot' : '' }}">
                         <time class="admin-visits-date" datetime="{{ $visit->created_at->toIso8601String() }}">
                             {{ $visit->created_at->format('M j, Y g:i A') }}
                         </time>
@@ -53,8 +57,24 @@
                                 &mdash;
                             @endif
                         </span>
-                        <span class="admin-visits-user-agent" @if ($visit->user_agent) title="{{ $visit->user_agent }}" @endif>
-                            {{ $visit->user_agent ?: '—' }}
+                        <span class="admin-visits-location" title="{{ $visit->location_label }}">
+                            {{ $visit->location_label }}
+                        </span>
+                        <span class="admin-visits-browser" @if ($visit->user_agent) title="{{ $visit->user_agent }}" @endif>
+                            {{ $visit->browser }}
+                        </span>
+                        <span class="admin-visits-device">
+                            {{ $visit->device }}
+                        </span>
+                        <span class="admin-visits-os">
+                            {{ $visit->os }}
+                        </span>
+                        <span class="admin-visits-bot">
+                            @if ($visit->is_bot)
+                                <span class="badge badge-bot">Bot</span>
+                            @else
+                                <span class="admin-visits-bot-no">No</span>
+                            @endif
                         </span>
                         <span class="admin-visits-ip">
                             {{ $visit->ip_address ?: '—' }}

@@ -14,8 +14,10 @@ class UserController extends Controller
 {
     public function index(Request $request): View
     {
+        $tab = $request->input('tab') === 'admins' ? 'admins' : 'users';
+
         $query = User::query()
-            ->where('is_admin', false)
+            ->where('is_admin', $tab === 'admins')
             ->withCount([
                 // List stats
                 'images',
@@ -36,10 +38,13 @@ class UserController extends Controller
             $query->where('username', 'like', "%{$search}%");
         }
 
-        if ($request->input('status') === 'banned') {
-            $query->where('is_banned', true);
-        } elseif ($request->input('status') === 'active') {
-            $query->where('is_banned', false);
+        // Ban status only applies to regular users.
+        if ($tab === 'users') {
+            if ($request->input('status') === 'banned') {
+                $query->where('is_banned', true);
+            } elseif ($request->input('status') === 'active') {
+                $query->where('is_banned', false);
+            }
         }
 
         $sort = $request->input('sort');
@@ -54,7 +59,10 @@ class UserController extends Controller
 
         $users = $query->paginate(20)->withQueryString();
 
-        return view('admin.users.index', compact('users', 'sort'));
+        $userCount = User::query()->where('is_admin', false)->count();
+        $adminCount = User::query()->where('is_admin', true)->count();
+
+        return view('admin.users.index', compact('users', 'sort', 'tab', 'userCount', 'adminCount'));
     }
 
     public function ban(User $user): RedirectResponse
