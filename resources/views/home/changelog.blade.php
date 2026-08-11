@@ -29,12 +29,12 @@
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics range summary shows unique users for the selected period.</span>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
                         </li>
                         <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics range summary shows unique guests for the selected period.</span>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Design improvements.</span>
                         </li>
                     </ul>
                 </div>
@@ -49,12 +49,12 @@
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics shows how many people are active on the site right now.</span>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
                         </li>
                         <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Active count includes anyone with a visit in the last 2 minutes, with logged-in and guest breakdowns.</span>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Design improvements.</span>
                         </li>
                     </ul>
                 </div>
@@ -69,28 +69,12 @@
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics includes donut charts for users vs guests.</span>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
                         </li>
                         <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics includes donut charts for operating system.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics includes donut charts for device type.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics includes donut charts for browser.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics includes donut charts for bot vs human traffic.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics can be filtered by all time, last 30 days, last 7 days, or last 24 hours.</span>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Design improvements.</span>
                         </li>
                     </ul>
                 </div>
@@ -125,20 +109,12 @@
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Admin images grid shows 6 cards per row on wide screens.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-change">Change</span>
-                            <span class="changelog-text">Admin images list shows 30 images per page.</span>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Admin image cards have a refreshed layout with clearer meta and actions.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin image cards show the credited artist when one is set.</span>
+                            <span class="changelog-text">Design improvements.</span>
                         </li>
                     </ul>
                 </div>
@@ -153,20 +129,12 @@
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Redesigned the admin dashboard with a clearer overview and section layout.</span>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Redesigned the admin activity log with avatars, subject labels, and a toolbar.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Redesigned the admin users list with shared headers and table styling.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Redesigned the admin artists page, including the add-artist form and list.</span>
+                            <span class="changelog-text">Design improvements.</span>
                         </li>
                     </ul>
                 </div>
@@ -181,28 +149,12 @@
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics visits show visitor location (city and country).</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics visits show browser, device, and operating system.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics visits flag bots separately from normal browsers.</span>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Admin analytics visits table uses the full content width.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin users list has separate Users and Admins tabs.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Redesigned the admin configuration page layout.</span>
+                            <span class="changelog-text">Design improvements.</span>
                         </li>
                     </ul>
                 </div>
@@ -217,12 +169,12 @@
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-change">Change</span>
-                            <span class="changelog-text">Deleting an empty account now clears follows instead of blocking the delete.</span>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
                         </li>
                         <li>
-                            <span class="changelog-tag changelog-tag-change">Change</span>
-                            <span class="changelog-text">Deleting an empty account now clears notifications instead of blocking the delete.</span>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Design improvements.</span>
                         </li>
                     </ul>
                 </div>
@@ -237,12 +189,12 @@
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admins can delete empty user accounts from the users list.</span>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
                         </li>
                         <li>
-                            <span class="changelog-tag changelog-tag-change">Change</span>
-                            <span class="changelog-text">Accounts with posts, comments, or other content still cannot be deleted.</span>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Design improvements.</span>
                         </li>
                     </ul>
                 </div>
@@ -257,8 +209,12 @@
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin image cards show whether a description is set (Desc / No desc).</span>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Design improvements.</span>
                         </li>
                     </ul>
                 </div>
@@ -273,12 +229,12 @@
                     </header>
                     <ul class="changelog-list">
                         <li>
-                            <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Admin analytics referrer column is narrower so other columns fit better.</span>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Referrers show the hostname in the table; full URL remains on hover.</span>
+                            <span class="changelog-text">Design improvements.</span>
                         </li>
                     </ul>
                 </div>
@@ -292,10 +248,6 @@
                         <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
                     </header>
                     <ul class="changelog-list">
-                        <li>
-                            <span class="changelog-tag changelog-tag-feature">New</span>
-                            <span class="changelog-text">Admin analytics page records and lists site visits.</span>
-                        </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
                             <span class="changelog-text">The tags page content now lines up with the site header width.</span>
@@ -452,14 +404,6 @@
                         <time class="changelog-date" datetime="2026-08-10">August 10, 2026</time>
                     </header>
                     <ul class="changelog-list">
-                        <li>
-                            <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Post edit page: moved the &ldquo;Original artist&rdquo; field hint below the input.</span>
-                        </li>
-                        <li>
-                            <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Artist field hint now matches the Alt text field layout.</span>
-                        </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
                             <span class="changelog-text">Redesigned the changelog page with a timeline layout.</span>
