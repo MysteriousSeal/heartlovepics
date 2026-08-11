@@ -13,6 +13,7 @@
             <div class="admin-list-meta admin-dashboard-quick-links">
                 <a href="{{ route('admin.images.index') }}" class="admin-list-chip admin-dashboard-chip-link">Images</a>
                 <a href="{{ route('admin.users.index') }}" class="admin-list-chip admin-dashboard-chip-link">Users</a>
+                <a href="{{ route('admin.messages.index') }}" class="admin-list-chip admin-dashboard-chip-link">Messages</a>
                 <a href="{{ route('admin.analytics.index') }}" class="admin-list-chip admin-dashboard-chip-link">Analytics</a>
                 <a href="{{ route('admin.activity.index') }}" class="admin-list-chip admin-dashboard-chip-link">Activity</a>
                 <a href="{{ route('home') }}" class="admin-list-chip admin-dashboard-chip-link" target="_blank" rel="noopener noreferrer">View site</a>

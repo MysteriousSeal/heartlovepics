@@ -14,6 +14,7 @@ use App\Http\Controllers\ShoutController;
 use App\Http\Controllers\UserImageController;
 use App\Http\Controllers\Admin\CommentController as AdminCommentController;
 use App\Http\Controllers\Admin\ConfigurationController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -41,6 +42,10 @@ Route::get('/sitemap-artists.xml', [SitemapController::class, 'artists'])->name(
 Route::get('/privacy', [PageController::class, 'privacy'])->name('pages.privacy');
 Route::get('/terms', [PageController::class, 'terms'])->name('pages.terms');
 Route::get('/changelog', [PageController::class, 'changelog'])->name('pages.changelog');
+Route::get('/contact', [PageController::class, 'contact'])->name('pages.contact');
+Route::post('/contact', [PageController::class, 'submitContact'])
+    ->middleware('throttle:5,1')
+    ->name('pages.contact.submit');
 Route::post('/preferences/nsfw', [PreferenceController::class, 'updateNsfw'])->name('preferences.nsfw');
 Route::post('/preferences/theme', [PreferenceController::class, 'updateTheme'])->name('preferences.theme');
 Route::get('/tags/suggest', [TagController::class, 'suggest'])->name('tags.suggest');
@@ -127,6 +132,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('artists', ArtistController::class)->except(['show', 'create']);
         Route::get('comments', [AdminCommentController::class, 'index'])->name('comments.index');
         Route::delete('comments/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
+        Route::get('messages', [ContactMessageController::class, 'index'])->name('messages.index');
+        Route::post('messages/{message}/archive', [ContactMessageController::class, 'archive'])->name('messages.archive');
+        Route::post('messages/{message}/unarchive', [ContactMessageController::class, 'unarchive'])->name('messages.unarchive');
+        Route::delete('messages/{message}', [ContactMessageController::class, 'destroy'])->name('messages.destroy');
         Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
         Route::post('users/{user}/ban', [AdminUserController::class, 'ban'])->name('users.ban');
         Route::post('users/{user}/unban', [AdminUserController::class, 'unban'])->name('users.unban');

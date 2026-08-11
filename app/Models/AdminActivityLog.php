@@ -29,6 +29,8 @@ class AdminActivityLog extends Model
 
     public const ACTION_CONFIGURATION_UPDATED = 'configuration.updated';
 
+    public const ACTION_CONTACT_MESSAGE_DELETED = 'contact_message.deleted';
+
     public function admin(): BelongsTo
     {
         return $this->belongsTo(User::class, 'admin_id');

@@ -44,6 +44,17 @@
                 </h1>
                 <p class="site-tagline">A quiet collection of images</p>
             </div>
+            <a
+                href="{{ route('pages.contact') }}"
+                class="site-contact-btn"
+                title="Contact"
+                aria-label="Contact"
+            >
+                <svg class="site-contact-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                    <path d="M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="m4 8 8 5 8-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
         </div>
     </header>
 
