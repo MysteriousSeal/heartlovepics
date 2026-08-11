@@ -8,6 +8,7 @@ use App\Support\DonutChart;
 use App\Support\UserAgentParser;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\View\View;
@@ -44,6 +45,15 @@ class AnalyticsController extends Controller
             'activeNow',
             'rangeVisitors',
         ));
+    }
+
+    /**
+     * Polled from the admin nav every few seconds to keep the "active now"
+     * chip live without a full page reload.
+     */
+    public function activeNow(): JsonResponse
+    {
+        return response()->json($this->countDistinctVisitors(Carbon::now()->subMinutes(2)));
     }
 
     /**

@@ -145,6 +145,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('activity', [ActivityLogController::class, 'index'])->name('activity.index');
         Route::get('cron', [CronLogController::class, 'index'])->name('cron.index');
         Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+        Route::get('analytics/active-now', [AnalyticsController::class, 'activeNow'])->name('analytics.active-now');
         Route::get('configuration', [ConfigurationController::class, 'edit'])->name('configuration.edit');
         Route::put('configuration', [ConfigurationController::class, 'update'])->name('configuration.update');
     });

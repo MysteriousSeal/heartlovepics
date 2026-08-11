@@ -31,7 +31,13 @@
                 <a href="{{ route('admin.images.index') }}" class="{{ request()->routeIs('admin.images.*') ? 'active' : '' }}">Images</a>
                 <a href="{{ route('admin.artists.index') }}" class="{{ request()->routeIs('admin.artists.*') ? 'active' : '' }}">Artists</a>
                 <a href="{{ route('admin.comments.index') }}" class="{{ request()->routeIs('admin.comments.*') ? 'active' : '' }}">Comments</a>
-                <a href="{{ route('admin.messages.index') }}" class="{{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">Messages</a>
+                <a href="{{ route('admin.messages.index') }}" class="admin-nav-link-badged {{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
+                    Messages
+                    @php $unrepliedCount = \App\Models\ContactMessage::whereNull('replied_at')->where('is_archived', false)->count(); @endphp
+                    @if ($unrepliedCount > 0)
+                        <span class="admin-nav-badge">{{ $unrepliedCount > 99 ? '99+' : $unrepliedCount }}</span>
+                    @endif
+                </a>
                 <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">Users</a>
                 <a href="{{ route('admin.activity.index') }}" class="{{ request()->routeIs('admin.activity.*') ? 'active' : '' }}">Activity</a>
                 <a href="{{ route('admin.cron.index') }}" class="{{ request()->routeIs('admin.cron.*') ? 'active' : '' }}">Cron</a>
@@ -40,6 +46,16 @@
             </nav>
 
             <div class="admin-nav-actions">
+                <span
+                    class="admin-list-chip admin-active-now-chip admin-nav-active-now"
+                    id="admin-nav-active-now"
+                    title="Distinct visitors with a page view in the last 2 minutes"
+                >
+                    <span class="admin-active-now-dot" aria-hidden="true"></span>
+                    <span class="admin-active-now-count">&hellip;</span>
+                    active
+                </span>
+                <span class="admin-nav-divider" aria-hidden="true"></span>
                 <button
                     type="button"
                     class="theme-toggle-btn"
@@ -68,6 +84,11 @@
     </main>
 
     <script src="{{ asset('js/theme-toggle.js') }}" defer></script>
+    <script
+        src="{{ asset('js/admin-active-now.js') }}"
+        data-active-now-url="{{ route('admin.analytics.active-now') }}"
+        defer
+    ></script>
     @stack('scripts')
 </body>
 </html>

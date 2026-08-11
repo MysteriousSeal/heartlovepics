@@ -121,6 +121,11 @@
                             </div>
 
                             <div class="admin-message-meta">
+                                @unless ($message->is_archived)
+                                    <span class="badge {{ $message->replied_at ? 'badge-published' : 'badge-banned' }}">
+                                        {{ $message->replied_at ? 'Answered' : 'Not answered' }}
+                                    </span>
+                                @endunless
                                 <time
                                     class="admin-message-date"
                                     datetime="{{ $message->created_at->toIso8601String() }}"

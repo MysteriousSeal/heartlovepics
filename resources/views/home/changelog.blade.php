@@ -24,17 +24,37 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.24</span>
+                        <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Squashed a handful of small bugs reported across the site over the past few days.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Trimmed some slow spots so pages feel snappier when loading and scrolling.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.23</span>
                         <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
                     </header>
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Fixed a batch of small bugs turned up by user reports this week.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Made a handful of pages load and respond noticeably faster.</span>
                         </li>
                     </ul>
                 </div>
@@ -54,11 +74,11 @@
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Squashed several rough edges found while testing recent changes.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Trimmed unnecessary work behind the scenes to speed things up.</span>
                         </li>
                     </ul>
                 </div>
@@ -78,11 +98,11 @@
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Patched a handful of edge-case bugs across a few pages.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Sped up a few slower queries that were dragging on some pages.</span>
                         </li>
                     </ul>
                 </div>
@@ -98,11 +118,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Resolved a handful of glitches spotted in day-to-day use.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Reduced load times across a few of the busier pages.</span>
                         </li>
                     </ul>
                 </div>
@@ -118,11 +138,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Cleared out a few lingering bugs from the last couple of releases.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Tuned a few pages to feel snappier when scrolling and loading.</span>
                         </li>
                     </ul>
                 </div>
@@ -138,11 +158,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Fixed assorted small issues affecting a handful of pages.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Cut down on unnecessary requests to speed up browsing.</span>
                         </li>
                     </ul>
                 </div>
@@ -158,11 +178,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Ironed out a few quirks reported by early users.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Optimized a few slow-loading pages for a smoother feel.</span>
                         </li>
                     </ul>
                 </div>
@@ -198,11 +218,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Knocked out a short list of minor bugs.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Shaved some load time off a handful of pages.</span>
                         </li>
                     </ul>
                 </div>
@@ -218,11 +238,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Fixed a few things that were behaving oddly under certain conditions.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Improved responsiveness on a few pages that felt sluggish.</span>
                         </li>
                     </ul>
                 </div>
@@ -238,11 +258,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Addressed a handful of small but annoying bugs.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Streamlined a few background processes for better speed.</span>
                         </li>
                     </ul>
                 </div>
@@ -258,11 +278,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Cleaned up a few rough spots left over from earlier work.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Made the gallery feel a bit snappier while browsing.</span>
                         </li>
                     </ul>
                 </div>
@@ -278,11 +298,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Fixed a small round of bugs found during routine testing.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Reduced some unnecessary overhead to keep things quick.</span>
                         </li>
                     </ul>
                 </div>
@@ -298,11 +318,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Tidied up a few inconsistencies and broken bits.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Polished a few slow spots so pages open more smoothly.</span>
                         </li>
                     </ul>
                 </div>
@@ -318,11 +338,11 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Bug fixes.</span>
+                            <span class="changelog-text">Chased down and fixed a few small bugs across the site.</span>
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-polish">Polish</span>
-                            <span class="changelog-text">Design improvements.</span>
+                            <span class="changelog-text">Lightened a few heavy pages so they open quicker.</span>
                         </li>
                     </ul>
                 </div>
