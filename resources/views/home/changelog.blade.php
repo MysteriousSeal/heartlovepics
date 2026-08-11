@@ -24,6 +24,26 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.23</span>
+                        <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bug fixes.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Design improvements.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.22</span>
                         <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
                     </header>

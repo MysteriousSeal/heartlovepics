@@ -2,9 +2,15 @@
 
 namespace App\Providers;
 
+use App\Listeners\LogScheduledTask;
 use App\Models\Tag;
+use App\Services\CronLogService;
 use App\Services\NotificationService;
+use Illuminate\Console\Events\ScheduledTaskFailed;
+use Illuminate\Console\Events\ScheduledTaskFinished;
+use Illuminate\Console\Events\ScheduledTaskStarting;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -22,7 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Singleton so scheduled-task listeners and commands share open-run state.
+        $this->app->singleton(CronLogService::class);
     }
 
     /**
@@ -36,6 +43,11 @@ class AppServiceProvider extends ServiceProvider
                 new Dsn('native', 'default')
             );
         });
+
+        // Persist every scheduled-task run for the admin Cron log.
+        Event::listen(ScheduledTaskStarting::class, [LogScheduledTask::class, 'handleStarting']);
+        Event::listen(ScheduledTaskFinished::class, [LogScheduledTask::class, 'handleFinished']);
+        Event::listen(ScheduledTaskFailed::class, [LogScheduledTask::class, 'handleFailed']);
 
         View::composer('partials.site-auth', function ($view) {
             $user = auth()->user();
