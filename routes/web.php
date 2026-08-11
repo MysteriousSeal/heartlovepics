@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\ArtistController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\CollectionController;
@@ -130,6 +131,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('users/{user}/ban', [AdminUserController::class, 'ban'])->name('users.ban');
         Route::post('users/{user}/unban', [AdminUserController::class, 'unban'])->name('users.unban');
         Route::get('activity', [ActivityLogController::class, 'index'])->name('activity.index');
+        Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
         Route::get('configuration', [ConfigurationController::class, 'edit'])->name('configuration.edit');
         Route::put('configuration', [ConfigurationController::class, 'update'])->name('configuration.update');
     });

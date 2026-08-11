@@ -14,7 +14,7 @@ class RecordSiteVisit
     public function handle(Request $request, Closure $next): Response
     {
         if ($this->shouldRecord($request)) {
-            $this->visitCounter->record();
+            $this->visitCounter->record($request);
         }
 
         return $next($request);
