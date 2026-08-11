@@ -11,17 +11,17 @@
                 Visit breakdowns and a detailed log of recent traffic.
             </p>
             <div class="admin-list-meta">
-                <span class="admin-list-chip admin-active-now-chip {{ $activeNow['total'] > 0 ? 'is-live' : '' }}" title="Distinct visitors with a page view in the last 2 minutes">
+                <span class="admin-list-chip admin-active-now-chip {{ $activeNow['total'] > 0 ? 'is-live' : '' }}" title="Distinct visitors with a page view in the last 2 minutes (bots counted separately)">
                     <span class="admin-active-now-dot" aria-hidden="true"></span>
                     <span class="admin-active-now-count">{{ number_format($activeNow['total']) }}</span>
                     active
-                    {{ \Illuminate\Support\Str::plural('user', $activeNow['total']) }}
                     <span class="admin-list-chip-muted">
                         · {{ number_format($activeNow['users']) }} logged in
                         · {{ number_format($activeNow['guests']) }} {{ \Illuminate\Support\Str::plural('guest', $activeNow['guests']) }}
+                        · {{ number_format($activeNow['bots']) }} {{ \Illuminate\Support\Str::plural('bot', $activeNow['bots']) }}
                     </span>
                 </span>
-                <span class="admin-list-chip" title="Page views and distinct visitors in the selected range">
+                <span class="admin-list-chip" title="Page views and distinct visitors in the selected range (bots counted separately from guests)">
                     {{ number_format($visits->total()) }}
                     {{ \Illuminate\Support\Str::plural('visit', $visits->total()) }}
                     <span class="admin-list-chip-muted">
@@ -29,6 +29,8 @@
                         {{ \Illuminate\Support\Str::plural('user', $rangeVisitors['users']) }}
                         · {{ number_format($rangeVisitors['guests']) }}
                         {{ \Illuminate\Support\Str::plural('guest', $rangeVisitors['guests']) }}
+                        · {{ number_format($rangeVisitors['bots']) }}
+                        {{ \Illuminate\Support\Str::plural('bot', $rangeVisitors['bots']) }}
                         · {{ $ranges[$range] }}
                     </span>
                 </span>

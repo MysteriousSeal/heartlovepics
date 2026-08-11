@@ -48,30 +48,45 @@ class AnalyticsController extends Controller
 
     /**
      * Distinct visitors since $since (or all time when null).
-     * Logged-in users count by user_id; guests by IP address.
+     * Bots are counted separately from human guests via user-agent detection.
      *
-     * @return array{total: int, users: int, guests: int}
+     * @return array{total: int, users: int, guests: int, bots: int}
      */
     private function countDistinctVisitors(?CarbonInterface $since): array
     {
-        $usersQuery = SiteVisit::query()->whereNotNull('user_id');
-        $this->applyRange($usersQuery, $since);
-        $users = (int) $usersQuery
-            ->selectRaw('count(distinct user_id) as aggregate')
-            ->value('aggregate');
+        $query = SiteVisit::query()->select(['user_id', 'ip_address', 'user_agent']);
+        $this->applyRange($query, $since);
 
-        $guestsQuery = SiteVisit::query()
-            ->whereNull('user_id')
-            ->whereNotNull('ip_address');
-        $this->applyRange($guestsQuery, $since);
-        $guests = (int) $guestsQuery
-            ->selectRaw('count(distinct ip_address) as aggregate')
-            ->value('aggregate');
+        $userKeys = [];
+        $guestKeys = [];
+        $botKeys = [];
+
+        foreach ($query->cursor() as $row) {
+            $isBot = UserAgentParser::isBot($row->user_agent);
+            $ip = $row->ip_address ?: 'unknown';
+
+            if ($isBot) {
+                $botKeys['b:'.$ip.'|'.md5((string) $row->user_agent)] = true;
+
+                continue;
+            }
+
+            if ($row->user_id) {
+                $userKeys['u:'.$row->user_id] = true;
+            } else {
+                $guestKeys['g:'.$ip] = true;
+            }
+        }
+
+        $users = count($userKeys);
+        $guests = count($guestKeys);
+        $bots = count($botKeys);
 
         return [
-            'total' => $users + $guests,
+            'total' => $users + $guests + $bots,
             'users' => $users,
             'guests' => $guests,
+            'bots' => $bots,
         ];
     }
 
