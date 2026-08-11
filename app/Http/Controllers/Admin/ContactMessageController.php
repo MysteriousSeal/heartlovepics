@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\ContactReplyMail;
 use App\Models\AdminActivityLog;
 use App\Models\ContactMessage;
+use App\Models\ContactMessageReply;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -19,7 +20,7 @@ class ContactMessageController extends Controller
         $tab = $request->input('tab') === 'archived' ? 'archived' : 'new';
 
         $query = ContactMessage::query()
-            ->with('user')
+            ->with(['user', 'replies.admin'])
             ->where('is_archived', $tab === 'archived')
             ->latest();
 
@@ -72,8 +73,17 @@ class ContactMessageController extends Controller
                 ->with('error', 'Could not send the email. Check mail configuration and try again.');
         }
 
+        ContactMessageReply::create([
+            'contact_message_id' => $message->id,
+            'admin_id' => auth()->id(),
+            'subject' => $replySubject,
+            'body' => $replyBody,
+            'from_address' => (string) config('mail.from.address'),
+        ]);
+
         $updates = [
             'replied_at' => now(),
+            // Keep last reply mirrored for quick listing / legacy fields.
             'reply_subject' => $replySubject,
             'reply_body' => $replyBody,
         ];

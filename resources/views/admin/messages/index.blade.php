@@ -144,26 +144,47 @@
                             <p class="admin-message-body">{{ $message->message }}</p>
                         </div>
 
-                        @if ($message->replied_at && $message->reply_body)
+                        @if ($message->replies->isNotEmpty())
                             <section class="admin-message-history" aria-label="Reply history">
-                                <header class="admin-message-history-header">
-                                    <span class="admin-message-history-label">Reply sent</span>
-                                    <time
-                                        class="admin-message-history-date"
-                                        datetime="{{ $message->replied_at->toIso8601String() }}"
-                                        title="{{ $message->replied_at->format('M j, Y g:i A') }}"
-                                    >
-                                        {{ $message->replied_at->diffForHumans() }}
-                                    </time>
+                                <header class="admin-message-history-title-row">
+                                    <span class="admin-message-history-label">
+                                        Reply history
+                                    </span>
+                                    <span class="admin-message-history-count">
+                                        {{ $message->replies->count() }}
+                                        {{ \Illuminate\Support\Str::plural('reply', $message->replies->count()) }}
+                                    </span>
                                 </header>
-                                <p class="admin-message-history-meta">
-                                    From {{ config('mail.from.address') }}
-                                    → {{ $message->email }}
-                                </p>
-                                @if ($message->reply_subject)
-                                    <h4 class="admin-message-history-subject">{{ $message->reply_subject }}</h4>
-                                @endif
-                                <p class="admin-message-history-body">{{ $message->reply_body }}</p>
+
+                                <ol class="admin-message-history-list">
+                                    @foreach ($message->replies as $index => $reply)
+                                        <li class="admin-message-history-item">
+                                            <header class="admin-message-history-header">
+                                                <span class="admin-message-history-label">
+                                                    Reply {{ $index + 1 }}
+                                                    @if ($reply->admin)
+                                                        <span class="admin-message-history-admin">
+                                                            by {{ $reply->admin->username }}
+                                                        </span>
+                                                    @endif
+                                                </span>
+                                                <time
+                                                    class="admin-message-history-date"
+                                                    datetime="{{ $reply->created_at->toIso8601String() }}"
+                                                    title="{{ $reply->created_at->format('M j, Y g:i A') }}"
+                                                >
+                                                    {{ $reply->created_at->diffForHumans() }}
+                                                </time>
+                                            </header>
+                                            <p class="admin-message-history-meta">
+                                                From {{ $reply->from_address ?: config('mail.from.address') }}
+                                                → {{ $message->email }}
+                                            </p>
+                                            <h4 class="admin-message-history-subject">{{ $reply->subject }}</h4>
+                                            <p class="admin-message-history-body">{{ $reply->body }}</p>
+                                        </li>
+                                    @endforeach
+                                </ol>
                             </section>
                         @endif
 
