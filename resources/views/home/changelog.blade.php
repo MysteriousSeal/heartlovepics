@@ -24,6 +24,23 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.14</span>
+                        <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            Admin dashboard, activity log, users, and artists pages get a
+                            clearer layout with shared headers, toolbars, and table styling.
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.13</span>
                         <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
                     </header>

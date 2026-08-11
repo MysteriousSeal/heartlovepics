@@ -31,9 +31,13 @@ class ActivityLogController extends Controller
         $actions = [
             AdminActivityLog::ACTION_USER_BANNED => 'User banned',
             AdminActivityLog::ACTION_USER_UNBANNED => 'User unbanned',
+            AdminActivityLog::ACTION_USER_DELETED => 'User deleted',
             AdminActivityLog::ACTION_IMAGE_UPDATED => 'Image updated',
             AdminActivityLog::ACTION_IMAGE_DELETED => 'Image deleted',
             AdminActivityLog::ACTION_COMMENT_DELETED => 'Comment deleted',
+            AdminActivityLog::ACTION_ARTIST_CREATED => 'Artist created',
+            AdminActivityLog::ACTION_ARTIST_UPDATED => 'Artist updated',
+            AdminActivityLog::ACTION_ARTIST_DELETED => 'Artist deleted',
             AdminActivityLog::ACTION_CONFIGURATION_UPDATED => 'Configuration updated',
         ];
 
