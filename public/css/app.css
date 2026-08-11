@@ -5938,6 +5938,50 @@ a.admin-recent-image-link:hover {
     color: var(--text-muted);
 }
 
+.admin-active-now-chip {
+    gap: 0.4rem;
+}
+
+.admin-active-now-chip.is-live {
+    color: #2f6b3a;
+    background: color-mix(in srgb, #3a6b3a 10%, var(--surface));
+    border-color: color-mix(in srgb, #3a6b3a 30%, var(--border));
+}
+
+.admin-active-now-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.admin-active-now-chip.is-live .admin-active-now-dot {
+    background: #2f9e4b;
+    box-shadow: 0 0 0 3px color-mix(in srgb, #2f9e4b 25%, transparent);
+    animation: admin-active-pulse 1.6s ease-in-out infinite;
+}
+
+.admin-active-now-count {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+@keyframes admin-active-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 3px color-mix(in srgb, #2f9e4b 22%, transparent);
+    }
+    50% {
+        box-shadow: 0 0 0 5px color-mix(in srgb, #2f9e4b 8%, transparent);
+    }
+}
+
+[data-theme='dark'] .admin-active-now-chip.is-live {
+    color: #9ec5a0;
+    background: color-mix(in srgb, #3a6b3a 22%, var(--surface));
+    border-color: color-mix(in srgb, #3a6b3a 40%, var(--border));
+}
+
 .admin-list-tabs {
     display: flex;
     flex-wrap: wrap;

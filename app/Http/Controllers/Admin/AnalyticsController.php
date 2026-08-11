@@ -33,8 +33,39 @@ class AnalyticsController extends Controller
         $visits = $visitsQuery->paginate(50)->withQueryString();
         $charts = $this->buildCharts($since);
         $ranges = self::RANGES;
+        $activeNow = $this->countActiveVisitors();
 
-        return view('admin.analytics.index', compact('visits', 'charts', 'range', 'ranges'));
+        return view('admin.analytics.index', compact('visits', 'charts', 'range', 'ranges', 'activeNow'));
+    }
+
+    /**
+     * Distinct visitors with a hit in the last 2 minutes.
+     * Logged-in users count by user_id; guests by IP address.
+     *
+     * @return array{total: int, users: int, guests: int}
+     */
+    private function countActiveVisitors(): array
+    {
+        $since = Carbon::now()->subMinutes(2);
+
+        $users = (int) SiteVisit::query()
+            ->where('created_at', '>=', $since)
+            ->whereNotNull('user_id')
+            ->selectRaw('count(distinct user_id) as aggregate')
+            ->value('aggregate');
+
+        $guests = (int) SiteVisit::query()
+            ->where('created_at', '>=', $since)
+            ->whereNull('user_id')
+            ->whereNotNull('ip_address')
+            ->selectRaw('count(distinct ip_address) as aggregate')
+            ->value('aggregate');
+
+        return [
+            'total' => $users + $guests,
+            'users' => $users,
+            'guests' => $guests,
+        ];
     }
 
     private function resolveRange(?string $range): string

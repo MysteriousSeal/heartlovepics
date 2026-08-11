@@ -11,6 +11,16 @@
                 Visit breakdowns and a detailed log of recent traffic.
             </p>
             <div class="admin-list-meta">
+                <span class="admin-list-chip admin-active-now-chip {{ $activeNow['total'] > 0 ? 'is-live' : '' }}" title="Distinct visitors with a page view in the last 2 minutes">
+                    <span class="admin-active-now-dot" aria-hidden="true"></span>
+                    <span class="admin-active-now-count">{{ number_format($activeNow['total']) }}</span>
+                    active
+                    {{ \Illuminate\Support\Str::plural('user', $activeNow['total']) }}
+                    <span class="admin-list-chip-muted">
+                        · {{ number_format($activeNow['users']) }} logged in
+                        · {{ number_format($activeNow['guests']) }} {{ \Illuminate\Support\Str::plural('guest', $activeNow['guests']) }}
+                    </span>
+                </span>
                 <span class="admin-list-chip">
                     {{ number_format($visits->total()) }}
                     {{ \Illuminate\Support\Str::plural('visit', $visits->total()) }}
