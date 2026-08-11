@@ -14,6 +14,56 @@ class ImageApiController extends Controller
     public function __construct(private TagService $tags) {}
 
     /**
+     * Looks up by numeric ID when the identifier is all digits, by slug
+     * otherwise — so the same route works for either.
+     */
+    public function show(string $idOrSlug): JsonResponse
+    {
+        $image = ctype_digit($idOrSlug)
+            ? Image::findOrFail($idOrSlug)
+            : Image::where('slug', $idOrSlug)->firstOrFail();
+
+        $image->load(['tags', 'artist', 'user', 'additionalImages']);
+
+        return response()->json([
+            'id' => $image->id,
+            'slug' => $image->slug,
+            'title' => $image->title,
+            'description' => $image->description,
+            'alt_text' => $image->alt_text,
+            'is_published' => $image->is_published,
+            'is_private' => $image->is_private,
+            'is_nsfw' => $image->is_nsfw,
+            'is_nsfw_locked' => $image->is_nsfw_locked,
+            'content_warning' => $image->content_warning,
+            'artist_name' => $image->artist_name,
+            'artist_links' => $image->artist ? [
+                'deviantart_url' => $image->artist->deviantart_url,
+                'furaffinity_url' => $image->artist->furaffinity_url,
+                'patreon_url' => $image->artist->patreon_url,
+            ] : null,
+            'tags' => $image->tags->pluck('name'),
+            'user' => $image->user ? [
+                'id' => $image->user->id,
+                'username' => $image->user->username,
+            ] : null,
+            'url' => $image->direct_url,
+            'thumbnail_url' => $image->thumbnail_direct_url,
+            'width' => $image->width,
+            'height' => $image->height,
+            'file_extension' => $image->fileExtension(),
+            'file_size' => $image->fileSize(),
+            'views' => $image->views,
+            'additional_images' => $image->additionalImages->map(fn ($file) => [
+                'id' => $file->id,
+                'url' => url('/storage/'.$file->file_path),
+            ]),
+            'created_at' => $image->created_at,
+            'updated_at' => $image->updated_at,
+        ]);
+    }
+
+    /**
      * Partial metadata update for a post — description, tags, artist credit,
      * NSFW flagging. Not a replacement for the full admin edit form: this
      * intentionally can't touch the image files, title, or publish state.
