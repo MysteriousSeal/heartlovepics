@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\AdminActivityLog;
 use App\Models\Artist;
 use App\Models\Image;
+use App\Services\AvatarService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ArtistController extends Controller
 {
+    public function __construct(private AvatarService $avatars) {}
+
     public function index(Request $request): View
     {
         $query = Artist::query()->withCount('images');
@@ -29,10 +32,16 @@ class ArtistController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100', 'unique:artists,name'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp', 'max:5120'],
             'deviantart_url' => ['nullable', 'url', 'max:255'],
             'furaffinity_url' => ['nullable', 'url', 'max:255'],
             'patreon_url' => ['nullable', 'url', 'max:255'],
         ]);
+
+        if ($request->hasFile('avatar')) {
+            $validated['avatar_path'] = $this->avatars->store($request->file('avatar'));
+        }
+        unset($validated['avatar']);
 
         $artist = Artist::create($validated);
 
@@ -54,10 +63,21 @@ class ArtistController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100', 'unique:artists,name,'.$artist->id],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp', 'max:5120'],
+            'remove_avatar' => ['sometimes', 'boolean'],
             'deviantart_url' => ['nullable', 'url', 'max:255'],
             'furaffinity_url' => ['nullable', 'url', 'max:255'],
             'patreon_url' => ['nullable', 'url', 'max:255'],
         ]);
+
+        if ($request->hasFile('avatar')) {
+            $this->avatars->delete($artist->avatar_path);
+            $validated['avatar_path'] = $this->avatars->store($request->file('avatar'));
+        } elseif ($request->boolean('remove_avatar')) {
+            $this->avatars->delete($artist->avatar_path);
+            $validated['avatar_path'] = null;
+        }
+        unset($validated['avatar'], $validated['remove_avatar']);
 
         $oldName = $artist->name;
         $artist->update($validated);
@@ -88,6 +108,7 @@ class ArtistController extends Controller
     public function destroy(Artist $artist): RedirectResponse
     {
         $name = $artist->name;
+        $this->avatars->delete($artist->avatar_path);
         $artist->delete();
 
         AdminActivityLog::record(

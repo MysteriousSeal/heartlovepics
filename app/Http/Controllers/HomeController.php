@@ -13,6 +13,7 @@ use App\Services\BookmarkService;
 use App\Services\CollectionService;
 use App\Services\CommentLikeService;
 use App\Services\LikeService;
+use App\Services\SiteSettingsService;
 use App\Support\GalleryColumns;
 use App\Support\NsfwPreference;
 use Closure;
@@ -37,6 +38,8 @@ class HomeController extends Controller
     private const SAME_AUTHOR_IMAGE_LIMIT = 4;
 
     private const SAME_ARTIST_IMAGE_LIMIT = 4;
+
+    public function __construct(private SiteSettingsService $settings) {}
 
     public function index(Request $request, LikeService $likes, BookmarkService $bookmarks, GalleryActivityService $activity, VisitCounterService $visitCounter): View|JsonResponse
     {
@@ -300,10 +303,12 @@ class HomeController extends Controller
 
         $showNsfw = NsfwPreference::isEnabled($request);
         $ageConfirmed = NsfwPreference::hasAgeConfirmed($request);
+        $showGalleryAuthors = $this->settings->showGalleryAuthors();
+        $showGalleryArtists = $this->settings->showGalleryArtists();
 
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
-                'html' => view('partials.gallery-items', compact('images', 'likedMap', 'bookmarkMap', 'showNsfw'))->render(),
+                'html' => view('partials.gallery-items', compact('images', 'likedMap', 'bookmarkMap', 'showNsfw', 'showGalleryAuthors', 'showGalleryArtists'))->render(),
                 'offset' => $offset,
                 'next_page_url' => $images->nextPageUrl(),
                 'has_more' => $images->hasMorePages(),
@@ -344,6 +349,8 @@ class HomeController extends Controller
             'isFirstPage',
             'pageMeta',
             'showNsfw',
+            'showGalleryAuthors',
+            'showGalleryArtists',
             'ageConfirmed',
             'popularTags',
             'imageListSchema',
@@ -445,7 +452,7 @@ class HomeController extends Controller
     {
         return Image::query()
             ->publiclyVisible()
-            ->with('user')
+            ->with(['user', 'artist'])
             ->withCount(['likes', 'comments', 'bookmarks', 'additionalImages']);
     }
 

@@ -28,6 +28,9 @@
 @if ($image->hasArtistCredit())
     <div class="image-artist-credit">
         <span class="image-artist-credit-label">Original artist:</span>
+        @if ($image->artist?->hasAvatar())
+            <img src="{{ $image->artist->avatar_url }}" alt="" width="20" height="20" class="image-artist-credit-avatar">
+        @endif
         <a href="{{ route('gallery.artist', $image->artist_name) }}" class="image-artist-credit-name">{{ $image->artist_name }}</a>
         @if ($image->artist?->deviantart_url)
             <a href="{{ $image->artist->deviantart_url }}" class="image-artist-credit-link" target="_blank" rel="noopener noreferrer nofollow">DeviantArt</a>
@@ -45,7 +48,7 @@
     <div class="image-detail-meta-primary">
         <span>Added {{ $image->created_at->format('F j, Y') }}</span>
     </div>
-    @include('partials.image-author', ['image' => $image])
+    @include('partials.image-author', ['image' => $image, 'showLabel' => true])
 </div>
 
 @if ($canManageImage ?? false)

@@ -25,6 +25,8 @@ class AdminActivityLog extends Model
 
     public const ACTION_ARTIST_DELETED = 'artist.deleted';
 
+    public const ACTION_CONFIGURATION_UPDATED = 'configuration.updated';
+
     public function admin(): BelongsTo
     {
         return $this->belongsTo(User::class, 'admin_id');

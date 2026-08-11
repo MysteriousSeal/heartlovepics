@@ -34,6 +34,7 @@ class ActivityLogController extends Controller
             AdminActivityLog::ACTION_IMAGE_UPDATED => 'Image updated',
             AdminActivityLog::ACTION_IMAGE_DELETED => 'Image deleted',
             AdminActivityLog::ACTION_COMMENT_DELETED => 'Comment deleted',
+            AdminActivityLog::ACTION_CONFIGURATION_UPDATED => 'Configuration updated',
         ];
 
         return view('admin.activity.index', compact('logs', 'actions'));

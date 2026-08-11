@@ -24,6 +24,24 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.5</span>
+                        <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            Artists can now have an avatar. It appears next to their name in the
+                            &ldquo;Original artist&rdquo; credit on posts, and on gallery cards
+                            when an artist is credited.
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.4</span>
                         <time class="changelog-date" datetime="2026-08-11">August 11, 2026</time>
                     </header>

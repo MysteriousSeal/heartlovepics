@@ -8,6 +8,8 @@
                 'lcpImageId' => $lcpImage?->id,
                 'isFirstPage' => $isFirstPage ?? false,
                 'showNsfw' => $showNsfw ?? false,
+                'showGalleryAuthors' => $showGalleryAuthors ?? true,
+                'showGalleryArtists' => $showGalleryArtists ?? false,
             ])
         @endforeach
     </div>

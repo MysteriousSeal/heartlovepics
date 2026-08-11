@@ -4,5 +4,7 @@
         'likedMap' => $likedMap,
         'bookmarkMap' => $bookmarkMap ?? [],
         'showNsfw' => $showNsfw ?? false,
+        'showGalleryAuthors' => $showGalleryAuthors ?? true,
+        'showGalleryArtists' => $showGalleryArtists ?? false,
     ])
 @endforeach

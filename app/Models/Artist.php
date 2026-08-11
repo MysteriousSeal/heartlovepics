@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'deviantart_url', 'furaffinity_url', 'patreon_url'])]
+#[Fillable(['name', 'avatar_path', 'deviantart_url', 'furaffinity_url', 'patreon_url'])]
 class Artist extends Model
 {
     /**
@@ -22,5 +22,27 @@ class Artist extends Model
     public function hasLinks(): bool
     {
         return filled($this->deviantart_url) || filled($this->furaffinity_url) || filled($this->patreon_url);
+    }
+
+    public function hasAvatar(): bool
+    {
+        return (bool) $this->avatar_path;
+    }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        return $this->avatar_path ? '/storage/'.$this->avatar_path : null;
+    }
+
+    public function getAvatarInitialsAttribute(): string
+    {
+        return mb_strtoupper(mb_substr($this->name ?? '', 0, 2));
+    }
+
+    public function getAvatarColorAttribute(): string
+    {
+        $hue = abs(crc32($this->name ?? 'artist')) % 360;
+
+        return "hsl({$hue}, 35%, 55%)";
     }
 }

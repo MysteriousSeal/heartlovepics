@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShoutController;
 use App\Http\Controllers\UserImageController;
 use App\Http\Controllers\Admin\CommentController as AdminCommentController;
+use App\Http\Controllers\Admin\ConfigurationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -129,5 +130,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('users/{user}/ban', [AdminUserController::class, 'ban'])->name('users.ban');
         Route::post('users/{user}/unban', [AdminUserController::class, 'unban'])->name('users.unban');
         Route::get('activity', [ActivityLogController::class, 'index'])->name('activity.index');
+        Route::get('configuration', [ConfigurationController::class, 'edit'])->name('configuration.edit');
+        Route::put('configuration', [ConfigurationController::class, 'update'])->name('configuration.update');
     });
 });

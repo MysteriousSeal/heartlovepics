@@ -59,7 +59,12 @@
                 <p class="line-clamp-2">{{ \Illuminate\Support\Str::limit($image->description_plain, 120) }}</p>
             @endif
             <div class="card-byline">
-                @include('partials.image-author', ['image' => $image])
+                @if ($showGalleryAuthors ?? true)
+                    @include('partials.image-author', ['image' => $image])
+                @endif
+                @if ($showGalleryArtists ?? false)
+                    @include('partials.image-artist', ['image' => $image])
+                @endif
                 <time class="card-date" datetime="{{ $image->created_at->toIso8601String() }}">
                     {{ $image->created_at->diffForHumans() }}
                 </time>

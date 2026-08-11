@@ -158,7 +158,7 @@
             data-has-more="{{ $images->hasMorePages() ? 'true' : 'false' }}"
             data-loaded-count="{{ $images->count() }}"
         >
-            @include('partials.gallery-columns', compact('columns', 'likedMap', 'bookmarkMap', 'lcpImage', 'isFirstPage', 'showNsfw'))
+            @include('partials.gallery-columns', compact('columns', 'likedMap', 'bookmarkMap', 'lcpImage', 'isFirstPage', 'showNsfw', 'showGalleryAuthors', 'showGalleryArtists'))
         </div>
 
         <div id="gallery-loader" class="gallery-loader {{ $images->hasMorePages() ? '' : 'hidden' }}">

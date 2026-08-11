@@ -1,3 +1,8 @@
+@if ($showLabel ?? false)
+    <span class="image-author-row">
+        <span class="image-author-label">Posted by :</span>
+@endif
+
 @if ($image->user)
     <a href="{{ route('users.show', $image->user) }}" class="image-author">
         @include('partials.user-avatar', [
@@ -17,5 +22,9 @@
             aria-hidden="true"
         >?</span>
         <span class="image-author-name">Anonymous</span>
+    </span>
+@endif
+
+@if ($showLabel ?? false)
     </span>
 @endif

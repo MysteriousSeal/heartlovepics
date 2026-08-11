@@ -14,8 +14,24 @@
 
     <div class="form-card admin-artist-add-card">
         <h3 class="admin-artist-add-title">Add artist</h3>
-        <form method="POST" action="{{ route('admin.artists.store') }}" class="admin-artist-add-form">
+        <form method="POST" action="{{ route('admin.artists.store') }}" enctype="multipart/form-data" class="admin-artist-add-form">
             @csrf
+            <div class="form-group">
+                <label for="new-artist-avatar">Avatar</label>
+                <div class="admin-artist-add-avatar-row">
+                    <span class="admin-artist-avatar-placeholder" style="--avatar-color: hsl(220, 35%, 55%)" aria-hidden="true">?</span>
+                    <input
+                        type="file"
+                        id="new-artist-avatar"
+                        name="avatar"
+                        class="form-control"
+                        accept="image/jpeg,image/png,image/gif,image/webp"
+                    >
+                </div>
+                @error('avatar')
+                    <p class="form-error">{{ $message }}</p>
+                @enderror
+            </div>
             <div class="form-group">
                 <label for="new-artist-name">Name</label>
                 <input
@@ -102,6 +118,7 @@
 
         <div class="admin-artists-table">
             <div class="admin-artists-head" aria-hidden="true">
+                <span>Avatar</span>
                 <span>Name</span>
                 <span>DeviantArt</span>
                 <span>FurAffinity</span>
@@ -117,10 +134,26 @@
                         <form
                             method="POST"
                             action="{{ route('admin.artists.update', $artist) }}"
+                            enctype="multipart/form-data"
                             class="admin-artist-row-form"
                         >
                             @csrf
                             @method('PUT')
+                            <span class="admin-artist-avatar-cell" data-label="Avatar">
+                                <span class="admin-artist-avatar-preview">
+                                    @if ($artist->hasAvatar())
+                                        <img src="{{ $artist->avatar_url }}" alt="" width="36" height="36">
+                                    @else
+                                        <span class="admin-artist-avatar-placeholder" style="--avatar-color: {{ $artist->avatar_color }}">{{ $artist->avatar_initials }}</span>
+                                    @endif
+                                </span>
+                                <input type="file" name="avatar" class="admin-artist-avatar-input" accept="image/jpeg,image/png,image/gif,image/webp" title="Change avatar">
+                                @if ($artist->hasAvatar())
+                                    <label class="admin-artist-avatar-remove">
+                                        <input type="checkbox" name="remove_avatar" value="1"> Remove
+                                    </label>
+                                @endif
+                            </span>
                             <span data-label="Name">
                                 <input type="text" name="name" class="form-control" value="{{ old('name', $artist->name) }}" maxlength="100" required>
                             </span>
