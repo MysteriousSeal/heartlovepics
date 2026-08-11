@@ -3718,6 +3718,20 @@ body.modal-open {
     border: 1px solid var(--border);
 }
 
+.image-artist-info {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.image-artist-post-count {
+    font-size: 0.6875rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text-muted);
+}
+
 .masonry-card .card-footer {
     display: flex;
     align-items: center;

@@ -22,6 +22,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -452,7 +453,17 @@ class HomeController extends Controller
     {
         return Image::query()
             ->publiclyVisible()
+            ->select('images.*')
             ->with(['user', 'artist'])
+            ->selectSub(
+                DB::table('images as artist_images')
+                    ->selectRaw('count(*)')
+                    ->where('artist_images.is_published', true)
+                    ->where('artist_images.is_private', false)
+                    ->whereNull('artist_images.deleted_at')
+                    ->whereColumn('artist_images.artist_name', 'images.artist_name'),
+                'artist_posts_count',
+            )
             ->withCount(['likes', 'comments', 'bookmarks', 'additionalImages']);
     }
 

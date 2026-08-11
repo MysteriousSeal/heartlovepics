@@ -10,9 +10,14 @@
                 loading="lazy"
             >
         @endif
-        <span class="image-author-name">
-            <span class="image-artist-label">Artist:</span>
-            {{ $image->artist_name }}
+        <span class="image-artist-info">
+            <span class="image-author-name">
+                <span class="image-artist-label">Artist:</span>
+                {{ $image->artist_name }}
+            </span>
+            <span class="image-artist-post-count">
+                {{ trans_choice(':count post|:count posts', $image->artist_posts_count ?? 0, ['count' => $image->artist_posts_count ?? 0]) }}
+            </span>
         </span>
     </a>
 @endif
