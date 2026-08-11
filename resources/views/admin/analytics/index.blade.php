@@ -37,13 +37,23 @@
                         <time class="admin-visits-date" datetime="{{ $visit->created_at->toIso8601String() }}">
                             {{ $visit->created_at->format('M j, Y g:i A') }}
                         </time>
-                        <span class="admin-visits-path">
+                        <span class="admin-visits-path" @if ($visit->path) title="{{ $visit->path }}" @endif>
                             {{ $visit->path ?: '—' }}
                         </span>
-                        <span class="admin-visits-referrer">
-                            {{ $visit->referrer ?: '—' }}
+                        <span class="admin-visits-referrer" @if ($visit->referrer) title="{{ $visit->referrer }}" @endif>
+                            @if ($visit->referrer)
+                                @php
+                                    $referrerHost = parse_url($visit->referrer, PHP_URL_HOST);
+                                    $referrerLabel = $referrerHost
+                                        ? \Illuminate\Support\Str::of($referrerHost)->replaceStart('www.', '')->toString()
+                                        : \Illuminate\Support\Str::limit($visit->referrer, 40);
+                                @endphp
+                                {{ $referrerLabel }}
+                            @else
+                                &mdash;
+                            @endif
                         </span>
-                        <span class="admin-visits-user-agent" title="{{ $visit->user_agent }}">
+                        <span class="admin-visits-user-agent" @if ($visit->user_agent) title="{{ $visit->user_agent }}" @endif>
                             {{ $visit->user_agent ?: '—' }}
                         </span>
                         <span class="admin-visits-ip">
