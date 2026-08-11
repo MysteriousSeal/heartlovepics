@@ -7121,6 +7121,125 @@ a.admin-message-username:hover {
     color: var(--text-muted);
 }
 
+.admin-message-history {
+    padding: 1rem 1.1rem;
+    background: color-mix(in srgb, var(--accent) 6%, var(--bg));
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+}
+
+.admin-message-history-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem 0.75rem;
+    margin-bottom: 0.35rem;
+}
+
+.admin-message-history-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.admin-message-history-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-message-history-meta {
+    margin: 0 0 0.65rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    word-break: break-all;
+}
+
+.admin-message-history-subject {
+    margin: 0 0 0.4rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    line-height: 1.35;
+}
+
+.admin-message-history-body {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.admin-message-reply {
+    border: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.admin-message-reply-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.75rem;
+    padding: 0.7rem 0.9rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+    list-style: none;
+    user-select: none;
+}
+
+.admin-message-reply-summary::-webkit-details-marker {
+    display: none;
+}
+
+.admin-message-reply-summary::before {
+    content: '▸';
+    display: inline-block;
+    color: var(--text-muted);
+    font-weight: 400;
+    transition: transform 0.12s ease;
+}
+
+.admin-message-reply[open] .admin-message-reply-summary::before {
+    transform: rotate(90deg);
+}
+
+.admin-message-reply-from {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.admin-message-reply-form {
+    padding: 0 0.9rem 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.admin-message-reply-form .form-group {
+    margin-top: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.admin-message-reply-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.admin-message-reply-actions .form-check {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+}
+
 @media (max-width: 640px) {
     .admin-message-card {
         padding: 1rem;

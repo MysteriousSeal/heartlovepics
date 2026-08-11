@@ -144,13 +144,107 @@
                             <p class="admin-message-body">{{ $message->message }}</p>
                         </div>
 
-                        <footer class="admin-message-card-footer">
-                            <a
-                                href="mailto:{{ $message->email }}?subject={{ rawurlencode('Re: '.$message->subject) }}"
-                                class="btn btn-sm btn-secondary"
+                        @if ($message->replied_at && $message->reply_body)
+                            <section class="admin-message-history" aria-label="Reply history">
+                                <header class="admin-message-history-header">
+                                    <span class="admin-message-history-label">Reply sent</span>
+                                    <time
+                                        class="admin-message-history-date"
+                                        datetime="{{ $message->replied_at->toIso8601String() }}"
+                                        title="{{ $message->replied_at->format('M j, Y g:i A') }}"
+                                    >
+                                        {{ $message->replied_at->diffForHumans() }}
+                                    </time>
+                                </header>
+                                <p class="admin-message-history-meta">
+                                    From {{ config('mail.from.address') }}
+                                    → {{ $message->email }}
+                                </p>
+                                @if ($message->reply_subject)
+                                    <h4 class="admin-message-history-subject">{{ $message->reply_subject }}</h4>
+                                @endif
+                                <p class="admin-message-history-body">{{ $message->reply_body }}</p>
+                            </section>
+                        @endif
+
+                        @php
+                            $replyOpen = (string) old('reply_message_id', request('reply')) === (string) $message->id;
+                            $defaultSubject = old('reply_subject', str_starts_with(mb_strtolower($message->subject), 're:')
+                                ? $message->subject
+                                : 'Re: '.$message->subject);
+                        @endphp
+
+                        <details class="admin-message-reply" @if ($replyOpen) open @endif>
+                            <summary class="admin-message-reply-summary">
+                                Reply by email
+                                <span class="admin-message-reply-from">from {{ config('mail.from.address') }}</span>
+                            </summary>
+
+                            <form
+                                method="POST"
+                                action="{{ route('admin.messages.reply', $message) }}"
+                                class="admin-message-reply-form"
                             >
-                                Reply
-                            </a>
+                                @csrf
+                                <input type="hidden" name="search" value="{{ request('search') }}">
+                                <input type="hidden" name="reply_message_id" value="{{ $message->id }}">
+
+                                <div class="form-group">
+                                    <label for="reply-subject-{{ $message->id }}">Subject</label>
+                                    <input
+                                        type="text"
+                                        id="reply-subject-{{ $message->id }}"
+                                        name="reply_subject"
+                                        class="form-control"
+                                        value="{{ $defaultSubject }}"
+                                        required
+                                        maxlength="{{ \App\Models\ContactMessage::REPLY_SUBJECT_MAX }}"
+                                    >
+                                    @error('reply_subject')
+                                        @if ($replyOpen)
+                                            <p class="form-error">{{ $messageBag }}</p>
+                                        @endif
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reply-body-{{ $message->id }}">Message</label>
+                                    <textarea
+                                        id="reply-body-{{ $message->id }}"
+                                        name="reply_body"
+                                        class="form-control"
+                                        rows="6"
+                                        required
+                                        maxlength="{{ \App\Models\ContactMessage::REPLY_BODY_MAX }}"
+                                        placeholder="Write your reply…"
+                                    >{{ $replyOpen ? old('reply_body') : '' }}</textarea>
+                                    <p class="form-hint">
+                                        Sent from {{ config('mail.from.address') }}. The original message is quoted below your reply.
+                                    </p>
+                                    @error('reply_body')
+                                        @if ($replyOpen)
+                                            <p class="form-error">{{ $messageBag }}</p>
+                                        @endif
+                                    @enderror
+                                </div>
+
+                                <div class="admin-message-reply-actions">
+                                    <label class="form-check">
+                                        <input type="hidden" name="archive_after" value="0">
+                                        <input
+                                            type="checkbox"
+                                            name="archive_after"
+                                            value="1"
+                                            @checked(old('archive_after', '1') == '1')
+                                        >
+                                        Mark as done after sending
+                                    </label>
+                                    <button type="submit" class="btn btn-sm btn-primary">Send reply</button>
+                                </div>
+                            </form>
+                        </details>
+
+                        <footer class="admin-message-card-footer">
                             @if ($message->is_archived)
                                 <form
                                     action="{{ route('admin.messages.unarchive', $message) }}"
@@ -169,7 +263,7 @@
                                 >
                                     @csrf
                                     <input type="hidden" name="search" value="{{ request('search') }}">
-                                    <button type="submit" class="btn btn-sm btn-primary">Mark as done</button>
+                                    <button type="submit" class="btn btn-sm btn-secondary">Mark as done</button>
                                 </form>
                             @endif
                             <form

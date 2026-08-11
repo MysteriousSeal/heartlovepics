@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ContactReplyMail;
 use App\Models\AdminActivityLog;
 use App\Models\ContactMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use Throwable;
 
 class ContactMessageController extends Controller
 {
@@ -39,6 +42,69 @@ class ContactMessageController extends Controller
             'newCount',
             'archivedCount',
         ));
+    }
+
+    public function reply(Request $request, ContactMessage $message): RedirectResponse
+    {
+        $validated = $request->validate([
+            'reply_subject' => ['required', 'string', 'max:'.ContactMessage::REPLY_SUBJECT_MAX],
+            'reply_body' => ['required', 'string', 'max:'.ContactMessage::REPLY_BODY_MAX],
+            'archive_after' => ['sometimes', 'boolean'],
+        ]);
+
+        $replySubject = trim($validated['reply_subject']);
+        $replyBody = trim($validated['reply_body']);
+        $archiveAfter = $request->boolean('archive_after');
+
+        try {
+            Mail::to($message->email, $message->username)
+                ->send(new ContactReplyMail($message, $replySubject, $replyBody));
+        } catch (Throwable $e) {
+            report($e);
+
+            return redirect()
+                ->route('admin.messages.index', array_filter([
+                    'tab' => $message->is_archived ? 'archived' : 'new',
+                    'search' => $request->input('search'),
+                    'reply' => $message->id,
+                ]))
+                ->withInput()
+                ->with('error', 'Could not send the email. Check mail configuration and try again.');
+        }
+
+        $updates = [
+            'replied_at' => now(),
+            'reply_subject' => $replySubject,
+            'reply_body' => $replyBody,
+        ];
+
+        if ($archiveAfter && ! $message->is_archived) {
+            $updates['is_archived'] = true;
+            $updates['archived_at'] = now();
+        }
+
+        $message->forceFill($updates)->save();
+
+        AdminActivityLog::record(
+            auth()->user(),
+            AdminActivityLog::ACTION_CONTACT_MESSAGE_REPLIED,
+            'Replied to contact message from '.$message->username.' ('.$message->email.')',
+            'contact_message',
+            $message->id,
+            $message->username.' — '.$message->subject,
+        );
+
+        $success = 'Reply sent to '.$message->email.' from '.config('mail.from.address').'.';
+        if ($archiveAfter) {
+            $success .= ' Message marked as done.';
+        }
+
+        return redirect()
+            ->route('admin.messages.index', array_filter([
+                'tab' => $archiveAfter || $message->fresh()->is_archived ? 'archived' : 'new',
+                'search' => $request->input('search'),
+            ]))
+            ->with('success', $success);
     }
 
     public function archive(ContactMessage $message): RedirectResponse

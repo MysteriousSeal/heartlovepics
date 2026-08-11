@@ -133,6 +133,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('comments', [AdminCommentController::class, 'index'])->name('comments.index');
         Route::delete('comments/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
         Route::get('messages', [ContactMessageController::class, 'index'])->name('messages.index');
+        Route::post('messages/{message}/reply', [ContactMessageController::class, 'reply'])->name('messages.reply');
         Route::post('messages/{message}/archive', [ContactMessageController::class, 'archive'])->name('messages.archive');
         Route::post('messages/{message}/unarchive', [ContactMessageController::class, 'unarchive'])->name('messages.unarchive');
         Route::delete('messages/{message}', [ContactMessageController::class, 'destroy'])->name('messages.destroy');

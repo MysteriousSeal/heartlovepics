@@ -15,6 +15,7 @@
         \App\Models\AdminActivityLog::ACTION_ARTIST_DELETED => 'badge-banned',
         \App\Models\AdminActivityLog::ACTION_CONFIGURATION_UPDATED => 'badge-draft',
         \App\Models\AdminActivityLog::ACTION_CONTACT_MESSAGE_DELETED => 'badge-banned',
+        \App\Models\AdminActivityLog::ACTION_CONTACT_MESSAGE_REPLIED => 'badge-published',
     ];
 @endphp
 

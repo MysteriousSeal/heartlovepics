@@ -31,6 +31,8 @@ class AdminActivityLog extends Model
 
     public const ACTION_CONTACT_MESSAGE_DELETED = 'contact_message.deleted';
 
+    public const ACTION_CONTACT_MESSAGE_REPLIED = 'contact_message.replied';
+
     public function admin(): BelongsTo
     {
         return $this->belongsTo(User::class, 'admin_id');

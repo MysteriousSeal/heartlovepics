@@ -40,6 +40,7 @@ class ActivityLogController extends Controller
             AdminActivityLog::ACTION_ARTIST_DELETED => 'Artist deleted',
             AdminActivityLog::ACTION_CONFIGURATION_UPDATED => 'Configuration updated',
             AdminActivityLog::ACTION_CONTACT_MESSAGE_DELETED => 'Contact message deleted',
+            AdminActivityLog::ACTION_CONTACT_MESSAGE_REPLIED => 'Contact message replied',
         ];
 
         return view('admin.activity.index', compact('logs', 'actions'));
