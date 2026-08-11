@@ -108,6 +108,124 @@ class User extends Authenticatable
         return $this->hasMany(Journal::class);
     }
 
+    public function commentLikes(): HasMany
+    {
+        return $this->hasMany(CommentLike::class);
+    }
+
+    /**
+     * Content / engagement relations that block admin deletion.
+     * Soft analytics (site visits, notification actor, admin logs) are excluded.
+     *
+     * @return list<string>
+     */
+    public static function deletionBlockingRelations(): array
+    {
+        return [
+            'images',
+            'comments',
+            'imageLikes',
+            'commentLikes',
+            'imageBookmarks',
+            'collections',
+            'following',
+            'followers',
+            'shouts',
+            'shoutsPosted',
+            'journals',
+            'notifications',
+        ];
+    }
+
+    /**
+     * Human labels for blockers — used in admin UI and flash messages.
+     *
+     * @return array<string, string>
+     */
+    public static function deletionBlockingRelationLabels(): array
+    {
+        return [
+            'images' => 'posts',
+            'comments' => 'comments',
+            'imageLikes' => 'likes given',
+            'commentLikes' => 'comment likes',
+            'imageBookmarks' => 'bookmarks',
+            'collections' => 'collections',
+            'following' => 'following',
+            'followers' => 'followers',
+            'shouts' => 'profile shouts',
+            'shoutsPosted' => 'shouts posted',
+            'journals' => 'journals',
+            'notifications' => 'notifications',
+        ];
+    }
+
+    /**
+     * Whether this account has no content/engagement and may be hard-deleted.
+     * Admins can never be deleted this way.
+     */
+    public function canBeDeleted(): bool
+    {
+        if ($this->is_admin) {
+            return false;
+        }
+
+        return $this->deletionBlockers() === [];
+    }
+
+    /**
+     * Non-empty relation labels that prevent deletion.
+     *
+     * @return list<string>
+     */
+    public function deletionBlockers(): array
+    {
+        $labels = self::deletionBlockingRelationLabels();
+        $blockers = [];
+
+        foreach (self::deletionBlockingRelations() as $relation) {
+            $count = $this->relationCountForDeletion($relation);
+
+            if ($count > 0) {
+                $blockers[] = $labels[$relation] ?? $relation;
+            }
+        }
+
+        return $blockers;
+    }
+
+    /**
+     * Resolve a relation count from withCount/loadCount aliases or a live query.
+     */
+    private function relationCountForDeletion(string $relation): int
+    {
+        $snake = \Illuminate\Support\Str::snake($relation).'_count';
+
+        // Admin list uses display aliases for a couple of these.
+        $candidates = match ($relation) {
+            'imageLikes' => [$snake, 'likes_given_count'],
+            'comments' => [$snake, 'comments_posted_count'],
+            default => [$snake],
+        };
+
+        $attributes = $this->getAttributes();
+
+        foreach ($candidates as $key) {
+            if (array_key_exists($key, $attributes)) {
+                return (int) $attributes[$key];
+            }
+        }
+
+        // Dynamic attributes set by loadCount() after construction.
+        foreach ($candidates as $key) {
+            if (isset($this->{$key})) {
+                return (int) $this->{$key};
+            }
+        }
+
+        return $this->{$relation}()->count();
+    }
+
     public function canPost(): bool
     {
         return ! $this->is_banned;

@@ -130,6 +130,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
         Route::post('users/{user}/ban', [AdminUserController::class, 'ban'])->name('users.ban');
         Route::post('users/{user}/unban', [AdminUserController::class, 'unban'])->name('users.unban');
+        Route::delete('users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
         Route::get('activity', [ActivityLogController::class, 'index'])->name('activity.index');
         Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
         Route::get('configuration', [ConfigurationController::class, 'edit'])->name('configuration.edit');

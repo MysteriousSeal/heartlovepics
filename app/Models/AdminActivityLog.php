@@ -13,6 +13,8 @@ class AdminActivityLog extends Model
 
     public const ACTION_USER_UNBANNED = 'user.unbanned';
 
+    public const ACTION_USER_DELETED = 'user.deleted';
+
     public const ACTION_IMAGE_UPDATED = 'image.updated';
 
     public const ACTION_IMAGE_DELETED = 'image.deleted';

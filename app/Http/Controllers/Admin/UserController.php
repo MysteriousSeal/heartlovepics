@@ -7,6 +7,7 @@ use App\Models\AdminActivityLog;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -16,10 +17,22 @@ class UserController extends Controller
         $query = User::query()
             ->where('is_admin', false)
             ->withCount([
+                // List stats
                 'images',
                 'imageLikes as likes_given_count',
                 'receivedImageLikes as likes_received_count',
                 'comments as comments_posted_count',
+                // Extra counts for canBeDeleted() / deletionBlockers()
+                // (images/comments/imageLikes already counted above)
+                'commentLikes',
+                'imageBookmarks',
+                'collections',
+                'following',
+                'followers',
+                'shouts',
+                'shoutsPosted',
+                'journals',
+                'notifications',
             ]);
 
         if ($search = $request->string('search')->trim()->toString()) {
@@ -97,5 +110,66 @@ class UserController extends Controller
         return redirect()
             ->route('admin.users.index')
             ->with('success', '@'.$user->username.' has been unbanned.');
+    }
+
+    /**
+     * Hard-delete an empty account — only when it has no content or engagement.
+     */
+    public function destroy(User $user): RedirectResponse
+    {
+        abort_if($user->is_admin, 403);
+
+        // Fresh counts so the gate is not based on a stale list row.
+        $user->loadCount([
+            'images',
+            'comments',
+            'imageLikes',
+            'commentLikes',
+            'imageBookmarks',
+            'collections',
+            'following',
+            'followers',
+            'shouts',
+            'shoutsPosted',
+            'journals',
+            'notifications',
+        ]);
+
+        if (! $user->canBeDeleted()) {
+            $blockers = $user->deletionBlockers();
+
+            return redirect()
+                ->route('admin.users.index')
+                ->with('error', '@'.$user->username.' cannot be deleted while they still have '
+                    .implode(', ', $blockers).'.');
+        }
+
+        $username = $user->username;
+        $userId = $user->id;
+        $avatarPath = $user->avatar_path;
+        $bannerPath = $user->banner_path;
+
+        $user->delete();
+
+        if ($avatarPath) {
+            Storage::disk('public')->delete($avatarPath);
+        }
+
+        if ($bannerPath) {
+            Storage::disk('public')->delete($bannerPath);
+        }
+
+        AdminActivityLog::record(
+            auth()->user(),
+            AdminActivityLog::ACTION_USER_DELETED,
+            'Deleted empty account @'.$username,
+            'user',
+            $userId,
+            $username,
+        );
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', '@'.$username.' has been deleted.');
     }
 }

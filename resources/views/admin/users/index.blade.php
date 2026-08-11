@@ -113,6 +113,32 @@
                                     <button type="submit" class="btn btn-sm btn-danger">Ban</button>
                                 </form>
                             @endif
+
+                            @if ($user->canBeDeleted())
+                                <form
+                                    action="{{ route('admin.users.destroy', $user) }}"
+                                    method="POST"
+                                    class="delete-form"
+                                    data-confirm="Permanently delete {{ '@'.$user->username }}? This only works because they have no posts, comments, or other activity. This cannot be undone."
+                                    data-confirm-label="Delete"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            @else
+                                @php
+                                    $deleteBlockers = $user->deletionBlockers();
+                                @endphp
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-secondary"
+                                    disabled
+                                    title="Cannot delete: has {{ implode(', ', $deleteBlockers) }}"
+                                >
+                                    Delete
+                                </button>
+                            @endif
                         </div>
                     </li>
                 @endforeach
