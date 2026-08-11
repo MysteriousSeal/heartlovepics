@@ -131,52 +131,47 @@
             <ul class="admin-artists-list">
                 @foreach ($artists as $artist)
                     <li class="admin-artist-row">
-                        <form
-                            method="POST"
-                            action="{{ route('admin.artists.update', $artist) }}"
-                            enctype="multipart/form-data"
-                            class="admin-artist-row-form"
-                        >
-                            @csrf
-                            @method('PUT')
-                            <span class="admin-artist-avatar-cell" data-label="Avatar">
-                                <span class="admin-artist-avatar-preview">
-                                    @if ($artist->hasAvatar())
-                                        <img src="{{ $artist->avatar_url }}" alt="" width="36" height="36">
-                                    @else
-                                        <span class="admin-artist-avatar-placeholder" style="--avatar-color: {{ $artist->avatar_color }}">{{ $artist->avatar_initials }}</span>
-                                    @endif
-                                </span>
-                                <input type="file" name="avatar" class="admin-artist-avatar-input" accept="image/jpeg,image/png,image/gif,image/webp" title="Change avatar">
+                        <span class="admin-artist-avatar-cell" data-label="Avatar">
+                            <span class="admin-artist-avatar-preview">
                                 @if ($artist->hasAvatar())
-                                    <label class="admin-artist-avatar-remove">
-                                        <input type="checkbox" name="remove_avatar" value="1"> Remove
-                                    </label>
-                                @endif
-                            </span>
-                            <span data-label="Name">
-                                <input type="text" name="name" class="form-control" value="{{ old('name', $artist->name) }}" maxlength="100" required>
-                            </span>
-                            <span data-label="DeviantArt">
-                                <input type="url" name="deviantart_url" class="form-control" value="{{ old('deviantart_url', $artist->deviantart_url) }}" placeholder="https://www.deviantart.com/username" maxlength="255">
-                            </span>
-                            <span data-label="FurAffinity">
-                                <input type="url" name="furaffinity_url" class="form-control" value="{{ old('furaffinity_url', $artist->furaffinity_url) }}" placeholder="https://www.furaffinity.net/user/username" maxlength="255">
-                            </span>
-                            <span data-label="Patreon">
-                                <input type="url" name="patreon_url" class="form-control" value="{{ old('patreon_url', $artist->patreon_url) }}" placeholder="https://www.patreon.com/username" maxlength="255">
-                            </span>
-                            <span class="admin-artist-posts-count" data-label="Posts">
-                                @if ($artist->images_count > 0)
-                                    <a href="{{ route('gallery.artist', $artist->name) }}" target="_blank" rel="noopener noreferrer">{{ number_format($artist->images_count) }}</a>
+                                    <img src="{{ $artist->avatar_url }}" alt="" width="36" height="36">
                                 @else
-                                    0
+                                    <span class="admin-artist-avatar-placeholder" style="--avatar-color: {{ $artist->avatar_color }}">{{ $artist->avatar_initials }}</span>
                                 @endif
                             </span>
-                            <span class="admin-artist-actions">
-                                <button type="submit" class="btn btn-sm btn-primary">Save</button>
-                            </span>
-                        </form>
+                        </span>
+                        <span data-label="Name">{{ $artist->name }}</span>
+                        <span data-label="DeviantArt">
+                            @if ($artist->deviantart_url)
+                                <a href="{{ $artist->deviantart_url }}" target="_blank" rel="noopener noreferrer nofollow">Link</a>
+                            @else
+                                &mdash;
+                            @endif
+                        </span>
+                        <span data-label="FurAffinity">
+                            @if ($artist->furaffinity_url)
+                                <a href="{{ $artist->furaffinity_url }}" target="_blank" rel="noopener noreferrer nofollow">Link</a>
+                            @else
+                                &mdash;
+                            @endif
+                        </span>
+                        <span data-label="Patreon">
+                            @if ($artist->patreon_url)
+                                <a href="{{ $artist->patreon_url }}" target="_blank" rel="noopener noreferrer nofollow">Link</a>
+                            @else
+                                &mdash;
+                            @endif
+                        </span>
+                        <span class="admin-artist-posts-count" data-label="Posts">
+                            @if ($artist->images_count > 0)
+                                <a href="{{ route('gallery.artist', $artist->name) }}" target="_blank" rel="noopener noreferrer">{{ number_format($artist->images_count) }}</a>
+                            @else
+                                0
+                            @endif
+                        </span>
+                        <span class="admin-artist-actions">
+                            <a href="{{ route('admin.artists.edit', $artist) }}" class="btn btn-sm btn-secondary">Edit</a>
+                        </span>
                         <form
                             method="POST"
                             action="{{ route('admin.artists.destroy', $artist) }}"

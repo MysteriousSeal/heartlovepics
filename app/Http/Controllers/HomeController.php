@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artist;
 use App\Models\Comment;
 use App\Models\Follow;
 use App\Models\Image;
@@ -133,6 +134,8 @@ class HomeController extends Controller
         // one visible post currently credits them.
         abort_if($artistName === '' || $query->clone()->doesntExist(), 404);
 
+        $artistModel = Artist::query()->where('name', $artistName)->first();
+
         return $this->renderGallery(
             $request,
             $query,
@@ -142,6 +145,7 @@ class HomeController extends Controller
             $visitCounter,
             'artist',
             artistName: $artistName,
+            artistModel: $artistModel,
         );
     }
 
@@ -294,6 +298,7 @@ class HomeController extends Controller
         ?string $searchQuery = null,
         ?Tag $tag = null,
         ?string $artistName = null,
+        ?Artist $artistModel = null,
     ): View|JsonResponse {
         $images = $query->paginate(20)->withQueryString();
 
@@ -343,6 +348,7 @@ class HomeController extends Controller
             'searchQuery',
             'tag',
             'artistName',
+            'artistModel',
             'activityStats',
             'totalVisits',
             'totalImages',

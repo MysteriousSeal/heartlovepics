@@ -7,6 +7,7 @@ use App\Models\AdminActivityLog;
 use App\Models\Artist;
 use App\Models\Image;
 use App\Services\AvatarService;
+use App\Support\HtmlSanitizer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -28,11 +29,17 @@ class ArtistController extends Controller
         return view('admin.artists.index', compact('artists'));
     }
 
+    public function edit(Artist $artist): View
+    {
+        return view('admin.artists.edit', compact('artist'));
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100', 'unique:artists,name'],
             'avatar' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp', 'max:5120'],
+            'description' => ['nullable', 'string'],
             'deviantart_url' => ['nullable', 'url', 'max:255'],
             'furaffinity_url' => ['nullable', 'url', 'max:255'],
             'patreon_url' => ['nullable', 'url', 'max:255'],
@@ -42,6 +49,8 @@ class ArtistController extends Controller
             $validated['avatar_path'] = $this->avatars->store($request->file('avatar'));
         }
         unset($validated['avatar']);
+
+        $validated['description'] = HtmlSanitizer::clean($validated['description'] ?? null);
 
         $artist = Artist::create($validated);
 
@@ -65,6 +74,7 @@ class ArtistController extends Controller
             'name' => ['required', 'string', 'max:100', 'unique:artists,name,'.$artist->id],
             'avatar' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp', 'max:5120'],
             'remove_avatar' => ['sometimes', 'boolean'],
+            'description' => ['nullable', 'string'],
             'deviantart_url' => ['nullable', 'url', 'max:255'],
             'furaffinity_url' => ['nullable', 'url', 'max:255'],
             'patreon_url' => ['nullable', 'url', 'max:255'],
@@ -78,6 +88,8 @@ class ArtistController extends Controller
             $validated['avatar_path'] = null;
         }
         unset($validated['avatar'], $validated['remove_avatar']);
+
+        $validated['description'] = HtmlSanitizer::clean($validated['description'] ?? null);
 
         $oldName = $artist->name;
         $artist->update($validated);

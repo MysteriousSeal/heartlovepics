@@ -123,7 +123,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('images', ImageController::class)->except(['show', 'create', 'store']);
-        Route::resource('artists', ArtistController::class)->except(['show', 'create', 'edit']);
+        Route::resource('artists', ArtistController::class)->except(['show', 'create']);
         Route::get('comments', [AdminCommentController::class, 'index'])->name('comments.index');
         Route::delete('comments/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
         Route::get('users', [AdminUserController::class, 'index'])->name('users.index');

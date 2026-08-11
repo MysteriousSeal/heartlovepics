@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Support\HtmlSanitizer;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'avatar_path', 'deviantart_url', 'furaffinity_url', 'patreon_url'])]
+#[Fillable(['name', 'avatar_path', 'description', 'deviantart_url', 'furaffinity_url', 'patreon_url'])]
 class Artist extends Model
 {
     /**
@@ -27,6 +28,16 @@ class Artist extends Model
     public function hasAvatar(): bool
     {
         return (bool) $this->avatar_path;
+    }
+
+    public function hasDescription(): bool
+    {
+        return ! HtmlSanitizer::isEmpty($this->description);
+    }
+
+    public function getDescriptionHtmlAttribute(): ?string
+    {
+        return HtmlSanitizer::clean($this->description);
     }
 
     public function getAvatarUrlAttribute(): ?string

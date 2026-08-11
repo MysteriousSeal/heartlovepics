@@ -2367,6 +2367,172 @@ img {
     font-weight: 500;
 }
 
+.artist-profile-header {
+    margin-bottom: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+}
+
+.artist-profile-header-grid {
+    display: grid;
+    grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+    gap: 0;
+    align-items: stretch;
+}
+
+.artist-profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-right: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 55%, var(--surface));
+    min-width: 0;
+}
+
+.artist-profile-avatar {
+    width: 7rem;
+    height: 7rem;
+    border: 1px solid var(--border);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.artist-profile-avatar-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--avatar-color);
+    color: #fff;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.artist-profile-sidebar-meta {
+    min-width: 0;
+    width: 100%;
+}
+
+.artist-profile-sidebar-meta h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    color: var(--text);
+    word-break: break-word;
+}
+
+.artist-profile-count {
+    margin-top: 0.35rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.artist-profile-main {
+    min-width: 0;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.artist-profile-description {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    text-align: left;
+}
+
+.artist-profile-description-empty {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.artist-profile-description p {
+    margin: 0 0 0.75em;
+}
+
+.artist-profile-description p:last-child {
+    margin-bottom: 0;
+}
+
+.artist-profile-description h2,
+.artist-profile-description h3,
+.artist-profile-description h4 {
+    margin: 1em 0 0.4em;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.35;
+}
+
+.artist-profile-description h2:first-child,
+.artist-profile-description h3:first-child,
+.artist-profile-description h4:first-child {
+    margin-top: 0;
+}
+
+.artist-profile-description ul,
+.artist-profile-description ol {
+    margin: 0 0 0.75em;
+    padding-left: 1.35rem;
+}
+
+.artist-profile-description blockquote {
+    margin: 0 0 0.75em;
+    padding: 0.25rem 0 0.25rem 0.85rem;
+    border-left: 2px solid var(--border);
+}
+
+.artist-profile-description a {
+    color: var(--accent-hover);
+}
+
+.artist-profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.875rem;
+}
+
+.artist-profile-link {
+    display: inline-block;
+    padding: 0.3125rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.artist-profile-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+@media (max-width: 720px) {
+    .artist-profile-header-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .artist-profile-sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+        align-items: center;
+        text-align: center;
+    }
+
+    .artist-profile-links {
+        justify-content: center;
+    }
+}
+
 .home-about {
     margin: 2.5rem 0 0;
     padding: 1.75rem 0 0.25rem;
@@ -3879,6 +4045,46 @@ body.modal-open {
     font-weight: 600;
 }
 
+.description-editor-group {
+    position: relative;
+}
+
+.description-editor-mode {
+    display: inline-flex;
+    gap: 0;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.description-editor-mode-btn {
+    appearance: none;
+    margin: 0;
+    padding: 0.35rem 0.75rem;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+
+.description-editor-mode-btn + .description-editor-mode-btn {
+    border-left: 1px solid var(--border);
+}
+
+.description-editor-mode-btn:hover {
+    color: var(--text);
+}
+
+.description-editor-mode-btn.is-active {
+    color: var(--text);
+    background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
 .description-editor-group .ql-toolbar.ql-snow,
 .description-editor-group .ql-container.ql-snow {
     border-color: var(--border);
@@ -3935,6 +4141,7 @@ body.modal-open {
     fill: var(--accent);
 }
 
+/* Hidden form field while editing visually; becomes the HTML source pane in HTML mode. */
 .description-editor-source {
     position: absolute;
     width: 1px;
@@ -3945,6 +4152,35 @@ body.modal-open {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+}
+
+.description-editor-group.is-html-mode .ql-toolbar.ql-snow,
+.description-editor-group.is-html-mode .ql-container.ql-snow {
+    display: none;
+}
+
+.description-editor-group.is-html-mode .description-editor-source {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: 16rem;
+    margin: 0;
+    padding: 0.75rem 0.875rem;
+    overflow: auto;
+    clip: auto;
+    white-space: pre-wrap;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    resize: vertical;
+}
+
+.description-editor-group.is-html-mode .description-editor-source:focus {
+    outline: none;
+    border-color: var(--accent);
 }
 
 .image-artist-credit {
@@ -6047,6 +6283,16 @@ a.admin-recent-image-link:hover {
     margin-bottom: 1.5rem;
 }
 
+.admin-artist-edit-stats {
+    margin: 0.25rem 0 1.5rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.admin-artist-edit-stats a {
+    color: inherit;
+}
+
 .admin-artist-add-title {
     font-size: 1rem;
     font-weight: 500;
@@ -6103,26 +6349,18 @@ a.admin-recent-image-link:hover {
     border-bottom: none;
 }
 
-/* The row's two forms (save / delete) submit to different endpoints, so they
-   can't share one <form>. display:contents keeps each form out of the grid's
-   box model while its own child elements still occupy the row's 7 columns —
-   otherwise the forms themselves would count as grid items and everything
-   would shift. */
-.admin-artist-row-form,
+/* The row is a plain grid of read-only cells except for the trailing delete
+   form — display:contents keeps that form out of the grid's box model while
+   its button still occupies the row's last column, instead of the form
+   itself counting as one oversized grid item. */
 .admin-artist-delete-form {
     display: contents;
 }
 
-.admin-artist-row input.form-control {
-    font-size: 0.8125rem;
-    padding: 0.4rem 0.6rem;
-}
-
 .admin-artist-avatar-cell {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 0.25rem;
+    justify-content: center;
 }
 
 .admin-artist-avatar-preview {
@@ -6150,12 +6388,6 @@ a.admin-recent-image-link:hover {
     font-weight: 600;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-}
-
-.admin-artist-avatar-input {
-    width: 100%;
-    max-width: 4.5rem;
-    font-size: 0.6875rem;
 }
 
 .admin-artist-avatar-remove {
@@ -6195,7 +6427,6 @@ a.admin-recent-image-link:hover {
         padding: 0.875rem 1rem;
     }
 
-    .admin-artist-row-form,
     .admin-artist-delete-form {
         display: contents;
     }
