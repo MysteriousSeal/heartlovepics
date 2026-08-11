@@ -114,8 +114,8 @@ class User extends Authenticatable
     }
 
     /**
-     * Content / engagement relations that block admin deletion.
-     * Soft analytics (site visits, notification actor, admin logs) are excluded.
+     * Content relations that block admin deletion.
+     * Social graph (follows) and inbox notifications are stripped on delete instead.
      *
      * @return list<string>
      */
@@ -128,12 +128,9 @@ class User extends Authenticatable
             'commentLikes',
             'imageBookmarks',
             'collections',
-            'following',
-            'followers',
             'shouts',
             'shoutsPosted',
             'journals',
-            'notifications',
         ];
     }
 
@@ -151,13 +148,29 @@ class User extends Authenticatable
             'commentLikes' => 'comment likes',
             'imageBookmarks' => 'bookmarks',
             'collections' => 'collections',
-            'following' => 'following',
-            'followers' => 'followers',
             'shouts' => 'profile shouts',
             'shoutsPosted' => 'shouts posted',
             'journals' => 'journals',
-            'notifications' => 'notifications',
         ];
+    }
+
+    /**
+     * Drop follows and notifications so an otherwise empty account can be deleted.
+     * Safe to call even when none exist; FKs also cascade, this makes intent explicit.
+     */
+    public function purgeSocialRelations(): void
+    {
+        // Both sides of the follow graph.
+        $this->following()->detach();
+        $this->followers()->detach();
+
+        // Inbox for this user.
+        $this->notifications()->delete();
+
+        // Notifications about this user on other people's inboxes.
+        UserNotification::query()
+            ->where('actor_id', $this->id)
+            ->delete();
     }
 
     /**

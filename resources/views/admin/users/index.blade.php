@@ -119,7 +119,7 @@
                                     action="{{ route('admin.users.destroy', $user) }}"
                                     method="POST"
                                     class="delete-form"
-                                    data-confirm="Permanently delete {{ '@'.$user->username }}? This only works because they have no posts, comments, or other activity. This cannot be undone."
+                                    data-confirm="Permanently delete {{ '@'.$user->username }}? Follows and notifications will be removed. Accounts with posts, comments, or other content cannot be deleted. This cannot be undone."
                                     data-confirm-label="Delete"
                                 >
                                     @csrf

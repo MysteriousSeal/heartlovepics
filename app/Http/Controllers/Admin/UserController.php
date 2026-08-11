@@ -27,12 +27,9 @@ class UserController extends Controller
                 'commentLikes',
                 'imageBookmarks',
                 'collections',
-                'following',
-                'followers',
                 'shouts',
                 'shoutsPosted',
                 'journals',
-                'notifications',
             ]);
 
         if ($search = $request->string('search')->trim()->toString()) {
@@ -127,12 +124,9 @@ class UserController extends Controller
             'commentLikes',
             'imageBookmarks',
             'collections',
-            'following',
-            'followers',
             'shouts',
             'shoutsPosted',
             'journals',
-            'notifications',
         ]);
 
         if (! $user->canBeDeleted()) {
@@ -148,6 +142,9 @@ class UserController extends Controller
         $userId = $user->id;
         $avatarPath = $user->avatar_path;
         $bannerPath = $user->banner_path;
+
+        // Follows + notifications no longer block delete — strip them first.
+        $user->purgeSocialRelations();
 
         $user->delete();
 
