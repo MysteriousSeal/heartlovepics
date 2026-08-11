@@ -21,10 +21,16 @@
                         · {{ number_format($activeNow['guests']) }} {{ \Illuminate\Support\Str::plural('guest', $activeNow['guests']) }}
                     </span>
                 </span>
-                <span class="admin-list-chip">
+                <span class="admin-list-chip" title="Page views and distinct visitors in the selected range">
                     {{ number_format($visits->total()) }}
                     {{ \Illuminate\Support\Str::plural('visit', $visits->total()) }}
-                    <span class="admin-list-chip-muted">· {{ $ranges[$range] }}</span>
+                    <span class="admin-list-chip-muted">
+                        · {{ number_format($rangeVisitors['users']) }}
+                        {{ \Illuminate\Support\Str::plural('user', $rangeVisitors['users']) }}
+                        · {{ number_format($rangeVisitors['guests']) }}
+                        {{ \Illuminate\Support\Str::plural('guest', $rangeVisitors['guests']) }}
+                        · {{ $ranges[$range] }}
+                    </span>
                 </span>
             </div>
         </header>

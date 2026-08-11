@@ -33,31 +33,38 @@ class AnalyticsController extends Controller
         $visits = $visitsQuery->paginate(50)->withQueryString();
         $charts = $this->buildCharts($since);
         $ranges = self::RANGES;
-        $activeNow = $this->countActiveVisitors();
+        $activeNow = $this->countDistinctVisitors(Carbon::now()->subMinutes(2));
+        $rangeVisitors = $this->countDistinctVisitors($since);
 
-        return view('admin.analytics.index', compact('visits', 'charts', 'range', 'ranges', 'activeNow'));
+        return view('admin.analytics.index', compact(
+            'visits',
+            'charts',
+            'range',
+            'ranges',
+            'activeNow',
+            'rangeVisitors',
+        ));
     }
 
     /**
-     * Distinct visitors with a hit in the last 2 minutes.
+     * Distinct visitors since $since (or all time when null).
      * Logged-in users count by user_id; guests by IP address.
      *
      * @return array{total: int, users: int, guests: int}
      */
-    private function countActiveVisitors(): array
+    private function countDistinctVisitors(?CarbonInterface $since): array
     {
-        $since = Carbon::now()->subMinutes(2);
-
-        $users = (int) SiteVisit::query()
-            ->where('created_at', '>=', $since)
-            ->whereNotNull('user_id')
+        $usersQuery = SiteVisit::query()->whereNotNull('user_id');
+        $this->applyRange($usersQuery, $since);
+        $users = (int) $usersQuery
             ->selectRaw('count(distinct user_id) as aggregate')
             ->value('aggregate');
 
-        $guests = (int) SiteVisit::query()
-            ->where('created_at', '>=', $since)
+        $guestsQuery = SiteVisit::query()
             ->whereNull('user_id')
-            ->whereNotNull('ip_address')
+            ->whereNotNull('ip_address');
+        $this->applyRange($guestsQuery, $since);
+        $guests = (int) $guestsQuery
             ->selectRaw('count(distinct ip_address) as aggregate')
             ->value('aggregate');
 
