@@ -22,12 +22,19 @@ class ContactReplyMail extends Mailable
 
     public function envelope(): Envelope
     {
+        $fromAddress = (string) config('mail.from.address', 'noreply@heartlovepics.com');
+        $fromName = (string) config('mail.from.name', 'HeartLovePics');
+
         return new Envelope(
-            from: new Address(
-                (string) config('mail.from.address', 'noreply@heartlovepics.com'),
-                (string) config('mail.from.name', 'HeartLovePics'),
-            ),
+            from: new Address($fromAddress, $fromName),
             subject: $this->replySubject,
+            using: [
+                function ($message) use ($fromAddress, $fromName) {
+                    // Force envelope sender / Return-Path for native sendmail.
+                    $message->sender($fromAddress, $fromName);
+                    $message->returnPath($fromAddress);
+                },
+            ],
         );
     }
 
