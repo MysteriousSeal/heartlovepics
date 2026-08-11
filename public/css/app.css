@@ -2137,10 +2137,11 @@ img {
 
 .changelog-list li {
     position: relative;
+    /* Tag stays left; text always starts to its right and wraps under the text column */
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: flex-start;
-    gap: 0.5rem 0.625rem;
+    gap: 0.625rem;
     margin: 0;
     padding: 0;
     font-size: 0.9375rem;
@@ -2157,16 +2158,22 @@ img {
 .changelog-tag {
     flex: 0 0 auto;
     display: inline-block;
-    margin-top: 0.15rem;
+    margin-top: 0.2rem;
     padding: 0.12rem 0.45rem;
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     line-height: 1.4;
+    white-space: nowrap;
     border: 1px solid var(--border);
     color: var(--text-muted);
     background: var(--bg);
+}
+
+.changelog-text {
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .changelog-tag-feature {
