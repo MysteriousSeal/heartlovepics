@@ -23,7 +23,7 @@ class SeedRandomEngagement extends Command
                             {--likes-max=2 : Maximum total likes to add this run}
                             {--dry-run : Show what would happen without writing}';
 
-    protected $description = 'Add a random batch of views (10–20) and likes (1–2) across public posts';
+    protected $description = 'Add random views (10–20) across public posts, then likes (1–2) only on posts that got views';
 
     public function handle(CronLogService $cronLogs): int
     {
@@ -47,13 +47,18 @@ class SeedRandomEngagement extends Command
         }
 
         $viewTotal = random_int($viewsMin, $viewsMax);
+        // Global total for this run (not per post): between likes-min and likes-max.
         $likeTotal = random_int($likesMin, $likesMax);
 
+        // Views first; likes only on a small subset of posts that got views this run.
         $viewHits = $this->distribute($viewTotal, $imageIds);
-        $likeHits = $this->distribute($likeTotal, $imageIds);
+        $viewedImageIds = array_keys($viewHits);
+        // Exactly $likeTotal likes for the whole run (capped by how many posts were viewed).
+        $likeHits = $this->distributeAmong($likeTotal, $viewedImageIds, oneEach: true);
 
         if ($dryRun) {
-            $message = "[dry-run] Would add {$viewTotal} view(s) and {$likeTotal} like(s) across ".count($imageIds).' public post(s).';
+            $message = '[dry-run] Would add '.$viewTotal.' view(s) across '.count($viewHits)
+                .' post(s) and '.array_sum($likeHits).' like(s) total (only on viewed posts).';
             $this->info($message);
             $this->line('Views by image: '.json_encode($viewHits));
             $this->line('Likes by image: '.json_encode($likeHits));
@@ -65,7 +70,8 @@ class SeedRandomEngagement extends Command
         $viewsAdded = $this->applyViews($viewHits);
         $likesAdded = $this->applyLikes($likeHits);
 
-        $message = "Added {$viewsAdded} view(s) and {$likesAdded} like(s) across public posts.";
+        $message = "Added {$viewsAdded} view(s) across ".count($viewHits)
+            ." post(s) and {$likesAdded} like(s) total on viewed posts.";
         $this->info($message);
         $cronLogs->appendOutput($message, 'engagement:seed-random');
 
@@ -80,9 +86,34 @@ class SeedRandomEngagement extends Command
      */
     private function distribute(int $total, array $imageIds): array
     {
+        return $this->distributeAmong($total, $imageIds, oneEach: false);
+    }
+
+    /**
+     * Assign up to $total hits across $imageIds.
+     * When $oneEach is true, each selected post gets at most one hit (used for likes:
+     * 1–2 likes total across the run, never 1–2 per viewed post).
+     *
+     * @param  list<int>  $imageIds
+     * @return array<int, int> image_id => hit count
+     */
+    private function distributeAmong(int $total, array $imageIds, bool $oneEach): array
+    {
         $hits = [];
 
         if ($total <= 0 || $imageIds === []) {
+            return $hits;
+        }
+
+        if ($oneEach) {
+            $imageIds = array_values(array_unique($imageIds));
+            shuffle($imageIds);
+            $pick = array_slice($imageIds, 0, min($total, count($imageIds)));
+
+            foreach ($pick as $id) {
+                $hits[$id] = 1;
+            }
+
             return $hits;
         }
 
