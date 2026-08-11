@@ -25,6 +25,9 @@
                     {{ number_format($visits->total()) }}
                     {{ \Illuminate\Support\Str::plural('visit', $visits->total()) }}
                     <span class="admin-list-chip-muted">
+                        · {{ number_format($rangeVisitors['total']) }}
+                        unique
+                        {{ \Illuminate\Support\Str::plural('visitor', $rangeVisitors['total']) }}
                         · {{ number_format($rangeVisitors['users']) }}
                         {{ \Illuminate\Support\Str::plural('user', $rangeVisitors['users']) }}
                         · {{ number_format($rangeVisitors['guests']) }}
