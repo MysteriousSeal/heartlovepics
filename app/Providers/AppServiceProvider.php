@@ -5,8 +5,11 @@ namespace App\Providers;
 use App\Models\Tag;
 use App\Services\NotificationService;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\Mailer\Transport\Dsn;
+use Symfony\Component\Mailer\Transport\NativeTransportFactory;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +30,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // PHP native mail transport (same stack as mail() / php.ini sendmail_path).
+        Mail::extend('native', function (array $config = []) {
+            return (new NativeTransportFactory)->create(
+                new Dsn('native', 'default')
+            );
+        });
+
         View::composer('partials.site-auth', function ($view) {
             $user = auth()->user();
             $unreadNotificationCount = $user

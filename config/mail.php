@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
+    'default' => env('MAIL_MAILER', 'native'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,13 +29,23 @@ return [
     | when delivering an email. You may specify which one you're using for
     | your mailers below. You may also add additional mailers if needed.
     |
-    | Supported: "smtp", "sendmail", "mailgun", "ses", "ses-v2",
+    | Supported: "native", "smtp", "sendmail", "mailgun", "ses", "ses-v2",
     |            "postmark", "resend", "log", "array",
     |            "failover", "roundrobin"
+    |
+    | "native" uses PHP's mail setup (php.ini sendmail_path), same as mail().
     |
     */
 
     'mailers' => [
+
+        /*
+        | PHP native mail — uses sendmail_path from php.ini (typically
+        | "/usr/sbin/sendmail -t -i"), the same path PHP's mail() function uses.
+        */
+        'native' => [
+            'transport' => 'native',
+        ],
 
         'smtp' => [
             'transport' => 'smtp',
@@ -67,7 +77,8 @@ return [
 
         'sendmail' => [
             'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+            // Match PHP's mail() defaults (-t -i), not SMTP mode (-bs).
+            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -t -i'),
         ],
 
         'log' => [
@@ -82,7 +93,7 @@ return [
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
-                'smtp',
+                'native',
                 'log',
             ],
             'retry_after' => 60,
