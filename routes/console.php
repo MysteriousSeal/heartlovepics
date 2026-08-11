@@ -10,7 +10,7 @@ Artisan::command('inspire', function () {
 
 Schedule::command('view-events:prune')->daily();
 Schedule::command('images:prune-trashed')->hourly();
-// Sprinkle 10–20 views and 1–5 likes across public posts so the gallery stays lively.
+// Sprinkle 10–20 views and 1–2 likes across public posts so the gallery stays lively.
 Schedule::command('engagement:seed-random')->everyMinute();
 // Keep the admin Cron log from growing forever (every-minute jobs add up quickly).
 Schedule::command('cron-logs:prune')->daily();

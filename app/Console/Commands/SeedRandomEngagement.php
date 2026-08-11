@@ -20,10 +20,10 @@ class SeedRandomEngagement extends Command
                             {--views-min=10 : Minimum total views to add this run}
                             {--views-max=20 : Maximum total views to add this run}
                             {--likes-min=1 : Minimum total likes to add this run}
-                            {--likes-max=5 : Maximum total likes to add this run}
+                            {--likes-max=2 : Maximum total likes to add this run}
                             {--dry-run : Show what would happen without writing}';
 
-    protected $description = 'Add a random batch of views (10–20) and likes (1–5) across public posts';
+    protected $description = 'Add a random batch of views (10–20) and likes (1–2) across public posts';
 
     public function handle(CronLogService $cronLogs): int
     {
