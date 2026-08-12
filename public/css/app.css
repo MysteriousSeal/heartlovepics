@@ -6674,7 +6674,7 @@ a.admin-recent-image-link:hover {
 .admin-activity-head,
 .admin-activity-row {
     display: grid;
-    grid-template-columns: minmax(10rem, 14rem) 9.5rem minmax(0, 1fr) 7.5rem;
+    grid-template-columns: minmax(10rem, 14rem) 11.5rem minmax(0, 1fr) 7.5rem;
     gap: 1rem;
     align-items: center;
     padding: 0.875rem 1.125rem;
