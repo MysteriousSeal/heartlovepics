@@ -118,6 +118,7 @@ Route::get('/search', [HomeController::class, 'search'])->name('gallery.search')
 Route::get('/tags', [HomeController::class, 'tags'])->name('gallery.tags');
 Route::get('/tags/{tag}', [HomeController::class, 'tag'])->name('gallery.tag');
 Route::get('/artists/{artist}', [HomeController::class, 'artist'])->name('gallery.artist');
+Route::get('/parody/{parody}', [HomeController::class, 'parody'])->name('gallery.parody');
 Route::get('/images/{slug}', [HomeController::class, 'show'])->name('images.show');
 Route::post('/images/{slug}/like', [LikeController::class, 'toggle'])->name('images.like');
 Route::post('/images/{slug}/comments', [CommentController::class, 'store'])->name('images.comments.store');

@@ -4399,6 +4399,31 @@ body.modal-open {
     color: var(--accent);
 }
 
+.image-parody-credit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+}
+
+.image-parody-credit-label {
+    color: var(--text-muted);
+}
+
+.image-parody-credit-name {
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.image-parody-credit-name:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
 .image-detail-meta {
     display: flex;
     flex-direction: column;

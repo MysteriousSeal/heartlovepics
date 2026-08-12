@@ -44,6 +44,13 @@
     </div>
 @endif
 
+@if (filled($image->parody))
+    <div class="image-parody-credit">
+        <span class="image-parody-credit-label">Parody:</span>
+        <a href="{{ route('gallery.parody', $image->parody) }}" class="image-parody-credit-name">{{ $image->parody }}</a>
+    </div>
+@endif
+
 <div class="image-detail-meta">
     <div class="image-detail-meta-primary">
         <span>Added {{ $image->created_at->format('F j, Y') }}</span>

@@ -82,6 +82,7 @@ class ImageController extends Controller
             'is_nsfw_locked' => $image->is_nsfw_locked || $isNsfw !== $image->is_nsfw,
             'content_warning' => $isNsfw ? $request->input('content_warning') : null,
             'artist_name' => $request->input('artist_name'),
+            'parody' => $request->input('parody'),
         ];
 
         if ($request->boolean('is_private') || $request->has('is_private')) {

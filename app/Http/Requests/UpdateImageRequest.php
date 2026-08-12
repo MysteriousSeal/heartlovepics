@@ -23,6 +23,7 @@ class UpdateImageRequest extends FormRequest
             'is_nsfw' => ['sometimes', 'boolean'],
             'content_warning' => ['nullable', 'string', 'max:100'],
             'artist_name' => ['nullable', 'string', 'max:100'],
+            'parody' => ['nullable', 'string', 'max:100'],
             'publish_action' => ['sometimes', 'in:draft,publish'],
             'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp', 'max:10240'],
             'additional_images' => ['nullable', 'array', 'max:99'],
