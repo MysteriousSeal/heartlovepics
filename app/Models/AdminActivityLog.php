@@ -27,6 +27,12 @@ class AdminActivityLog extends Model
 
     public const ACTION_ARTIST_DELETED = 'artist.deleted';
 
+    public const ACTION_PARODY_CREATED = 'parody.created';
+
+    public const ACTION_PARODY_UPDATED = 'parody.updated';
+
+    public const ACTION_PARODY_DELETED = 'parody.deleted';
+
     public const ACTION_CONFIGURATION_UPDATED = 'configuration.updated';
 
     public const ACTION_CONTACT_MESSAGE_DELETED = 'contact_message.deleted';

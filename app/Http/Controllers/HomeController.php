@@ -6,6 +6,7 @@ use App\Models\Artist;
 use App\Models\Comment;
 use App\Models\Follow;
 use App\Models\Image;
+use App\Models\Parody;
 use App\Models\Tag;
 use App\Services\GalleryActivityService;
 use App\Services\VisitCounterService;
@@ -159,6 +160,8 @@ class HomeController extends Controller
 
         abort_if($parodyName === '' || $query->clone()->doesntExist(), 404);
 
+        $parodyModel = Parody::query()->where('name', $parodyName)->first();
+
         return $this->renderGallery(
             $request,
             $query,
@@ -168,6 +171,7 @@ class HomeController extends Controller
             $visitCounter,
             'parody',
             parodyName: $parodyName,
+            parodyModel: $parodyModel,
         );
     }
 
@@ -322,6 +326,7 @@ class HomeController extends Controller
         ?string $artistName = null,
         ?Artist $artistModel = null,
         ?string $parodyName = null,
+        ?Parody $parodyModel = null,
     ): View|JsonResponse {
         $images = $query->paginate(20)->withQueryString();
 
@@ -373,6 +378,7 @@ class HomeController extends Controller
             'artistName',
             'artistModel',
             'parodyName',
+            'parodyModel',
             'activityStats',
             'totalVisits',
             'totalImages',

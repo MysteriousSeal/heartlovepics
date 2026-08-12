@@ -8263,6 +8263,72 @@ a.admin-message-username:hover {
     }
 }
 
+.admin-parodies-head,
+.admin-parody-row {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1.4fr) 5rem minmax(10rem, auto);
+    gap: 0.75rem 1.25rem;
+    align-items: center;
+    padding: 0.875rem 1.125rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.admin-parodies-head {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 55%, var(--surface));
+}
+
+.admin-parodies-head span:nth-child(2) {
+    text-align: right;
+}
+
+.admin-parodies-list {
+    list-style: none;
+}
+
+.admin-parody-row {
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+    transition: background 0.15s ease;
+}
+
+.admin-parody-row:hover {
+    background: color-mix(in srgb, var(--bg) 55%, var(--surface));
+}
+
+.admin-parodies-list li:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 900px) {
+    .admin-parodies-head {
+        display: none;
+    }
+
+    .admin-parody-row {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .admin-parody-row [data-label]::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        margin-bottom: 0.35rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+}
+
 /* Drop zone */
 .drop-zone {
     border: 2px dashed var(--border);
@@ -8695,6 +8761,49 @@ a.admin-message-username:hover {
 
 .admin-config-card-body {
     padding: 0.5rem;
+}
+
+.admin-parody-pending-card {
+    margin-bottom: 1.5rem;
+}
+
+.admin-parody-pending-card .admin-config-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-parody-pending-list {
+    list-style: none;
+}
+
+.admin-parody-pending-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.625rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+}
+
+.admin-parody-pending-row:last-child {
+    border-bottom: none;
+}
+
+.admin-parody-pending-name {
+    flex: 1;
+    min-width: 0;
+    font-weight: 500;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-parody-pending-count {
+    flex-shrink: 0;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
 }
 
 .admin-config-options {

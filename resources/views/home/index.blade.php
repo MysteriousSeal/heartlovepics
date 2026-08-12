@@ -111,20 +111,21 @@
     @endif
 
     @if (($sort ?? '') === 'parody' && ($parodyName ?? null))
-        <div class="search-results-header">
-            <h1 class="search-results-title">Parody: {{ $parodyName }}</h1>
-            @if ($images->total() === 0)
-                @include('partials.empty-state-suggestions', [
-                    'message' => 'No images parody this.',
-                    'suggestions' => [
-                        ['label' => 'Back to the gallery', 'url' => route('home')],
-                        ['label' => 'Try random picks', 'url' => route('gallery.random')],
-                    ],
-                ])
-            @else
-                <p class="search-results-count">{{ number_format($images->total()) }} {{ \Illuminate\Support\Str::plural('image', $images->total()) }} found</p>
-            @endif
-        </div>
+        @include('partials.parody-profile-header', [
+            'parodyName' => $parodyName,
+            'parody' => $parodyModel ?? null,
+            'postCount' => $images->total(),
+        ])
+
+        @if ($images->total() === 0)
+            @include('partials.empty-state-suggestions', [
+                'message' => 'No images parody this.',
+                'suggestions' => [
+                    ['label' => 'Back to the gallery', 'url' => route('home')],
+                    ['label' => 'Try random picks', 'url' => route('gallery.random')],
+                ],
+            ])
+        @endif
     @endif
 
     @if (($sort ?? '') === 'artist' && ($artistName ?? null))

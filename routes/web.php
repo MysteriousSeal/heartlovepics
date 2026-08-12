@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\ArtistController;
+use App\Http\Controllers\Admin\ParodyController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\JournalController;
@@ -133,6 +134,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('images', ImageController::class)->except(['show', 'create', 'store']);
         Route::resource('artists', ArtistController::class)->except(['show', 'create']);
+        Route::resource('parodies', ParodyController::class)->except(['show', 'create']);
         Route::get('comments', [AdminCommentController::class, 'index'])->name('comments.index');
         Route::delete('comments/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
         Route::get('messages', [ContactMessageController::class, 'index'])->name('messages.index');
