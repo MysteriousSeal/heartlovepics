@@ -2546,6 +2546,25 @@ img {
     font-weight: 600;
 }
 
+.parody-profile-cover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 9 / 16;
+    border: 1px solid var(--border);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.parody-profile-cover-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--avatar-color);
+    color: #fff;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
 .artist-profile-sidebar-meta {
     min-width: 0;
     width: 100%;
@@ -8135,6 +8154,34 @@ a.admin-message-username:hover {
     background: var(--avatar-color);
     color: #fff;
     font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.admin-parody-cover-preview {
+    display: block;
+    width: 36px;
+    height: 64px;
+    flex-shrink: 0;
+}
+
+.admin-parody-cover-preview img {
+    width: 36px;
+    height: 64px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+}
+
+.admin-parody-cover-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 64px;
+    background: var(--avatar-color);
+    color: #fff;
+    font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.02em;
     text-transform: uppercase;

@@ -67,7 +67,7 @@ class ParodyController extends Controller
         ]);
 
         if ($request->hasFile('cover')) {
-            $validated['cover_path'] = $this->avatars->store($request->file('cover'));
+            $validated['cover_path'] = $this->avatars->storeCover($request->file('cover'));
         }
         unset($validated['cover']);
 
@@ -100,7 +100,7 @@ class ParodyController extends Controller
 
         if ($request->hasFile('cover')) {
             $this->avatars->delete($parody->cover_path);
-            $validated['cover_path'] = $this->avatars->store($request->file('cover'));
+            $validated['cover_path'] = $this->avatars->storeCover($request->file('cover'));
         } elseif ($request->boolean('remove_cover')) {
             $this->avatars->delete($parody->cover_path);
             $validated['cover_path'] = null;

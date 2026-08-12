@@ -33,6 +33,10 @@ class SitemapController extends Controller
                 'loc' => url(route('sitemap.artists', absolute: false)),
                 'lastmod' => null,
             ],
+            [
+                'loc' => url(route('sitemap.parodies', absolute: false)),
+                'lastmod' => null,
+            ],
         ];
 
         return response()
@@ -129,6 +133,28 @@ class SitemapController extends Controller
             ->get()
             ->map(fn ($row) => [
                 'loc' => url(route('gallery.artist', $row->artist_name, absolute: false)),
+                'lastmod' => $row->last_updated_at ? Carbon::parse($row->last_updated_at)->toAtomString() : null,
+                'changefreq' => 'weekly',
+                'priority' => '0.4',
+            ])
+            ->all();
+
+        return $this->urlsetResponse($urls);
+    }
+
+    public function parodies(): Response
+    {
+        $urls = Image::query()
+            ->where('is_published', true)
+            ->where('is_private', false)
+            ->whereNotNull('parody')
+            ->where('parody', '!=', '')
+            ->selectRaw('parody, MAX(updated_at) as last_updated_at')
+            ->groupBy('parody')
+            ->orderBy('parody')
+            ->get()
+            ->map(fn ($row) => [
+                'loc' => url(route('gallery.parody', $row->parody, absolute: false)),
                 'lastmod' => $row->last_updated_at ? Carbon::parse($row->last_updated_at)->toAtomString() : null,
                 'changefreq' => 'weekly',
                 'priority' => '0.4',

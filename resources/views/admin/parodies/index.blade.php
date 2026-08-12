@@ -44,7 +44,7 @@
                     <div class="form-group admin-artist-add-avatar-group">
                         <label for="new-parody-cover">Cover image</label>
                         <div class="admin-artist-add-avatar-row">
-                            <span class="admin-artist-avatar-placeholder" style="--avatar-color: hsl(220, 35%, 55%)" aria-hidden="true">?</span>
+                            <span class="admin-parody-cover-placeholder" style="--avatar-color: hsl(220, 35%, 55%)" aria-hidden="true">?</span>
                             <input
                                 type="file"
                                 id="new-parody-cover"
@@ -53,6 +53,7 @@
                                 accept="image/jpeg,image/png,image/gif,image/webp"
                             >
                         </div>
+                        <p class="form-hint">Cropped to a 9:16 portrait (1080×1920).</p>
                         @error('cover')
                             <p class="form-error">{{ $message }}</p>
                         @enderror

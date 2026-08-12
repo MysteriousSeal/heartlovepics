@@ -42,6 +42,7 @@ Route::get('/sitemap-tags.xml', [SitemapController::class, 'tags'])->name('sitem
 Route::get('/sitemap-posts.xml', [SitemapController::class, 'posts'])->name('sitemap.posts');
 Route::get('/sitemap-users.xml', [SitemapController::class, 'users'])->name('sitemap.users');
 Route::get('/sitemap-artists.xml', [SitemapController::class, 'artists'])->name('sitemap.artists');
+Route::get('/sitemap-parodies.xml', [SitemapController::class, 'parodies'])->name('sitemap.parodies');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('pages.privacy');
 Route::get('/terms', [PageController::class, 'terms'])->name('pages.terms');
 Route::get('/changelog', [PageController::class, 'changelog'])->name('pages.changelog');

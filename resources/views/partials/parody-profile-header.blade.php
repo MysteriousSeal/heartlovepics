@@ -2,10 +2,10 @@
     <div class="artist-profile-header-grid">
         <div class="artist-profile-sidebar">
             @if ($parody?->hasCover())
-                <img src="{{ $parody->cover_url }}" alt="" width="112" height="112" class="artist-profile-avatar">
+                <img src="{{ $parody->cover_url }}" alt="" width="126" height="224" class="parody-profile-cover">
             @else
                 <span
-                    class="artist-profile-avatar artist-profile-avatar-placeholder"
+                    class="parody-profile-cover parody-profile-cover-placeholder"
                     style="--avatar-color: {{ $parody?->cover_color ?? 'hsl(220, 35%, 55%)' }}"
                     aria-hidden="true"
                 >{{ $parody?->cover_initials ?? mb_strtoupper(mb_substr($parodyName, 0, 2)) }}</span>

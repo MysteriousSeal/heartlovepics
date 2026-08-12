@@ -16,11 +16,11 @@
             <div class="form-group">
                 <label for="parody-cover">Cover image</label>
                 <div class="admin-artist-add-avatar-row">
-                    <span class="admin-artist-avatar-preview">
+                    <span class="admin-parody-cover-preview">
                         @if ($parody->hasCover())
-                            <img src="{{ $parody->cover_url }}" alt="" width="36" height="36">
+                            <img src="{{ $parody->cover_url }}" alt="" width="36" height="64">
                         @else
-                            <span class="admin-artist-avatar-placeholder" style="--avatar-color: {{ $parody->cover_color }}">{{ $parody->cover_initials }}</span>
+                            <span class="admin-parody-cover-placeholder" style="--avatar-color: {{ $parody->cover_color }}">{{ $parody->cover_initials }}</span>
                         @endif
                     </span>
                     <input
@@ -31,6 +31,7 @@
                         accept="image/jpeg,image/png,image/gif,image/webp"
                     >
                 </div>
+                <p class="form-hint">Cropped to a 9:16 portrait (1080×1920). Off-center subjects may get trimmed.</p>
                 @if ($parody->hasCover())
                     <label class="admin-artist-avatar-remove">
                         <input type="checkbox" name="remove_cover" value="1"> Remove current cover
