@@ -24,6 +24,26 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.28</span>
+                        <time class="changelog-date" datetime="2026-08-12">August 12, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Rewrote the homepage's About section and footer to better describe what HeartLovePics actually is, and refreshed the Terms of Use and Privacy Policy to match how the site works today.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Cleared up a small batch of inconsistencies found while reviewing recent pages.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.27</span>
                         <time class="changelog-date" datetime="2026-08-12">August 12, 2026</time>
                     </header>

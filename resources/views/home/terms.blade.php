@@ -14,7 +14,7 @@
                 Service, you agree to them.
             </p>
             <div class="legal-meta">
-                <time class="legal-updated" datetime="2026-08-06">Last updated August 6, 2026</time>
+                <time class="legal-updated" datetime="2026-08-12">Last updated August 12, 2026</time>
                 <a href="{{ route('pages.privacy') }}" class="legal-related-link">Privacy Policy</a>
             </div>
         </header>
@@ -71,8 +71,9 @@
                 <div class="legal-section-body">
                     <ul>
                         <li>An account is not required to browse, like, or comment as a guest, but is
-                        required to upload images, save bookmarks and collections, follow other users, or
-                        keep a journal.</li>
+                        required to save bookmarks and collections, follow other users, or keep a journal.</li>
+                        <li>Publishing new posts to the gallery is limited to HeartLovePics administrators.
+                        Regular accounts can still comment, like, bookmark, follow, and keep a journal.</li>
                         <li>You're responsible for keeping your password secure and for all activity that
                         happens under your account.</li>
                         <li>You must provide accurate information and keep it up to date.</li>
@@ -88,14 +89,21 @@
                 </h2>
                 <div class="legal-section-body">
                     <p>
-                        You retain ownership of the images, titles, descriptions, comments, journal entries,
-                        and other content you submit (“Your Content”). By submitting Your Content, you grant
-                        HeartLovePics a non-exclusive, worldwide, royalty-free license to host, store,
-                        reproduce, display, and distribute it as necessary to operate and promote the
-                        Service — for example, showing it in the gallery, thumbnails, tag pages, and related-
-                        image sections. This license ends when you delete Your Content, subject to the short
-                        retention window described in our Privacy Policy and any copies reasonably required
-                        for backups or legal compliance.
+                        Posts in the gallery, comics, illustrated sets, and single images alike, are
+                        published by HeartLovePics administrators and credited to the artist who made them,
+                        with links to that artist's DeviantArt, FurAffinity, or Patreon where available.
+                        Publishing a post doesn't imply the artist submitted it themselves or endorses
+                        HeartLovePics; if you're the artist behind a piece and want it credited differently,
+                        updated, or removed, contact the site administrator.
+                    </p>
+                    <p>
+                        You retain ownership of the comments, journal entries, collections, and other
+                        content you personally submit (“Your Content”). By submitting Your Content, you
+                        grant HeartLovePics a non-exclusive, worldwide, royalty-free license to host, store,
+                        reproduce, and display it as necessary to operate the Service. This license ends
+                        when you delete Your Content, subject to the short retention window described in
+                        our Privacy Policy and any copies reasonably required for backups or legal
+                        compliance.
                     </p>
                     <p>
                         You're solely responsible for Your Content. By submitting it, you confirm that you

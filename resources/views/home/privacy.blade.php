@@ -14,7 +14,7 @@
                 public image-sharing gallery.
             </p>
             <div class="legal-meta">
-                <time class="legal-updated" datetime="2026-08-06">Last updated August 6, 2026</time>
+                <time class="legal-updated" datetime="2026-08-12">Last updated August 12, 2026</time>
                 <a href="{{ route('pages.terms') }}" class="legal-related-link">Terms of Use</a>
             </div>
         </header>
@@ -57,21 +57,33 @@
                     We also record the date you accepted our Terms of Use. You may optionally add a profile
                     avatar, banner image, and bio.</p>
 
-                    <p><strong>Content you submit.</strong> Anything you post is collected and stored,
-                    including uploaded images and their titles, descriptions, alt text, and tags; comments
-                    and shouts; journal entries; and the collections you create. See “Public Visibility” below —
-                    most of this content is public by design.</p>
+                    <p><strong>Content you submit.</strong> Anything you post yourself is collected and
+                    stored, including comments and shouts, journal entries, and the collections you create.
+                    Gallery posts themselves (comics, illustrations, and images, together with their
+                    titles, descriptions, alt text, and tags) are published by site administrators rather
+                    than uploaded by ordinary accounts. See “Public Visibility” below — most of this content
+                    is public by design.</p>
 
                     <p><strong>Usage and engagement data.</strong> We store the actions you take so the
                     Service works as expected: likes, bookmarks, follows, and which images you've viewed.
                     For visitors who aren't logged in, likes are tied to an anonymized identifier (see
                     Cookies below) rather than an account.</p>
 
-                    <p><strong>Technical data.</strong> We log aggregate, non-identifying view counts for
-                    images and the site as a whole. Where we do handle an IP address — to let a visitor like
-                    an image without creating an account — we never store the address itself. It's combined
-                    with your session ID and passed through a one-way SHA-256 hash before being saved, so the
-                    original IP address cannot be recovered from what we store.</p>
+                    <p><strong>Site traffic data.</strong> For every page you load, we record the page
+                    visited, your IP address, your browser's user agent string, the referring page (if
+                    any), an approximate location derived from your IP address (typically country and
+                    city), and your account if you're logged in. This is used internally to understand
+                    traffic to the Service and is visible only to site administrators; it is not shared
+                    with third parties.</p>
+
+                    <p><strong>Contact form.</strong> If you send us a message, we store your name or
+                    username, email address, the message itself, and the IP address it was sent from, so we
+                    can respond to you and guard against abuse.</p>
+
+                    <p>Separately, where we handle an IP address to let a visitor like an image without
+                    creating an account, we don't store that address as part of the like record itself. It's
+                    combined with your session ID and passed through a one-way SHA-256 hash before being
+                    saved, so the original IP address cannot be recovered from that hash.</p>
                 </div>
             </section>
 
@@ -95,8 +107,9 @@
                         only in your browser's local storage. That data never leaves your device or reaches
                         our servers.
                     </p>
-                    <p>We do not use third-party advertising or analytics trackers, and we do not sell or
-                    share your data with data brokers.</p>
+                    <p>The site traffic data described under “Information We Collect” above is gathered
+                    directly by HeartLovePics, not by a third party. We do not use third-party advertising
+                    or analytics trackers, and we do not sell or share your data with data brokers.</p>
                 </div>
             </section>
 

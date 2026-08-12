@@ -174,48 +174,49 @@
         <section class="home-about" aria-labelledby="home-about-heading">
             <h2 id="home-about-heading" class="home-about-heading">About HeartLovePics</h2>
             <p class="home-about-lead">
-                HeartLovePics is a quiet space to share and discover original photo stories —
-                browse by tag, follow creators you like, and keep a personal collection of your
-                favorites.
+                HeartLovePics is a gallery built around the story, not just the image. Comics,
+                illustrated sets, and one-off pieces all belong here, whatever the format,
+                because they're posted for telling you something, not just showing you
+                something. No single genre owns the place; if it's got a story worth
+                following, it fits.
             </p>
 
             <div class="home-about-columns">
                 <div class="home-about-col">
                     <h3 class="home-about-col-title">Browse &amp; discover</h3>
                     <p>
-                        The gallery is updated with new uploads every day. Start with the
-                        <a href="{{ route('home') }}">latest images</a>, see what the community
-                        enjoys via <a href="{{ route('gallery.likes') }}">most liked</a> and
-                        <a href="{{ route('gallery.views') }}">most viewed</a>, or open a
-                        <a href="{{ route('gallery.random') }}">random shuffle</a> when you want
-                        something unexpected. You can also
-                        <a href="{{ route('gallery.search') }}">search</a> by title or description
-                        when you know what you are looking for.
+                        New posts land in the gallery all the time. Start with the
+                        <a href="{{ route('home') }}">latest uploads</a>, see what everyone's
+                        talking about via <a href="{{ route('gallery.likes') }}">most liked</a>
+                        and <a href="{{ route('gallery.views') }}">most viewed</a>, or hit
+                        <a href="{{ route('gallery.random') }}">random</a> and let the site pick
+                        your next read for you. Know exactly what you're in the mood for?
+                        <a href="{{ route('gallery.search') }}">Search</a> by title or
+                        description.
                     </p>
                     <p>
-                        Prefer topics over recency?
-                        <a href="{{ route('gallery.tags') }}">Browse all tags</a> to explore photo
-                        stories by theme — from settings and styles to moods and characters — each
-                        tag page lists every public image that uses that label.
+                        Prefer to browse by genre, kink, or theme? Head to
+                        <a href="{{ route('gallery.tags') }}">all tags</a> and dig through the
+                        gallery your way. Every tag page lists every public post carrying that
+                        label, so you can follow one thread as far as it goes.
                     </p>
                 </div>
 
                 <div class="home-about-col">
-                    <h3 class="home-about-col-title">Creators &amp; collections</h3>
+                    <h3 class="home-about-col-title">Artists &amp; collections</h3>
                     <p>
-                        Every public post belongs to a creator profile. Open an image to read the
-                        story, view the full gallery when a post has multiple frames, leave a
-                        comment, or follow the author so their new work shows up in your
-                        following feed. Bookmarks and collections help you save favorites and
-                        group images the way you like.
+                        Every post credits the artist who made it, with links out to their
+                        DeviantArt, FurAffinity, or Patreon when they have one. Think of this as
+                        a showcase for their work, not a replacement for supporting it directly.
+                        Open a post to read the full story, comment, or follow the artist so
+                        their next piece lands in your feed. Bookmarks and collections let you
+                        save favorites and organize them your own way.
                     </p>
                     <p>
-                        Looking is free and does not require an account. When you are ready to
-                        share your own photo stories, you can
-                        <a href="{{ route('register') }}">create an account</a>,
-                        <a href="{{ route('login') }}">log in</a>, and upload from your profile.
-                        We keep the experience calm and readable — fewer distractions, more room
-                        for the images and the writing that goes with them. Read how we handle
+                        Looking around costs nothing and needs no account. Want likes, bookmarks,
+                        collections, and a following feed tied to your own profile? You can
+                        <a href="{{ route('register') }}">create an account</a> or
+                        <a href="{{ route('login') }}">log in</a> in seconds. Read how we handle
                         data in our <a href="{{ route('pages.privacy') }}">privacy policy</a>.
                     </p>
                 </div>

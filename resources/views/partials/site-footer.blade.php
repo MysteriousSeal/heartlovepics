@@ -6,9 +6,11 @@
                     <span class="logo-primary">HeartLove</span><span class="logo-secondary">Pics</span>
                 </a>
                 <p class="site-footer-about">
-                    HeartLovePics is a free gallery for original photo stories.
-                    Browse the latest uploads, sort by likes or views, explore images by tag,
-                    and follow creators you like — no account needed to look around.
+                    HeartLovePics is a free home for comics, illustrations, and stories, SFW and
+                    NSFW alike, covering every genre and every trope in one shared gallery. Sort
+                    by likes or views, dig through tags to find your exact kind of thing, and
+                    follow the artists whose work keeps you coming back. No account needed to
+                    look around.
                 </p>
             </div>
 
