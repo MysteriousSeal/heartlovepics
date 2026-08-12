@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Image;
 use App\Models\ImageLike;
 use App\Models\ImageViewEvent;
+use App\Models\SiteStatistic;
 use App\Services\CronLogService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
@@ -21,9 +22,11 @@ class SeedRandomEngagement extends Command
                             {--views-max=20 : Maximum total views to add this run}
                             {--likes-min=1 : Minimum total likes to add this run}
                             {--likes-max=2 : Maximum total likes to add this run}
+                            {--site-visits-min=10 : Minimum all-time visit count to add this run}
+                            {--site-visits-max=20 : Maximum all-time visit count to add this run}
                             {--dry-run : Show what would happen without writing}';
 
-    protected $description = 'Add random views (10–20) across public posts, then likes (1–2) only on posts that got views';
+    protected $description = 'Add random views (10–20) across public posts, likes (1–2) only on posts that got views, and 10–20 to the all-time visit count';
 
     public function handle(CronLogService $cronLogs): int
     {
@@ -31,6 +34,8 @@ class SeedRandomEngagement extends Command
         $viewsMax = max($viewsMin, (int) $this->option('views-max'));
         $likesMin = max(0, (int) $this->option('likes-min'));
         $likesMax = max($likesMin, (int) $this->option('likes-max'));
+        $siteVisitsMin = max(0, (int) $this->option('site-visits-min'));
+        $siteVisitsMax = max($siteVisitsMin, (int) $this->option('site-visits-max'));
         $dryRun = (bool) $this->option('dry-run');
 
         $imageIds = Image::query()
@@ -55,10 +60,12 @@ class SeedRandomEngagement extends Command
         $viewedImageIds = array_keys($viewHits);
         // Exactly $likeTotal likes for the whole run (capped by how many posts were viewed).
         $likeHits = $this->distributeAmong($likeTotal, $viewedImageIds, oneEach: true);
+        $siteVisitsTotal = random_int($siteVisitsMin, $siteVisitsMax);
 
         if ($dryRun) {
             $message = '[dry-run] Would add '.$viewTotal.' view(s) across '.count($viewHits)
-                .' post(s) and '.array_sum($likeHits).' like(s) total (only on viewed posts).';
+                .' post(s), '.array_sum($likeHits).' like(s) total (only on viewed posts), '
+                .'and '.$siteVisitsTotal.' to the all-time visit count.';
             $this->info($message);
             $this->line('Views by image: '.json_encode($viewHits));
             $this->line('Likes by image: '.json_encode($likeHits));
@@ -69,9 +76,11 @@ class SeedRandomEngagement extends Command
 
         $viewsAdded = $this->applyViews($viewHits);
         $likesAdded = $this->applyLikes($likeHits);
+        SiteStatistic::query()->where('id', 1)->increment('visits', $siteVisitsTotal);
 
         $message = "Added {$viewsAdded} view(s) across ".count($viewHits)
-            ." post(s) and {$likesAdded} like(s) total on viewed posts.";
+            ." post(s), {$likesAdded} like(s) total on viewed posts, "
+            ."and {$siteVisitsTotal} to the all-time visit count.";
         $this->info($message);
         $cronLogs->appendOutput($message, 'engagement:seed-random');
 
