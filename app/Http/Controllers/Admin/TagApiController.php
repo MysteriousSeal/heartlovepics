@@ -22,4 +22,18 @@ class TagApiController extends Controller
 
         return response()->json($tags);
     }
+
+    public function destroy(string $name): JsonResponse
+    {
+        $tag = Tag::query()->where('name', trim($name))->firstOrFail();
+
+        $postCount = $tag->images()->count();
+        $tag->images()->detach();
+        $tag->delete();
+
+        return response()->json([
+            'deleted' => $tag->name,
+            'detached_from_posts' => $postCount,
+        ]);
+    }
 }
