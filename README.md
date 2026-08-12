@@ -13,6 +13,8 @@ content is supported behind an age-confirmation gate and is blurred by default.
 - Two selectable post-detail layouts (stacked / side-by-side), saved per-visitor in
   `localStorage`
 - Word-boundary + popularity-ranked tag suggestions while composing a post
+- Artist pages: posts can be credited to a free-text artist name, which links to a full
+  profile (avatar, description, DeviantArt/FurAffinity/Patreon links) once one exists
 
 **Social**
 - Likes (works for guests too, via a hashed IP+session fingerprint — no account required),
@@ -28,8 +30,13 @@ content is supported behind an age-confirmation gate and is blurred by default.
 - NSFW flagging with content warnings and a client-side blur + age-confirmation gate
 
 **Admin**
-- Separate `/admin` panel (image moderation, comment moderation, user management/bans,
-  activity log, site dashboard)
+- Separate `/admin` panel (image moderation, artist management, comment moderation, user
+  management/bans, activity log, site dashboard)
+- Contact inbox: public `/contact` form feeds an admin message list with threaded replies
+  sent by email
+- Site analytics (visit counts, live "active now" view) and a feature-flag configuration
+  screen (e.g. toggling gallery author/artist credits on or off)
+- A scheduled-task log viewer (`/admin/cron`) for auditing the cron jobs below
 - All moderation actions are recorded to an internal activity log
 
 **SEO**
@@ -97,10 +104,14 @@ the regular `/login` form and lives at `/admin`.
 |---|---|
 | `php artisan images:prune-trashed` | Permanently deletes soft-deleted images (and their files) past the undo grace period (`--hours`, default 24). Scheduled hourly. |
 | `php artisan view-events:prune` | Deletes image view-event rows older than the retention window (`--days`, default 30). Scheduled daily. |
+| `php artisan engagement:seed-random` | Sprinkles a small batch of synthetic views (10–20), likes (1–2), and site visits (10–20) across public posts so the gallery doesn't look frozen. Scheduled every minute; supports `--dry-run`. |
+| `php artisan cron-logs:prune` | Deletes old scheduled-task log rows (`--days`, default 7) so the admin Cron log doesn't grow forever. Scheduled daily. |
 | `php artisan images:generate-thumbnails` | Backfills thumbnails and dimensions for existing images. Run manually as needed (e.g. after importing images outside the normal upload flow). |
 
 Run `php artisan schedule:work` (or set up a real cron entry for `schedule:run`) in
-production so these actually fire.
+production so these actually fire. Note that `engagement:seed-random` means view/like/visit
+counts will drift on their own even with zero real traffic — disable that schedule entry if
+you want the numbers to reflect genuine activity only.
 
 ## Content policy
 
