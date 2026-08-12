@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ArtistApiController;
 use App\Http\Controllers\Admin\ImageApiController;
+use App\Http\Controllers\Admin\ParodyApiController;
 use App\Http\Controllers\Admin\TagApiController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,7 @@ Route::middleware('admin.api')->prefix('admin')->group(function () {
     Route::patch('/artists/{name}', [ArtistApiController::class, 'update'])
         ->where('name', '.*')
         ->name('api.admin.artists.update');
+    Route::patch('/parodies/{name}', [ParodyApiController::class, 'update'])
+        ->where('name', '.*')
+        ->name('api.admin.parodies.update');
 });
