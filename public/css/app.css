@@ -97,6 +97,14 @@ img {
     min-width: 0;
 }
 
+.site-header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    align-self: flex-start;
+}
+
 .site-contact-btn {
     display: inline-flex;
     align-items: center;
@@ -109,7 +117,6 @@ img {
     color: var(--text-muted);
     transition: color 0.15s, border-color 0.15s, background 0.15s;
     flex-shrink: 0;
-    align-self: flex-start;
 }
 
 .site-contact-icon {
@@ -121,6 +128,41 @@ img {
     color: var(--text);
     border-color: var(--accent);
     background: var(--bg);
+}
+
+/* Contact row inside the mobile menu panel — matches .sort-tab */
+.site-contact-menu-link {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 2.25rem;
+    height: 2.25rem;
+    padding: 0 1rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.site-contact-menu-link .site-contact-icon {
+    color: currentColor;
+}
+
+.site-contact-menu-link:hover {
+    color: var(--text);
+    border-color: #d5d0ca;
+    background: var(--surface);
+}
+
+/* Higher specificity so .gallery-search { display:flex } cannot unhide this on desktop */
+.gallery-search.gallery-search--menu {
+    display: none;
 }
 
 .site-logo {
@@ -198,6 +240,39 @@ img {
     height: 2.25rem;
     background: var(--border);
     flex-shrink: 0;
+}
+
+.site-menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.site-menu-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent-hover);
+}
+
+.site-menu-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+    justify-content: flex-end;
+}
+
+.site-subheader-nav .sort-tabs {
+    flex-wrap: nowrap;
 }
 
 .site-auth {
@@ -1501,6 +1576,16 @@ img {
 .site-main {
     flex: 1;
     padding: 2rem 0 3rem;
+}
+
+/* KPI bar is a second subheader — flush under .site-subheader, no top gap */
+.site-main:has(.gallery-activity-header) {
+    padding-top: 0;
+}
+
+.site-main:has(.gallery-activity-header) .container {
+    /* bar full-bleeds; content below still needs normal top spacing after the bar */
+    padding-top: 0;
 }
 
 .site-footer {
@@ -3430,27 +3515,48 @@ a.image-tag-badge:hover {
     color: #7a5c34;
 }
 
-/* Gallery activity bar */
+/* Gallery activity bar — second sticky subheader, flush under .site-subheader */
 .gallery-activity-header {
-    --gallery-gutter: 1.5rem;
-
     position: sticky;
     top: var(--site-subheader-height, 0px);
     z-index: 90;
     box-sizing: border-box;
-    margin: 0 calc(-1 * var(--gallery-gutter)) 1.25rem;
-    padding: 0.75rem var(--gallery-gutter);
-    background: color-mix(in srgb, var(--bg) 92%, transparent);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    /* Full-bleed like .site-subheader */
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    /* No top margin/border — sits directly under subheader’s bottom border */
+    margin-top: 0;
+    margin-bottom: 2rem;
+    padding: 0;
+    background: var(--surface);
+    border-top: none;
+    border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+    .gallery-activity-header {
+        position: static;
+        width: 100vw;
+        max-width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+    }
 }
 
 .gallery-activity-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.25rem;
+    gap: 0.75rem 1.25rem;
     flex-wrap: wrap;
+    box-sizing: border-box;
+    /* Same shell as .site-subheader-inner */
+    max-width: 1280px;
+    margin: 0 auto;
+    min-height: var(--site-subheader-height, 3.875rem);
+    padding: 0.875rem 1.5rem 1rem;
 }
 
 .gallery-activity-end {
@@ -8746,26 +8852,181 @@ a.admin-message-username:hover {
 }
 
 @media (max-width: 768px) {
+    :root {
+        /* Mobile: search moves into the menu; sticky bars sit under the main header only */
+        --site-subheader-height: 0px;
+    }
+
     .site-logo-wordmark {
         font-size: 1.5rem;
     }
 
+    .site-header-actions {
+        align-self: center;
+    }
+
+    /* Desktop search leaves the subheader; search lives in the menu panel */
+    .gallery-search--desktop {
+        display: none;
+    }
+
+    .gallery-search.gallery-search--menu {
+        display: flex;
+        width: 100%;
+        max-width: none;
+        flex: none;
+    }
+
+    .site-contact-menu-link {
+        display: inline-flex;
+        width: 100%;
+    }
+
+    /* Subheader collapses to a slim bar that only hosts the open menu panel */
+    .site-subheader {
+        position: relative;
+        border-top: none;
+        border-bottom: none;
+        background: transparent;
+    }
+
+    .site-subheader:has(.site-menu-panel.is-open) {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+    }
+
     .site-subheader-inner {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        padding: 0;
+        min-height: 0;
+    }
+
+    .site-menu-toggle {
+        display: inline-flex;
+    }
+
+    .site-menu-panel {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        flex: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.875rem;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 1.5rem 1.25rem;
+        box-shadow: var(--shadow);
+        z-index: 110;
+    }
+
+    .site-menu-panel.is-open {
+        display: flex;
     }
 
     .site-subheader-nav {
         width: 100%;
+        flex: none;
         flex-wrap: wrap;
+        justify-content: flex-start;
     }
 
     .site-header-divider {
         display: none;
     }
 
+    /* Auth controls: full menu width, two rows so Logout never clips */
     .site-auth {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         width: 100%;
-        justify-content: flex-start;
+        max-width: 100%;
+        gap: 0.375rem;
+        box-sizing: border-box;
+        align-items: stretch;
+    }
+
+    .site-auth > .site-upload-btn,
+    .site-auth > .theme-toggle-btn,
+    .site-auth > .notifications-bell {
+        width: 100%;
+        min-width: 0;
+        height: 2.25rem;
+        box-sizing: border-box;
+    }
+
+    .site-auth-profile {
+        grid-column: 1 / span 2;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        height: 2.25rem;
+        box-sizing: border-box;
+        padding: 0 0.5rem;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        gap: 0.4rem;
+        overflow: hidden;
+    }
+
+    .site-auth-profile:hover {
+        border-color: var(--accent);
+    }
+
+    .site-auth-name {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .site-auth-avatar,
+    .user-avatar-initials.site-auth-avatar {
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+        flex-shrink: 0;
+    }
+
+    .site-auth-logout {
+        grid-column: 3;
+        width: 100%;
+        min-width: 0;
+        display: flex;
+    }
+
+    .site-auth-logout .btn {
+        width: 100%;
+        height: 2.25rem;
+        box-sizing: border-box;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Guest: Login / Register share remaining cells */
+    .site-auth > a.btn {
+        width: 100%;
+        min-width: 0;
+        height: 2.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .site-auth:not(:has(.site-auth-profile)) > .theme-toggle-btn {
+        grid-column: 1;
+    }
+
+    .site-auth:not(:has(.site-auth-profile)) > a.btn.btn-secondary {
+        grid-column: 2;
+    }
+
+    .site-auth:not(:has(.site-auth-profile)) > a.btn.btn-primary {
+        grid-column: 3;
     }
 
     .user-profile-header-row {
@@ -8783,14 +9044,18 @@ a.admin-message-username:hover {
         padding-right: 0;
     }
 
-    .gallery-search {
-        flex: 1 1 100%;
-        max-width: none;
+    .sort-tabs {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 100%;
+        gap: 0.375rem;
+        justify-content: stretch;
     }
 
-    .sort-tabs {
+    .sort-tab {
         width: 100%;
-        justify-content: flex-start;
+        min-width: 0;
+        box-sizing: border-box;
     }
 
     .tags-index-title {
@@ -8957,7 +9222,7 @@ a.admin-message-username:hover {
 }
 
 [data-theme='dark'] .gallery-activity-header {
-    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    background: var(--surface);
 }
 
 /* Content warnings & drafts */

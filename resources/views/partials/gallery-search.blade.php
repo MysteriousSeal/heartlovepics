@@ -1,8 +1,12 @@
-<form class="gallery-search" action="{{ route('gallery.search') }}" method="GET" role="search">
-    <label class="sr-only" for="gallery-search-input">Search images</label>
+@php
+    $searchId = $searchId ?? 'gallery-search-input';
+    $searchClass = $searchClass ?? 'gallery-search';
+@endphp
+<form class="{{ $searchClass }}" action="{{ route('gallery.search') }}" method="GET" role="search">
+    <label class="sr-only" for="{{ $searchId }}">Search images</label>
     <input
         type="search"
-        id="gallery-search-input"
+        id="{{ $searchId }}"
         name="q"
         class="gallery-search-input"
         value="{{ request('q', '') }}"
