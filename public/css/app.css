@@ -4061,7 +4061,7 @@ body.modal-open {
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.5rem;
+    margin-top: 0.625rem;
 }
 
 .masonry-card .card-footer .image-stats {
