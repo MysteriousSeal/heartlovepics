@@ -24,6 +24,26 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.30</span>
+                        <time class="changelog-date" datetime="2026-08-13">August 13, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            <span class="changelog-text">Added Artists and Parodies browse pages, sortable A&ndash;Z or by most posts, matching the existing Tags page.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-change">Change</span>
+                            <span class="changelog-text">Parody cover images now crop to a 2:3 portrait instead of 9:16.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.29</span>
                         <time class="changelog-date" datetime="2026-08-13">August 13, 2026</time>
                     </header>

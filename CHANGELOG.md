@@ -7,6 +7,16 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
+## [1.0.30] - 2026-08-13
+
+### Added
+- Public Artists and Parodies browse pages (`/artists`, `/parodies`), sortable A–Z or by
+  most posts — same layout as the existing Tags page (`b23d4ae`)
+
+### Changed
+- Parody cover images now crop to a 2:3 portrait (800×1200) instead of 9:16, in the
+  admin uploader and on the public parody page (`b23d4ae`)
+
 ## [1.0.29] - 2026-08-13
 
 ### Added
