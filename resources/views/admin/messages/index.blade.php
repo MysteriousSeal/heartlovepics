@@ -19,6 +19,10 @@
                     {{ number_format($archivedCount) }}
                     archived
                 </span>
+                <span class="admin-list-chip">
+                    {{ number_format($contactsCount) }}
+                    {{ \Illuminate\Support\Str::plural('contact', $contactsCount) }}
+                </span>
                 @if (request()->filled('search'))
                     <span class="admin-list-chip is-filtered">Filtered</span>
                 @endif
@@ -40,6 +44,13 @@
                 Archived
                 <span class="admin-list-tab-count">{{ number_format($archivedCount) }}</span>
             </a>
+            <a
+                href="{{ route('admin.messages.index', array_filter(['tab' => 'contacts', 'search' => request('search')])) }}"
+                class="admin-list-tab {{ $tab === 'contacts' ? 'active' : '' }}"
+            >
+                Contacts
+                <span class="admin-list-tab-count">{{ number_format($contactsCount) }}</span>
+            </a>
         </nav>
 
         <form method="GET" action="{{ route('admin.messages.index') }}" class="admin-list-toolbar filter-bar">
@@ -48,7 +59,7 @@
                 type="search"
                 name="search"
                 class="form-control"
-                placeholder="Search username, email, subject, or message…"
+                placeholder="{{ $tab === 'contacts' ? 'Search email…' : 'Search username, email, subject, or message…' }}"
                 value="{{ request('search') }}"
             >
             <button type="submit" class="btn btn-secondary">Search</button>
@@ -57,7 +68,79 @@
             @endif
         </form>
 
-        @if ($messages->isEmpty())
+        @if ($tab === 'contacts')
+            @if ($contacts->isEmpty())
+                <div class="admin-list-empty empty-state">
+                    @if (request()->filled('search'))
+                        <p>No contacts match this search.</p>
+                        <p><a href="{{ route('admin.messages.index', ['tab' => 'contacts']) }}">Clear search</a></p>
+                    @else
+                        <p>No contacts yet.</p>
+                        <p class="text-muted">Every unique email address that has used the contact form will show up here.</p>
+                    @endif
+                </div>
+            @else
+                <p class="admin-result-count">
+                    Showing {{ $contacts->firstItem() }}&ndash;{{ $contacts->lastItem() }} of {{ number_format($contacts->total()) }}
+                    {{ \Illuminate\Support\Str::plural('contact', $contacts->total()) }}
+                </p>
+
+                <div class="admin-contacts-table admin-list-table">
+                    <div class="admin-contacts-head" aria-hidden="true">
+                        <span>Email</span>
+                        <span>Name</span>
+                        <span>Messages sent</span>
+                        <span>Last message</span>
+                    </div>
+
+                    <ul class="admin-contacts-list">
+                        @foreach ($contacts as $contact)
+                            <li class="admin-contact-row">
+                                <a
+                                    href="{{ route('admin.messages.index', ['tab' => 'new', 'search' => $contact->email]) }}"
+                                    class="admin-contact-email"
+                                    data-label="Email"
+                                >{{ $contact->email }}</a>
+                                <span class="admin-contact-name" data-label="Name">{{ $contact->latest_username }}</span>
+                                <span class="admin-contact-stat" data-label="Messages sent">{{ number_format($contact->messages_count) }}</span>
+                                <time
+                                    class="admin-contact-date"
+                                    data-label="Last message"
+                                    datetime="{{ \Illuminate\Support\Carbon::parse($contact->last_message_at)->toIso8601String() }}"
+                                    title="{{ \Illuminate\Support\Carbon::parse($contact->last_message_at)->format('M j, Y g:i A') }}"
+                                >
+                                    {{ \Illuminate\Support\Carbon::parse($contact->last_message_at)->diffForHumans() }}
+                                </time>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                @if ($contacts->hasPages())
+                    <div class="pagination">
+                        @if ($contacts->onFirstPage())
+                            <span>&laquo;</span>
+                        @else
+                            <a href="{{ $contacts->previousPageUrl() }}">&laquo;</a>
+                        @endif
+
+                        @foreach ($contacts->getUrlRange(1, $contacts->lastPage()) as $page => $url)
+                            @if ($page == $contacts->currentPage())
+                                <span class="active">{{ $page }}</span>
+                            @else
+                                <a href="{{ $url }}">{{ $page }}</a>
+                            @endif
+                        @endforeach
+
+                        @if ($contacts->hasMorePages())
+                            <a href="{{ $contacts->nextPageUrl() }}">&raquo;</a>
+                        @else
+                            <span>&raquo;</span>
+                        @endif
+                    </div>
+                @endif
+            @endif
+        @elseif ($messages->isEmpty())
             <div class="admin-list-empty empty-state">
                 @if (request()->filled('search'))
                     <p>No {{ $tab === 'archived' ? 'archived' : 'new' }} messages match this search.</p>

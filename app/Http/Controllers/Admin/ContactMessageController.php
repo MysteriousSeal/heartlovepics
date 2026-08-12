@@ -17,7 +17,34 @@ class ContactMessageController extends Controller
 {
     public function index(Request $request): View
     {
-        $tab = $request->input('tab') === 'archived' ? 'archived' : 'new';
+        $tab = in_array($request->input('tab'), ['archived', 'contacts'], true)
+            ? $request->input('tab')
+            : 'new';
+
+        $newCount = ContactMessage::where('is_archived', false)->count();
+        $archivedCount = ContactMessage::where('is_archived', true)->count();
+        $contactsCount = ContactMessage::query()->distinct()->count('email');
+
+        if ($tab === 'contacts') {
+            $query = ContactMessage::query()
+                ->selectRaw('email, max(username) as latest_username, count(*) as messages_count, max(created_at) as last_message_at')
+                ->groupBy('email')
+                ->orderByDesc('messages_count');
+
+            if ($search = $request->string('search')->trim()->toString()) {
+                $query->where('email', 'like', "%{$search}%");
+            }
+
+            $contacts = $query->paginate(20)->withQueryString();
+
+            return view('admin.messages.index', compact(
+                'contacts',
+                'tab',
+                'newCount',
+                'archivedCount',
+                'contactsCount',
+            ));
+        }
 
         $query = ContactMessage::query()
             ->with(['user', 'replies.admin'])
@@ -34,14 +61,13 @@ class ContactMessageController extends Controller
         }
 
         $messages = $query->paginate(20)->withQueryString();
-        $newCount = ContactMessage::where('is_archived', false)->count();
-        $archivedCount = ContactMessage::where('is_archived', true)->count();
 
         return view('admin.messages.index', compact(
             'messages',
             'tab',
             'newCount',
             'archivedCount',
+            'contactsCount',
         ));
     }
 
