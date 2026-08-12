@@ -15,6 +15,7 @@
                 <span class="admin-list-chip">{{ number_format($typeCounts->get('like', 0)) }} real likes</span>
                 <span class="admin-list-chip">{{ number_format($typeCounts->get('like_cron', 0)) }} cron likes</span>
                 <span class="admin-list-chip">{{ number_format($typeCounts->get('comment', 0)) }} comments</span>
+                <span class="admin-list-chip">{{ number_format($typeCounts->get('bookmark', 0)) }} bookmarks</span>
             </div>
         </header>
 
@@ -95,6 +96,7 @@
                                     'like' => 'badge-has-description',
                                     'like_cron' => 'badge-draft',
                                     'comment' => 'badge-banned',
+                                    'bookmark' => 'badge-sfw',
                                 } }}">
                                     {{ $types[$event['type']] }}
                                 </span>
@@ -115,6 +117,12 @@
                                         Commented on a post that has since been removed:
                                     @endif
                                     <em>&ldquo;{{ $event['comment_body'] }}&rdquo;</em>
+                                @elseif ($event['type'] === 'bookmark')
+                                    @if ($event['image'])
+                                        Bookmarked <a href="{{ route('images.show', $event['image']->slug) }}" target="_blank" rel="noopener noreferrer">{{ $event['image']->title }}</a>
+                                    @else
+                                        Bookmarked a post that has since been removed.
+                                    @endif
                                 @endif
                             </p>
                             <time class="admin-activity-date" datetime="{{ $event['created_at']->toIso8601String() }}" title="{{ $event['created_at']->toIso8601String() }}">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Image;
+use App\Models\ImageBookmark;
 use App\Models\ImageLike;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class UserActivityController extends Controller
         'like' => 'Liked a post',
         'like_cron' => 'Cron-seeded like',
         'comment' => 'New comment',
+        'bookmark' => 'Bookmarked a post',
     ];
 
     public function index(Request $request): View
@@ -32,7 +34,8 @@ class UserActivityController extends Controller
         $allEvents = collect()
             ->concat($this->signups())
             ->concat($this->likes())
-            ->concat($this->comments());
+            ->concat($this->comments())
+            ->concat($this->bookmarks());
 
         $typeCounts = $allEvents->countBy('type');
 
@@ -93,6 +96,23 @@ class UserActivityController extends Controller
                     'comment_body' => null,
                 ];
             });
+    }
+
+    private function bookmarks()
+    {
+        return ImageBookmark::query()
+            ->with(['user:id,username,avatar_path', 'image:id,title,slug'])
+            ->latest('created_at')
+            ->limit(self::FETCH_PER_TYPE)
+            ->get()
+            ->map(fn (ImageBookmark $bookmark) => [
+                'type' => 'bookmark',
+                'created_at' => $bookmark->created_at,
+                'user' => $bookmark->user,
+                'guest_label' => null,
+                'image' => $bookmark->image,
+                'comment_body' => null,
+            ]);
     }
 
     private function comments()
