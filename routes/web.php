@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\ArtistController;
+use App\Http\Controllers\Admin\ParodyController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\JournalController;
@@ -41,6 +42,7 @@ Route::get('/sitemap-tags.xml', [SitemapController::class, 'tags'])->name('sitem
 Route::get('/sitemap-posts.xml', [SitemapController::class, 'posts'])->name('sitemap.posts');
 Route::get('/sitemap-users.xml', [SitemapController::class, 'users'])->name('sitemap.users');
 Route::get('/sitemap-artists.xml', [SitemapController::class, 'artists'])->name('sitemap.artists');
+Route::get('/sitemap-parodies.xml', [SitemapController::class, 'parodies'])->name('sitemap.parodies');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('pages.privacy');
 Route::get('/terms', [PageController::class, 'terms'])->name('pages.terms');
 Route::get('/changelog', [PageController::class, 'changelog'])->name('pages.changelog');
@@ -118,6 +120,7 @@ Route::get('/search', [HomeController::class, 'search'])->name('gallery.search')
 Route::get('/tags', [HomeController::class, 'tags'])->name('gallery.tags');
 Route::get('/tags/{tag}', [HomeController::class, 'tag'])->name('gallery.tag');
 Route::get('/artists/{artist}', [HomeController::class, 'artist'])->name('gallery.artist');
+Route::get('/parody/{parody}', [HomeController::class, 'parody'])->name('gallery.parody');
 Route::get('/images/{slug}', [HomeController::class, 'show'])->name('images.show');
 Route::post('/images/{slug}/like', [LikeController::class, 'toggle'])->name('images.like');
 Route::post('/images/{slug}/comments', [CommentController::class, 'store'])->name('images.comments.store');
@@ -132,6 +135,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('images', ImageController::class)->except(['show', 'create', 'store']);
         Route::resource('artists', ArtistController::class)->except(['show', 'create']);
+        Route::resource('parodies', ParodyController::class)->except(['show', 'create']);
         Route::get('comments', [AdminCommentController::class, 'index'])->name('comments.index');
         Route::delete('comments/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
         Route::get('messages', [ContactMessageController::class, 'index'])->name('messages.index');

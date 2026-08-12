@@ -30,6 +30,7 @@ use Illuminate\Support\Str;
     'is_nsfw_locked',
     'content_warning',
     'artist_name',
+    'parody',
 ])]
 class Image extends Model
 {

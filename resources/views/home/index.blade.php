@@ -58,7 +58,7 @@
 
     @include('partials.nsfw-age-modal')
 
-    @if (! in_array($sort ?? '', ['search', 'tag', 'artist'], true))
+    @if (! in_array($sort ?? '', ['search', 'tag', 'artist', 'parody'], true))
         <h1 class="gallery-heading">{{ $pageMeta['heading'] }}</h1>
     @endif
 
@@ -108,6 +108,24 @@
                 <p class="search-results-count">{{ number_format($images->total()) }} {{ \Illuminate\Support\Str::plural('image', $images->total()) }} found</p>
             @endif
         </div>
+    @endif
+
+    @if (($sort ?? '') === 'parody' && ($parodyName ?? null))
+        @include('partials.parody-profile-header', [
+            'parodyName' => $parodyName,
+            'parody' => $parodyModel ?? null,
+            'postCount' => $images->total(),
+        ])
+
+        @if ($images->total() === 0)
+            @include('partials.empty-state-suggestions', [
+                'message' => 'No images parody this.',
+                'suggestions' => [
+                    ['label' => 'Back to the gallery', 'url' => route('home')],
+                    ['label' => 'Try random picks', 'url' => route('gallery.random')],
+                ],
+            ])
+        @endif
     @endif
 
     @if (($sort ?? '') === 'artist' && ($artistName ?? null))

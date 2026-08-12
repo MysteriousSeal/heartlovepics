@@ -6,6 +6,7 @@ use App\Models\Artist;
 use App\Models\Comment;
 use App\Models\Follow;
 use App\Models\Image;
+use App\Models\Parody;
 use App\Models\Tag;
 use App\Services\GalleryActivityService;
 use App\Services\VisitCounterService;
@@ -146,6 +147,31 @@ class HomeController extends Controller
             'artist',
             artistName: $artistName,
             artistModel: $artistModel,
+        );
+    }
+
+    public function parody(string $parody, Request $request, LikeService $likes, BookmarkService $bookmarks, GalleryActivityService $activity, VisitCounterService $visitCounter): View|JsonResponse
+    {
+        $parodyName = trim(urldecode($parody));
+
+        $query = $this->publishedImagesQuery()
+            ->where('parody', $parodyName)
+            ->latest();
+
+        abort_if($parodyName === '' || $query->clone()->doesntExist(), 404);
+
+        $parodyModel = Parody::query()->where('name', $parodyName)->first();
+
+        return $this->renderGallery(
+            $request,
+            $query,
+            $likes,
+            $bookmarks,
+            $activity,
+            $visitCounter,
+            'parody',
+            parodyName: $parodyName,
+            parodyModel: $parodyModel,
         );
     }
 
@@ -299,6 +325,8 @@ class HomeController extends Controller
         ?Tag $tag = null,
         ?string $artistName = null,
         ?Artist $artistModel = null,
+        ?string $parodyName = null,
+        ?Parody $parodyModel = null,
     ): View|JsonResponse {
         $images = $query->paginate(20)->withQueryString();
 
@@ -326,7 +354,7 @@ class HomeController extends Controller
         $totalImages = $activity->totalPublishedImages();
         $lcpImage = $images->getCollection()->get(self::LCP_IMAGE_INDEX) ?? $images->first();
         $isFirstPage = $images->currentPage() === 1;
-        $pageMeta = $this->pageMeta($sort, $searchQuery, $images, $tag, $artistName);
+        $pageMeta = $this->pageMeta($sort, $searchQuery, $images, $tag, $artistName, $parodyName);
         $pageMeta['og_image'] = $lcpImage?->direct_url ?? $activity->defaultOgImageUrl();
 
         // Only computed for the true homepage: real body text + internal links
@@ -349,6 +377,8 @@ class HomeController extends Controller
             'tag',
             'artistName',
             'artistModel',
+            'parodyName',
+            'parodyModel',
             'activityStats',
             'totalVisits',
             'totalImages',
@@ -549,7 +579,7 @@ class HomeController extends Controller
     }
 
     /** @return array{title: string, heading: string, description: string, canonical: string, noindex: bool} */
-    private function pageMeta(string $sort, ?string $searchQuery, LengthAwarePaginator $images, ?Tag $tag = null, ?string $artistName = null): array
+    private function pageMeta(string $sort, ?string $searchQuery, LengthAwarePaginator $images, ?Tag $tag = null, ?string $artistName = null, ?string $parodyName = null): array
     {
         if ($sort === 'tag' && $tag) {
             $title = "Tag: {$tag->name} — HeartLovePics";
@@ -575,6 +605,19 @@ class HomeController extends Controller
                 'description' => $description,
                 'canonical' => $this->canonicalUrl($images, route('gallery.artist', $artistName)),
                 // Thin/empty artist pages have nothing for a crawler to index.
+                'noindex' => $images->total() === 0,
+            ];
+        }
+
+        if ($sort === 'parody' && $parodyName) {
+            $title = "Parody: {$parodyName} — HeartLovePics";
+            $description = "Browse images parodying {$parodyName} on HeartLovePics.";
+
+            return [
+                'title' => $title,
+                'heading' => "Parody: {$parodyName}",
+                'description' => $description,
+                'canonical' => $this->canonicalUrl($images, route('gallery.parody', $parodyName)),
                 'noindex' => $images->total() === 0,
             ];
         }

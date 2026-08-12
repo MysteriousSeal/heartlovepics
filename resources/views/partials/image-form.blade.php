@@ -234,6 +234,23 @@
     @enderror
 </div>
 
+<div class="form-group">
+    <label for="parody">Parody</label>
+    <input
+        type="text"
+        id="parody"
+        name="parody"
+        class="form-control"
+        value="{{ old('parody', $image->parody ?? '') }}"
+        placeholder="e.g. Stardew Valley, Cyberpunk 2077"
+        maxlength="100"
+    >
+    <p class="form-hint">The comic, movie, game, or show this piece is based on, if it's fan art of an existing work.</p>
+    @error('parody')
+        <p class="form-error">{{ $message }}</p>
+    @enderror
+</div>
+
 @if ($lockContentRating)
     <div class="form-group content-rating-locked-group">
         <span class="form-label" id="content-rating-label">Content rating</span>

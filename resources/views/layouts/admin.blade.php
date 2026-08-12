@@ -30,6 +30,7 @@
                 <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a>
                 <a href="{{ route('admin.images.index') }}" class="{{ request()->routeIs('admin.images.*') ? 'active' : '' }}">Images</a>
                 <a href="{{ route('admin.artists.index') }}" class="{{ request()->routeIs('admin.artists.*') ? 'active' : '' }}">Artists</a>
+                <a href="{{ route('admin.parodies.index') }}" class="{{ request()->routeIs('admin.parodies.*') ? 'active' : '' }}">Parodies</a>
                 <a href="{{ route('admin.comments.index') }}" class="{{ request()->routeIs('admin.comments.*') ? 'active' : '' }}">Comments</a>
                 <a href="{{ route('admin.messages.index') }}" class="admin-nav-link-badged {{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
                     Messages

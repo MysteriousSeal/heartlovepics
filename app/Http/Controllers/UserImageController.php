@@ -57,6 +57,7 @@ class UserImageController extends Controller
             'is_nsfw' => $request->boolean('is_nsfw'),
             'content_warning' => $request->boolean('is_nsfw') ? $request->input('content_warning') : null,
             'artist_name' => $request->input('artist_name'),
+            'parody' => $request->input('parody'),
         ]);
 
         $this->tags->syncForImage($image, $request->input('tags', []));
@@ -116,6 +117,7 @@ class UserImageController extends Controller
             'is_published' => $this->resolvePublishedState($request, $image),
             'is_private' => $request->boolean('is_private'),
             'artist_name' => $request->input('artist_name'),
+            'parody' => $request->input('parody'),
         ];
 
         if ($image->is_nsfw_locked) {
