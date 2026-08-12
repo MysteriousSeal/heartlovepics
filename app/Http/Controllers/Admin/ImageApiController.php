@@ -71,6 +71,7 @@ class ImageApiController extends Controller
                 'furaffinity_url' => $image->artist->furaffinity_url,
                 'patreon_url' => $image->artist->patreon_url,
             ] : null,
+            'parody' => $image->parody,
             'tags' => $image->tags->pluck('name'),
             'user' => $image->user ? [
                 'id' => $image->user->id,
@@ -107,6 +108,7 @@ class ImageApiController extends Controller
             'is_nsfw' => ['sometimes', 'boolean'],
             'content_warning' => ['sometimes', 'nullable', 'string', 'max:100'],
             'artist_name' => ['sometimes', 'nullable', 'string', 'max:100'],
+            'parody' => ['sometimes', 'nullable', 'string', 'max:100'],
             'tags' => ['sometimes', 'array', 'max:10'],
             'tags.*' => ['string', 'max:50', 'regex:/^[\pL\pN\s\-]+$/u'],
         ]);
@@ -142,6 +144,7 @@ class ImageApiController extends Controller
                 'furaffinity_url' => $image->artist->furaffinity_url,
                 'patreon_url' => $image->artist->patreon_url,
             ] : null,
+            'parody' => $image->parody,
             'tags' => $image->tags->pluck('name'),
         ]);
     }
