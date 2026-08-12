@@ -65,13 +65,30 @@
                 <ul class="admin-activity-list">
                     @foreach ($activities as $event)
                         <li class="admin-activity-row">
-                            <span class="admin-activity-admin">
+                            <div class="admin-activity-admin">
                                 @if ($event['user'])
-                                    <a href="{{ route('users.show', $event['user']) }}" target="_blank" rel="noopener noreferrer">{{ $event['user']->username }}</a>
+                                    <a href="{{ route('users.show', $event['user']) }}" class="admin-activity-admin-link" target="_blank" rel="noopener noreferrer">
+                                        @include('partials.user-avatar', [
+                                            'user' => $event['user'],
+                                            'class' => 'admin-activity-avatar',
+                                            'width' => 36,
+                                            'height' => 36,
+                                        ])
+                                        <span class="admin-activity-admin-name">{{ $event['user']->username }}</span>
+                                    </a>
                                 @else
-                                    <span class="text-muted">{{ $event['guest_label'] ?? 'Guest' }}</span>
+                                    <span class="admin-activity-admin-missing">
+                                        <img
+                                            src="{{ asset($event['type'] === 'like_cron' ? 'images/bot-avatar.jpg' : 'images/blank-avatar.jpg') }}"
+                                            alt=""
+                                            class="admin-activity-avatar"
+                                            width="36"
+                                            height="36"
+                                        >
+                                        <span class="text-muted">{{ $event['guest_label'] ?? 'Guest' }}</span>
+                                    </span>
                                 @endif
-                            </span>
+                            </div>
                             <span>
                                 <span class="badge {{ match ($event['type']) {
                                     'signup' => 'badge-published',
@@ -100,8 +117,9 @@
                                     <em>&ldquo;{{ $event['comment_body'] }}&rdquo;</em>
                                 @endif
                             </p>
-                            <time class="admin-activity-date" datetime="{{ $event['created_at']->toIso8601String() }}">
-                                {{ $event['created_at']->format('M j, Y g:i A') }}
+                            <time class="admin-activity-date" datetime="{{ $event['created_at']->toIso8601String() }}" title="{{ $event['created_at']->toIso8601String() }}">
+                                <span class="admin-activity-date-primary">{{ $event['created_at']->format('M j, Y') }}</span>
+                                <span class="admin-activity-date-secondary">{{ $event['created_at']->format('g:i A') }}</span>
                             </time>
                         </li>
                     @endforeach

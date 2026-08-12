@@ -6768,6 +6768,18 @@ a.admin-recent-image-link:hover {
     word-break: break-word;
 }
 
+.admin-activity-admin-name,
+.admin-activity-description a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.admin-activity-admin-link:hover .admin-activity-admin-name,
+.admin-activity-description a:hover {
+    color: var(--accent-hover);
+}
+
 .admin-activity-subject {
     display: flex;
     flex-wrap: wrap;

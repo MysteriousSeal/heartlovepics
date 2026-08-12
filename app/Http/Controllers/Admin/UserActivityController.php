@@ -63,7 +63,7 @@ class UserActivityController extends Controller
         return User::query()
             ->latest('created_at')
             ->limit(self::FETCH_PER_TYPE)
-            ->get(['id', 'username', 'created_at'])
+            ->get(['id', 'username', 'avatar_path', 'created_at'])
             ->map(fn (User $user) => [
                 'type' => 'signup',
                 'created_at' => $user->created_at,
@@ -77,24 +77,28 @@ class UserActivityController extends Controller
     private function likes()
     {
         return ImageLike::query()
-            ->with(['user:id,username', 'image:id,title,slug'])
+            ->with(['user:id,username,avatar_path', 'image:id,title,slug'])
             ->latest('created_at')
             ->limit(self::FETCH_PER_TYPE)
             ->get()
-            ->map(fn (ImageLike $like) => [
-                'type' => str_starts_with((string) $like->fingerprint, 'cron-') ? 'like_cron' : 'like',
-                'created_at' => $like->created_at,
-                'user' => $like->user,
-                'guest_label' => $like->user ? null : 'Guest',
-                'image' => $like->image,
-                'comment_body' => null,
-            ]);
+            ->map(function (ImageLike $like) {
+                $isCron = str_starts_with((string) $like->fingerprint, 'cron-');
+
+                return [
+                    'type' => $isCron ? 'like_cron' : 'like',
+                    'created_at' => $like->created_at,
+                    'user' => $like->user,
+                    'guest_label' => $like->user ? null : ($isCron ? 'CRON Bot' : 'Guest'),
+                    'image' => $like->image,
+                    'comment_body' => null,
+                ];
+            });
     }
 
     private function comments()
     {
         return Comment::query()
-            ->with(['user:id,username', 'image:id,title,slug'])
+            ->with(['user:id,username,avatar_path', 'image:id,title,slug'])
             ->latest('created_at')
             ->limit(self::FETCH_PER_TYPE)
             ->get(['id', 'user_id', 'author_name', 'image_id', 'body', 'created_at'])
