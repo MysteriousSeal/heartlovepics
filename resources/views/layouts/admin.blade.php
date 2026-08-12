@@ -39,7 +39,8 @@
                     @endif
                 </a>
                 <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">Users</a>
-                <a href="{{ route('admin.activity.index') }}" class="{{ request()->routeIs('admin.activity.*') ? 'active' : '' }}">Activity</a>
+                <a href="{{ route('admin.user-activity.index') }}" class="{{ request()->routeIs('admin.user-activity.*') ? 'active' : '' }}">Activity</a>
+                <a href="{{ route('admin.activity.index') }}" class="{{ request()->routeIs('admin.activity.*') ? 'active' : '' }}">Admin Activity</a>
                 <a href="{{ route('admin.cron.index') }}" class="{{ request()->routeIs('admin.cron.*') ? 'active' : '' }}">Cron</a>
                 <a href="{{ route('admin.analytics.index') }}" class="{{ request()->routeIs('admin.analytics.*') ? 'active' : '' }}">Analytics</a>
                 <a href="{{ route('admin.configuration.edit') }}" class="{{ request()->routeIs('admin.configuration.*') ? 'active' : '' }}">Configuration</a>

@@ -24,6 +24,26 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.26</span>
+                        <time class="changelog-date" datetime="2026-08-12">August 12, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Corrected a few pages that were displaying stale or incorrect data in some cases.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Cut down database work on a couple of busy pages for quicker load times.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.25</span>
                         <time class="changelog-date" datetime="2026-08-12">August 12, 2026</time>
                     </header>

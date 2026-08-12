@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CronLogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImageController;
+use App\Http\Controllers\Admin\UserActivityController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommentLikeController;
@@ -143,6 +144,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('users/{user}/unban', [AdminUserController::class, 'unban'])->name('users.unban');
         Route::delete('users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
         Route::get('activity', [ActivityLogController::class, 'index'])->name('activity.index');
+        Route::get('user-activity', [UserActivityController::class, 'index'])->name('user-activity.index');
         Route::get('cron', [CronLogController::class, 'index'])->name('cron.index');
         Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
         Route::get('analytics/active-now', [AnalyticsController::class, 'activeNow'])->name('analytics.active-now');

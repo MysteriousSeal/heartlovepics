@@ -6038,6 +6038,15 @@ a.admin-recent-image-link:hover {
     max-width: 280px;
 }
 
+.form-switch-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    color: var(--text);
+    cursor: pointer;
+}
+
 .admin-result-count {
     font-size: 0.8125rem;
     color: var(--text-muted);
