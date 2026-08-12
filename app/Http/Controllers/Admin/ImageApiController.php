@@ -11,7 +11,31 @@ use Illuminate\Http\Request;
 
 class ImageApiController extends Controller
 {
+    private const PER_PAGE = 50;
+
     public function __construct(private TagService $tags) {}
+
+    /**
+     * Paginated listing of every post's details, newest first — same shape
+     * as show(), 50 per page. Use ?page=N to move through the set.
+     */
+    public function index(): JsonResponse
+    {
+        $images = Image::query()
+            ->with(['tags', 'artist', 'user', 'additionalImages'])
+            ->orderByDesc('id')
+            ->paginate(self::PER_PAGE);
+
+        return response()->json([
+            'data' => $images->getCollection()->map(fn (Image $image) => $this->serialize($image)),
+            'meta' => [
+                'current_page' => $images->currentPage(),
+                'last_page' => $images->lastPage(),
+                'per_page' => $images->perPage(),
+                'total' => $images->total(),
+            ],
+        ]);
+    }
 
     /**
      * Looks up by numeric ID when the identifier is all digits, by slug
@@ -25,7 +49,12 @@ class ImageApiController extends Controller
 
         $image->load(['tags', 'artist', 'user', 'additionalImages']);
 
-        return response()->json([
+        return response()->json($this->serialize($image));
+    }
+
+    private function serialize(Image $image): array
+    {
+        return [
             'id' => $image->id,
             'slug' => $image->slug,
             'title' => $image->title,
@@ -60,7 +89,7 @@ class ImageApiController extends Controller
             ]),
             'created_at' => $image->created_at,
             'updated_at' => $image->updated_at,
-        ]);
+        ];
     }
 
     /**
