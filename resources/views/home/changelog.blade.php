@@ -24,6 +24,26 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.29</span>
+                        <time class="changelog-date" datetime="2026-08-13">August 13, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            <span class="changelog-text">Posts can now credit a parody (the comic, movie, or game they're based on) — shown on the post page and clickable through to every other post parodying the same thing.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.28</span>
                         <time class="changelog-date" datetime="2026-08-12">August 12, 2026</time>
                     </header>

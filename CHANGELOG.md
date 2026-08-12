@@ -7,15 +7,27 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
-## [Unreleased]
+## [1.0.29] - 2026-08-13
 
 ### Added
 - Admin API route to list tags together with their post IDs (`dee186f`)
 - Admin API route to delete a tag (`863ffa3`)
+- Admin API route to list all posts, 50 per page (`3f8574b`)
+- Parody field on posts, with a linked gallery page listing every post sharing that
+  parody (`f63fc69`)
+- Parody field exposed in the admin image API (`b0d4748`)
+- Parody admin CRUD — cover image, description, and a pending-review queue for
+  free-text parody names not yet turned into a profile (`35aa7f5`)
+- Parodies listed in the sitemap (`538c134`)
+
+### Changed
+- Parody covers are center-cropped to a 9:16 portrait and fill their container width
+  (`538c134`)
 
 ### Documentation
 - Documented artist pages, the contact inbox, admin analytics/configuration screens, and
   the `engagement:seed-random` / `cron-logs:prune` scheduled commands in the README (`20e3410`)
+- Added this CHANGELOG.md, derived from git and version-bump history (`6209cfb`)
 
 ## [1.0.28] - 2026-08-12
 
