@@ -24,6 +24,30 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.27</span>
+                        <time class="changelog-date" datetime="2026-08-12">August 12, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Gallery post cards: the view, comment, like, and bookmark buttons now stretch evenly across the full card width, with cleaner spacing above and below.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Sorted out a few small inconsistencies spotted across recent pages.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Nudged some queries to run leaner, keeping things responsive as the gallery grows.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.26</span>
                         <time class="changelog-date" datetime="2026-08-12">August 12, 2026</time>
                     </header>
