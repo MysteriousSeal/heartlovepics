@@ -4064,6 +4064,16 @@ body.modal-open {
     margin-top: 0.5rem;
 }
 
+.masonry-card .card-footer .image-stats {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.masonry-card .card-footer .image-stats .stat-btn {
+    flex: 1;
+}
+
 .nsfw-stat-badge {
     color: #a61b1b;
     background: #f5b8b8;
