@@ -29,7 +29,7 @@ class UserActivityController extends Controller
     public function index(Request $request): View
     {
         $type = $request->input('type');
-        $hideCron = $request->boolean('hide_cron');
+        $hideCron = $request->has('hide_cron') ? $request->boolean('hide_cron') : true;
 
         $allEvents = collect()
             ->concat($this->signups())

@@ -21,14 +21,14 @@
 
         <nav class="admin-list-tabs" aria-label="Activity type">
             <a
-                href="{{ route('admin.user-activity.index', array_filter(['hide_cron' => $hideCron ?: null])) }}"
+                href="{{ route('admin.user-activity.index', ['hide_cron' => $hideCron ? '1' : '0']) }}"
                 class="admin-list-tab {{ ! $type ? 'active' : '' }}"
             >
                 All
             </a>
             @foreach ($types as $value => $label)
                 <a
-                    href="{{ route('admin.user-activity.index', array_filter(['type' => $value, 'hide_cron' => $hideCron ?: null])) }}"
+                    href="{{ route('admin.user-activity.index', ['type' => $value, 'hide_cron' => $hideCron ? '1' : '0']) }}"
                     class="admin-list-tab {{ $type === $value ? 'active' : '' }}"
                 >
                     {{ $label }}
@@ -37,7 +37,7 @@
             @endforeach
 
             <a
-                href="{{ route('admin.user-activity.index', array_filter(['type' => $type, 'hide_cron' => $hideCron ? null : '1'])) }}"
+                href="{{ route('admin.user-activity.index', array_filter(['type' => $type]) + ['hide_cron' => $hideCron ? '0' : '1']) }}"
                 class="admin-list-chip {{ $hideCron ? 'is-filtered' : '' }}"
                 style="margin-left: auto;"
             >
