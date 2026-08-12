@@ -100,6 +100,70 @@ class HomeController extends Controller
         return view('home.tags', compact('tags', 'sort'));
     }
 
+    public function artists(Request $request): View
+    {
+        $sort = $request->query('sort') === 'count' ? 'count' : 'name';
+
+        $counts = Image::query()
+            ->publiclyVisible()
+            ->whereNotNull('artist_name')
+            ->where('artist_name', '!=', '')
+            ->selectRaw('artist_name, count(*) as images_count')
+            ->groupBy('artist_name')
+            ->get();
+
+        $profiles = Artist::query()
+            ->whereIn('name', $counts->pluck('artist_name'))
+            ->get()
+            ->keyBy('name');
+
+        $artists = $counts
+            ->map(fn ($row) => (object) [
+                'name' => $row->artist_name,
+                'images_count' => $row->images_count,
+                'profile' => $profiles->get($row->artist_name),
+            ])
+            ->when(
+                $sort === 'count',
+                fn (Collection $collection) => $collection->sortByDesc('images_count')->values(),
+                fn (Collection $collection) => $collection->sortBy('name', SORT_FLAG_CASE | SORT_STRING)->values(),
+            );
+
+        return view('home.artists', compact('artists', 'sort'));
+    }
+
+    public function parodies(Request $request): View
+    {
+        $sort = $request->query('sort') === 'count' ? 'count' : 'name';
+
+        $counts = Image::query()
+            ->publiclyVisible()
+            ->whereNotNull('parody')
+            ->where('parody', '!=', '')
+            ->selectRaw('parody, count(*) as images_count')
+            ->groupBy('parody')
+            ->get();
+
+        $profiles = Parody::query()
+            ->whereIn('name', $counts->pluck('parody'))
+            ->get()
+            ->keyBy('name');
+
+        $parodies = $counts
+            ->map(fn ($row) => (object) [
+                'name' => $row->parody,
+                'images_count' => $row->images_count,
+                'profile' => $profiles->get($row->parody),
+            ])
+            ->when(
+                $sort === 'count',
+                fn (Collection $collection) => $collection->sortByDesc('images_count')->values(),
+                fn (Collection $collection) => $collection->sortBy('name', SORT_FLAG_CASE | SORT_STRING)->values(),
+            );
+
+        return view('home.parodies', compact('parodies', 'sort'));
+    }
+
     public function tag(string $tag, Request $request, LikeService $likes, BookmarkService $bookmarks, GalleryActivityService $activity, VisitCounterService $visitCounter): View|JsonResponse
     {
         $tagModel = Tag::query()

@@ -2,9 +2,8 @@
     $currentSort = match (true) {
         request()->routeIs('gallery.following') => 'following',
         request()->routeIs('gallery.tags', 'gallery.tag') => 'tags',
-        request()->routeIs('gallery.views') => 'views',
-        request()->routeIs('gallery.likes') => 'likes',
-        request()->routeIs('gallery.random') => 'random',
+        request()->routeIs('gallery.artists', 'gallery.artist') => 'artists',
+        request()->routeIs('gallery.parodies', 'gallery.parody') => 'parodies',
         request()->routeIs('gallery.search') => null,
         default => 'latest',
     };
@@ -26,22 +25,16 @@
         </a>
     @endauth
     <a
-        href="{{ route('gallery.views') }}"
-        class="sort-tab {{ ($currentSort ?? '') === 'views' ? 'active' : '' }}"
+        href="{{ route('gallery.artists') }}"
+        class="sort-tab {{ ($currentSort ?? '') === 'artists' ? 'active' : '' }}"
     >
-        Views
+        Artists
     </a>
     <a
-        href="{{ route('gallery.likes') }}"
-        class="sort-tab {{ ($currentSort ?? '') === 'likes' ? 'active' : '' }}"
+        href="{{ route('gallery.parodies') }}"
+        class="sort-tab {{ ($currentSort ?? '') === 'parodies' ? 'active' : '' }}"
     >
-        Likes
-    </a>
-    <a
-        href="{{ route('gallery.random') }}"
-        class="sort-tab {{ ($currentSort ?? '') === 'random' ? 'active' : '' }}"
-    >
-        Random
+        Parodies
     </a>
     <a
         href="{{ route('gallery.tags') }}"

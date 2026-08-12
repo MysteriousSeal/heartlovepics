@@ -35,11 +35,11 @@ class AvatarService
     }
 
     /**
-     * Store a portrait-cropped cover image (defaults to 1080×1920, 9:16) in
+     * Store a portrait-cropped cover image (defaults to 800×1200, 2:3) in
      * its own directory — used for parody covers, which read as a poster/
      * banner rather than a square avatar.
      */
-    public function storeCover(UploadedFile $file, int $width = 1080, int $height = 1920): string
+    public function storeCover(UploadedFile $file, int $width = 800, int $height = 1200): string
     {
         $source = $this->loadImage($file);
         $cover = $this->cropResize($source, $width, $height);

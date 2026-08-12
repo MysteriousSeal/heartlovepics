@@ -2,7 +2,7 @@
     <div class="artist-profile-header-grid">
         <div class="artist-profile-sidebar">
             @if ($parody?->hasCover())
-                <img src="{{ $parody->cover_url }}" alt="" width="126" height="224" class="parody-profile-cover">
+                <img src="{{ $parody->cover_url }}" alt="" width="150" height="225" class="parody-profile-cover">
             @else
                 <span
                     class="parody-profile-cover parody-profile-cover-placeholder"

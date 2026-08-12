@@ -2549,7 +2549,7 @@ img {
 .parody-profile-cover {
     width: 100%;
     height: auto;
-    aspect-ratio: 9 / 16;
+    aspect-ratio: 2 / 3;
     border: 1px solid var(--border);
     object-fit: cover;
     flex-shrink: 0;
@@ -3415,6 +3415,24 @@ a.image-tag-badge:hover {
     font-size: 0.875rem;
     color: var(--border);
     transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.artists-index-card-avatar {
+    flex: 0 0 auto;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--border);
+    object-fit: cover;
+}
+
+.artists-index-card-avatar-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--avatar-color);
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 600;
 }
 
 @media (max-width: 1024px) {
@@ -8162,13 +8180,13 @@ a.admin-message-username:hover {
 .admin-parody-cover-preview {
     display: block;
     width: 36px;
-    height: 64px;
+    height: 54px;
     flex-shrink: 0;
 }
 
 .admin-parody-cover-preview img {
     width: 36px;
-    height: 64px;
+    height: 54px;
     object-fit: cover;
     border: 1px solid var(--border);
 }
@@ -8178,7 +8196,7 @@ a.admin-message-username:hover {
     align-items: center;
     justify-content: center;
     width: 36px;
-    height: 64px;
+    height: 54px;
     background: var(--avatar-color);
     color: #fff;
     font-size: 0.6875rem;

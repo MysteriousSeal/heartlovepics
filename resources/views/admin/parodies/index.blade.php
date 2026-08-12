@@ -53,7 +53,7 @@
                                 accept="image/jpeg,image/png,image/gif,image/webp"
                             >
                         </div>
-                        <p class="form-hint">Cropped to a 9:16 portrait (1080×1920).</p>
+                        <p class="form-hint">Cropped to a 2:3 portrait (800×1200).</p>
                         @error('cover')
                             <p class="form-error">{{ $message }}</p>
                         @enderror
