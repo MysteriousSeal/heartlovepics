@@ -50,6 +50,44 @@ class Image extends Model
     }
 
     /**
+     * Soft-deleted posts keep their row (and their slug, which generateUniqueSlug()
+     * still checks via withTrashed()) around for a possible restore. Renaming the
+     * slug on the way out frees the original up for reuse immediately, while
+     * leaving a trashed row that's obviously identifiable in the database.
+     */
+    private const SOFTDELETE_SLUG_PATTERN = '/-softdelete-\d{14}$/';
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Image $image) {
+            if ($image->isForceDeleting()) {
+                return;
+            }
+
+            $image->slug = $image->slug.'-softdelete-'.now()->format('YmdHis');
+            $image->saveQuietly();
+        });
+
+        static::restoring(function (Image $image) {
+            $originalSlug = preg_replace(self::SOFTDELETE_SLUG_PATTERN, '', $image->slug);
+
+            if ($originalSlug === $image->slug) {
+                return;
+            }
+
+            $slugTaken = static::withTrashed()
+                ->where('id', '!=', $image->id)
+                ->where('slug', $originalSlug)
+                ->exists();
+
+            if (! $slugTaken) {
+                $image->slug = $originalSlug;
+                $image->saveQuietly();
+            }
+        });
+    }
+
+    /**
      * Published, non-private images — safe to expose in feeds, search, tags,
      * and any other listing. Private images are excluded unconditionally,
      * even for their own owner: the only place a private image is visible is
