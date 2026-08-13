@@ -1017,13 +1017,25 @@ img {
     color: var(--accent-hover);
 }
 
-.profile-edit-kicker {
+/* Shared page kicker (“Legal”, “Site”, “Browse”, …). One size everywhere.
+   0.9375rem matches the former “Legal” look on privacy/terms (was driven by
+   `.static-page p`). Extra .static-page specificity keeps that intentional. */
+.page-kicker,
+.legal-kicker,
+.contact-kicker,
+.tags-index-kicker,
+.changelog-kicker,
+.profile-edit-kicker,
+.static-page .legal-kicker,
+.static-page .page-kicker,
+.static-page .changelog-kicker {
     margin: 0 0 0.5rem;
-    font-size: 0.75rem;
+    font-size: 0.9375rem;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--accent);
+    line-height: 1.4;
 }
 
 .profile-edit-title {
@@ -1790,15 +1802,256 @@ img {
     margin: 0 auto;
 }
 
+/* Contact page — full content width (same as .container / header). */
+.contact-page {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+.contact-hero {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.contact-title {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.contact-lede {
+    margin: 0.625rem 0 0;
+    max-width: 36rem;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+}
+
+.contact-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.contact-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 1.5rem 1.5rem 1.75rem;
+}
+
+.contact-panel-header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.contact-panel-title {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.contact-panel-sub {
+    margin: 0.35rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+}
+
 .contact-form {
-    margin: 1.5rem 0 2rem;
+    margin: 0;
+}
+
+.contact-form .form-group {
+    margin-bottom: 1.35rem;
+}
+
+.contact-form .form-group > label,
+.contact-label-row label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.45rem;
+    color: var(--text);
+}
+
+.contact-required {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.contact-label-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.45rem;
+}
+
+.contact-label-row label {
+    margin-bottom: 0;
+}
+
+.contact-label-row .form-char-count {
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+}
+
+/* Match site form borders (same language as /terms cards). */
+.contact-form .form-control {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.9375rem;
+    padding: 0.75rem 0.875rem;
+    line-height: 1.45;
+}
+
+.contact-form .form-control::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+.contact-form .form-control:hover {
+    border-color: color-mix(in srgb, var(--text-muted) 35%, var(--border));
+}
+
+.contact-form .form-control:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 .contact-form .form-control[readonly],
 .contact-form .form-control:disabled {
     color: var(--text-muted);
     background: var(--bg);
+    border-color: var(--border);
     cursor: not-allowed;
+    opacity: 1;
+}
+
+.contact-form textarea.form-control.contact-message {
+    min-height: 11rem;
+    resize: vertical;
+}
+
+.contact-form .form-hint {
+    margin-top: 0.4rem;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--text-muted);
+}
+
+.contact-form .form-error {
+    margin-top: 0.4rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--danger, #c44);
+}
+
+.contact-actions {
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+}
+
+.contact-submit {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+}
+
+.contact-aside-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 1.25rem 1.25rem 1.35rem;
+}
+
+.contact-aside-title {
+    margin: 0 0 0.875rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.contact-aside-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.contact-aside-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.contact-aside-list strong {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.contact-aside-list span {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.contact-aside-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.contact-aside-links a {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.contact-aside-links a:hover {
+    color: var(--accent-hover);
+}
+
+@media (max-width: 800px) {
+    .contact-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-aside {
+        order: 2;
+    }
+
+    .contact-panel {
+        padding: 1.25rem 1.125rem 1.5rem;
+    }
+
+    .contact-title {
+        font-size: 1.5rem;
+    }
 }
 
 .static-page h1 {
@@ -1842,24 +2095,24 @@ img {
     margin-top: 2rem;
 }
 
-/* Legal pages (Terms, Privacy) */
+/* Legal pages (Terms, Privacy) — full content width (same as .container / header). */
 .legal-page {
-    max-width: 42rem;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+/* Beat .static-page { max-width: 42rem } when both classes are present. */
+.static-page.legal-page {
+    width: 100%;
+    max-width: none;
+    margin: 0;
 }
 
 .legal-hero {
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--border);
-}
-
-.legal-kicker {
-    margin: 0 0 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--accent);
 }
 
 .legal-page h1 {
@@ -2126,15 +2379,6 @@ img {
     margin-bottom: 2.25rem;
     padding-bottom: 1.75rem;
     border-bottom: 1px solid var(--border);
-}
-
-.changelog-kicker {
-    margin: 0 0 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--accent);
 }
 
 .changelog-page h1 {
@@ -3231,15 +3475,6 @@ a.image-tag-badge:hover {
     margin-bottom: 1.75rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--border);
-}
-
-.tags-index-kicker {
-    margin: 0 0 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--accent);
 }
 
 .tags-index-title {
