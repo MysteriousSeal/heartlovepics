@@ -46,10 +46,9 @@ Route::get('/sitemap-parodies.xml', [SitemapController::class, 'parodies'])->nam
 Route::get('/privacy', [PageController::class, 'privacy'])->name('pages.privacy');
 Route::get('/terms', [PageController::class, 'terms'])->name('pages.terms');
 Route::get('/changelog', [PageController::class, 'changelog'])->name('pages.changelog');
-Route::get('/contact', [PageController::class, 'contact'])->name('pages.contact');
-Route::post('/contact', [PageController::class, 'submitContact'])
-    ->middleware('throttle:5,1')
-    ->name('pages.contact.submit');
+// Contact page and submission routes are disabled — no route means /contact
+// 404s — but PageController::contact()/submitContact() and the contact.blade.php
+// view are kept in place in case the form comes back.
 Route::post('/preferences/nsfw', [PreferenceController::class, 'updateNsfw'])->name('preferences.nsfw');
 Route::post('/preferences/theme', [PreferenceController::class, 'updateTheme'])->name('preferences.theme');
 Route::get('/tags/suggest', [TagController::class, 'suggest'])->name('tags.suggest');

@@ -107,12 +107,6 @@ class SitemapController extends Controller
                 'changefreq' => 'yearly',
                 'priority' => '0.3',
             ],
-            [
-                'loc' => url(route('pages.contact', absolute: false)),
-                'lastmod' => null,
-                'changefreq' => 'yearly',
-                'priority' => '0.3',
-            ],
         ];
 
         return $this->urlsetResponse($urls);

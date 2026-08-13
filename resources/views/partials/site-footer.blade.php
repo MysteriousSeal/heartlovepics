@@ -31,7 +31,6 @@
                     <li><a href="{{ route('gallery.tags') }}">All tags</a></li>
                     <li><a href="{{ route('pages.terms') }}">Terms of use</a></li>
                     <li><a href="{{ route('pages.privacy') }}">Privacy policy</a></li>
-                    <li><a href="{{ route('pages.contact') }}">Contact</a></li>
                     <li><a href="{{ route('sitemap') }}">XML sitemap</a></li>
                     <li><a href="{{ route('pages.changelog') }}">Changelog</a></li>
                     @guest
