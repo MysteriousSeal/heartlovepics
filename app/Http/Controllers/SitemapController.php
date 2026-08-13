@@ -84,7 +84,25 @@ class SitemapController extends Controller
                 'priority' => '0.6',
             ],
             [
+                'loc' => url(route('gallery.artists', absolute: false)),
+                'lastmod' => null,
+                'changefreq' => 'weekly',
+                'priority' => '0.6',
+            ],
+            [
+                'loc' => url(route('gallery.parodies', absolute: false)),
+                'lastmod' => null,
+                'changefreq' => 'weekly',
+                'priority' => '0.6',
+            ],
+            [
                 'loc' => url(route('pages.privacy', absolute: false)),
+                'lastmod' => null,
+                'changefreq' => 'yearly',
+                'priority' => '0.3',
+            ],
+            [
+                'loc' => url(route('pages.terms', absolute: false)),
                 'lastmod' => null,
                 'changefreq' => 'yearly',
                 'priority' => '0.3',
