@@ -246,14 +246,19 @@ img {
     display: none;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
     padding: 0;
     flex-shrink: 0;
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text);
     cursor: pointer;
+}
+
+.site-menu-toggle .site-menu-toggle-icon {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .site-menu-toggle:hover {
@@ -9516,6 +9521,11 @@ a.admin-message-username:hover {
 
     .site-menu-toggle {
         display: inline-flex;
+    }
+
+    /* Contact lives in the hamburger menu on mobile — hide the header mail icon */
+    .site-contact-btn--header {
+        display: none;
     }
 
     .site-menu-panel {
