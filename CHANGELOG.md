@@ -7,6 +7,17 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
+## [1.0.32] - 2026-08-13
+
+### Added
+- Artists, Parodies, and Terms pages to `sitemap-pages.xml` (`26b03b8`)
+
+### Removed
+- Public Contact page taken off the live site: `/contact` routes dropped (now
+  404s), and its header, hamburger-menu, footer, and sitemap links removed.
+  `PageController` and `contact.blade.php` are left in place in case the form
+  comes back (`7d94778`)
+
 ## [1.0.31] - 2026-08-13
 
 ### Added

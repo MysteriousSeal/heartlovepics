@@ -24,6 +24,26 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.32</span>
+                        <time class="changelog-date" datetime="2026-08-13">August 13, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-change">Change</span>
+                            <span class="changelog-text">Removed the Contact page and its links from the header, menu, and footer.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.31</span>
                         <time class="changelog-date" datetime="2026-08-13">August 13, 2026</time>
                     </header>
