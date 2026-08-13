@@ -7,6 +7,27 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
+## [1.0.31] - 2026-08-13
+
+### Added
+- Admin messages: Contacts tab, grouping past contact-form submissions by email
+  with a message count per address (`bddc634`)
+- Admin API route to update a parody's description (`fb6b4d7`)
+- Date/Views/Likes sort buttons on the homepage gallery heading (`20d2ec3`)
+
+### Changed
+- Soft-deleted posts get their slug renamed to `<slug>-softdelete-<datetime>`,
+  freeing the original up for reuse immediately instead of only after the trash
+  is pruned; restoring a post reclaims the original slug if it's still free.
+  Backfilled via migration for posts already in the trash (`d786a53`)
+- Redesigned the Contact page into a two-column layout with a "Good to know"
+  tips panel; consolidated the duplicated page-kicker CSS across
+  legal/changelog/tags/contact pages into one shared rule (`3fd99e0`)
+
+### Fixed
+- Enlarged the mobile menu toggle and hid the now-duplicate header contact
+  icon on mobile (`6bece46`)
+
 ## [1.0.30] - 2026-08-13
 
 ### Added

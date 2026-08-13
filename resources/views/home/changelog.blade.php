@@ -24,6 +24,34 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.31</span>
+                        <time class="changelog-date" datetime="2026-08-13">August 13, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-feature">New</span>
+                            <span class="changelog-text">Sort the homepage by date, views, or likes with buttons next to the gallery heading.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-polish">Polish</span>
+                            <span class="changelog-text">Redesigned the Contact page with a clearer two-column layout and a quick-tips panel.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Enlarged the mobile menu button and removed a duplicate contact icon on mobile.</span>
+                        </li>
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.30</span>
                         <time class="changelog-date" datetime="2026-08-13">August 13, 2026</time>
                     </header>
