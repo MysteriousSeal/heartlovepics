@@ -59,7 +59,29 @@
     @include('partials.nsfw-age-modal')
 
     @if (! in_array($sort ?? '', ['search', 'tag', 'artist', 'parody'], true))
-        <h1 class="gallery-heading">{{ $pageMeta['heading'] }}</h1>
+        <div class="gallery-heading-row">
+            <h1 class="gallery-heading">{{ $pageMeta['heading'] }}</h1>
+            <nav class="gallery-sort-buttons" aria-label="Sort posts">
+                <a
+                    href="{{ route('home') }}"
+                    class="gallery-sort-button {{ ($sort ?? '') === 'latest' ? 'active' : '' }}"
+                >
+                    Date
+                </a>
+                <a
+                    href="{{ route('gallery.views') }}"
+                    class="gallery-sort-button {{ ($sort ?? '') === 'views' ? 'active' : '' }}"
+                >
+                    Views
+                </a>
+                <a
+                    href="{{ route('gallery.likes') }}"
+                    class="gallery-sort-button {{ ($sort ?? '') === 'likes' ? 'active' : '' }}"
+                >
+                    Likes
+                </a>
+            </nav>
+        </div>
     @endif
 
     @if (($sort ?? '') === 'search')
