@@ -13,7 +13,7 @@ history directly, so entries are more technical. Format loosely follows
 - `css/app.css` is now requested with a `?v=<site version>` query string on the
   main site, admin panel, and admin login page, so the long-lived
   `Cache-Control` header on static assets no longer serves a stale stylesheet
-  after a release *(commit pending)*
+  after a release (`2c2fcb3`)
 
 ## [1.0.32] - 2026-08-13
 
