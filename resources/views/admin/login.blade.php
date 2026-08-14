@@ -18,7 +18,7 @@
     <title>Admin Login — HeartLovePics</title>
     @include('partials.favicon')
     @include('partials.font-preload')
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ config('app.version') }}">
 </head>
 <body>
     <button

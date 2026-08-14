@@ -7,6 +7,14 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
+## [1.0.33] - 2026-08-13
+
+### Fixed
+- `css/app.css` is now requested with a `?v=<site version>` query string on the
+  main site, admin panel, and admin login page, so the long-lived
+  `Cache-Control` header on static assets no longer serves a stale stylesheet
+  after a release *(commit pending)*
+
 ## [1.0.32] - 2026-08-13
 
 ### Added

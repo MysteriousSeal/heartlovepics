@@ -18,7 +18,7 @@
     <title>@yield('title', 'Admin') — HeartLovePics</title>
     @include('partials.favicon')
     @include('partials.font-preload')
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ config('app.version') }}">
     @stack('styles')
 </head>
 <body class="admin-body">
