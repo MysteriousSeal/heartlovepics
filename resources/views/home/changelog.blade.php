@@ -25,7 +25,7 @@
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.33</span>
-                        <time class="changelog-date" datetime="2026-08-13">August 13, 2026</time>
+                        <time class="changelog-date" datetime="2026-08-14">August 14, 2026</time>
                     </header>
                     <ul class="changelog-list">
                         <li>

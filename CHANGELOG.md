@@ -7,7 +7,7 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
-## [1.0.33] - 2026-08-13
+## [1.0.33] - 2026-08-14
 
 ### Fixed
 - `css/app.css` is now requested with a `?v=<site version>` query string on the
