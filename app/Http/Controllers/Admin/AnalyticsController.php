@@ -23,6 +23,16 @@ class AnalyticsController extends Controller
         '24h' => 'Last 24 hours',
     ];
 
+    /**
+     * An IP address firing this many full-page-load requests inside
+     * BURST_WINDOW_SECONDS is treated as automated traffic regardless of its
+     * user agent — real browsing (and this site's infinite-scroll requests,
+     * which are AJAX and never recorded here) can't sustain that rate.
+     */
+    private const BURST_THRESHOLD = 12;
+
+    private const BURST_WINDOW_SECONDS = 60;
+
     public function index(Request $request): View
     {
         $range = $this->resolveRange($request->input('range'));
@@ -32,10 +42,13 @@ class AnalyticsController extends Controller
         $this->applyRange($visitsQuery, $since);
 
         $visits = $visitsQuery->paginate(50)->withQueryString();
-        $charts = $this->buildCharts($since);
+        $burstyIps = $this->burstyIps($since);
+        $charts = $this->buildCharts($since, $burstyIps);
         $ranges = self::RANGES;
         $activeNow = $this->countDistinctVisitors(Carbon::now()->subMinutes(2));
-        $rangeVisitors = $this->countDistinctVisitors($since);
+        $rangeVisitors = $this->countDistinctVisitors($since, $burstyIps);
+        $burstThreshold = self::BURST_THRESHOLD;
+        $burstWindowSeconds = self::BURST_WINDOW_SECONDS;
 
         return view('admin.analytics.index', compact(
             'visits',
@@ -44,6 +57,9 @@ class AnalyticsController extends Controller
             'ranges',
             'activeNow',
             'rangeVisitors',
+            'burstyIps',
+            'burstThreshold',
+            'burstWindowSeconds',
         ));
     }
 
@@ -53,17 +69,23 @@ class AnalyticsController extends Controller
      */
     public function activeNow(): JsonResponse
     {
-        return response()->json($this->countDistinctVisitors(Carbon::now()->subMinutes(2)));
+        $since = Carbon::now()->subMinutes(2);
+
+        return response()->json($this->countDistinctVisitors($since, $this->burstyIps($since)));
     }
 
     /**
      * Distinct visitors since $since (or all time when null).
-     * Bots are counted separately from human guests via user-agent detection.
+     * Bots are counted separately from human guests, combining user-agent
+     * signature matching with the IP request-burst heuristic (see burstyIps()).
      *
+     * @param  array<string, true>|null  $burstyIps  Pass a precomputed set to avoid recalculating it for the same range.
      * @return array{total: int, users: int, guests: int, bots: int}
      */
-    private function countDistinctVisitors(?CarbonInterface $since): array
+    private function countDistinctVisitors(?CarbonInterface $since, ?array $burstyIps = null): array
     {
+        $burstyIps ??= $this->burstyIps($since);
+
         $query = SiteVisit::query()->select(['user_id', 'ip_address', 'user_agent']);
         $this->applyRange($query, $since);
 
@@ -72,8 +94,8 @@ class AnalyticsController extends Controller
         $botKeys = [];
 
         foreach ($query->cursor() as $row) {
-            $isBot = UserAgentParser::isBot($row->user_agent);
             $ip = $row->ip_address ?: 'unknown';
+            $isBot = UserAgentParser::isBot($row->user_agent) || isset($burstyIps[$ip]);
 
             if ($isBot) {
                 $botKeys['b:'.$ip.'|'.md5((string) $row->user_agent)] = true;
@@ -126,13 +148,52 @@ class AnalyticsController extends Controller
     }
 
     /**
+     * IP addresses that fired BURST_THRESHOLD+ page-load requests within any
+     * BURST_WINDOW_SECONDS window in the given range — a behavioral signal
+     * that catches automated traffic no matter what user agent it presents
+     * (spoofed "real browser" UAs are common for scrapers and can't be caught
+     * by signature matching alone).
+     *
+     * @return array<string, true>
+     */
+    private function burstyIps(?CarbonInterface $since): array
+    {
+        $query = SiteVisit::query()->select(['ip_address', 'created_at'])->whereNotNull('ip_address');
+        $this->applyRange($query, $since);
+
+        $bursty = [];
+        $currentIp = null;
+        $window = [];
+
+        foreach ($query->orderBy('ip_address')->orderBy('created_at')->cursor() as $row) {
+            if ($row->ip_address !== $currentIp) {
+                $currentIp = $row->ip_address;
+                $window = [];
+            }
+
+            $window[] = $row->created_at->getTimestamp();
+
+            while (count($window) > 1 && end($window) - $window[0] > self::BURST_WINDOW_SECONDS) {
+                array_shift($window);
+            }
+
+            if (count($window) >= self::BURST_THRESHOLD) {
+                $bursty[$currentIp] = true;
+            }
+        }
+
+        return $bursty;
+    }
+
+    /**
      * Aggregate visits for donut charts within the selected range.
      *
+     * @param  array<string, true>  $burstyIps
      * @return array<string, array{title: string, total: int, gradient: string, slices: list<array{label: string, count: int, percent: float, color: string}>}>
      */
-    private function buildCharts(?CarbonInterface $since): array
+    private function buildCharts(?CarbonInterface $since, array $burstyIps): array
     {
-        $query = SiteVisit::query()->select(['user_id', 'user_agent', 'country']);
+        $query = SiteVisit::query()->select(['user_id', 'user_agent', 'ip_address', 'country']);
         $this->applyRange($query, $since);
         $rows = $query->get();
 
@@ -155,10 +216,11 @@ class AnalyticsController extends Controller
             }
 
             $parsed = UserAgentParser::parse($row->user_agent);
+            $isBot = $parsed['is_bot'] || isset($burstyIps[$row->ip_address ?: 'unknown']);
 
-            $os = $parsed['os'] === '—' ? 'Unknown' : $parsed['os'];
-            $device = $parsed['device'];
-            $browser = $parsed['browser'];
+            $os = $isBot ? '—' : ($parsed['os'] === '—' ? 'Unknown' : $parsed['os']);
+            $device = $isBot ? 'Bot' : $parsed['device'];
+            $browser = $isBot && ! $parsed['is_bot'] ? 'Bot' : $parsed['browser'];
             $country = filled($row->country) ? (string) $row->country : 'Unknown';
 
             $osCounts[$os] = ($osCounts[$os] ?? 0) + 1;
@@ -166,7 +228,7 @@ class AnalyticsController extends Controller
             $browserCounts[$browser] = ($browserCounts[$browser] ?? 0) + 1;
             $countryCounts[$country] = ($countryCounts[$country] ?? 0) + 1;
 
-            if ($parsed['is_bot']) {
+            if ($isBot) {
                 $botCounts['Bot']++;
             } else {
                 $botCounts['Human']++;

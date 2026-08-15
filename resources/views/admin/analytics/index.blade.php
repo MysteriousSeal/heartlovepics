@@ -137,7 +137,11 @@
 
                     <ul class="admin-visits-list">
                         @foreach ($visits as $visit)
-                            <li class="admin-visits-row {{ $visit->is_bot ? 'is-bot' : '' }}">
+                            @php
+                                $isBursty = isset($burstyIps[$visit->ip_address ?: 'unknown']);
+                                $isBot = $visit->is_bot || $isBursty;
+                            @endphp
+                            <li class="admin-visits-row {{ $isBot ? 'is-bot' : '' }}">
                                 <time class="admin-visits-date" datetime="{{ $visit->created_at->toIso8601String() }}">
                                     {{ $visit->created_at->format('M j, Y g:i A') }}
                                 </time>
@@ -170,8 +174,13 @@
                                     {{ $visit->os }}
                                 </span>
                                 <span class="admin-visits-bot">
-                                    @if ($visit->is_bot)
-                                        <span class="badge badge-bot">Bot</span>
+                                    @if ($isBot)
+                                        <span
+                                            class="badge badge-bot"
+                                            @if ($isBursty && ! $visit->is_bot)
+                                                title="Flagged by request rate: this IP made {{ $burstThreshold }}+ page loads within {{ $burstWindowSeconds }} seconds"
+                                            @endif
+                                        >Bot</span>
                                     @else
                                         <span class="admin-visits-bot-no">No</span>
                                     @endif
