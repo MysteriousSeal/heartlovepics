@@ -7,6 +7,17 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
+## [1.0.34] - 2026-08-14
+
+### Changed
+- Improved bot vs. human detection in admin analytics: modernized the user-agent
+  signature list (AI crawlers, chat-app link-preview fetchers, security
+  scanners, headless-browser/scripting tools), and added an IP request-burst
+  heuristic (12+ page loads within 60 seconds) that catches automated traffic
+  even when it spoofs a normal browser user agent. Applied consistently to
+  the "active now" chip, range visitor counts, the bot/human donut chart, and
+  the per-row badge in the visits table (`8a71411`)
+
 ## [1.0.33] - 2026-08-14
 
 ### Fixed
