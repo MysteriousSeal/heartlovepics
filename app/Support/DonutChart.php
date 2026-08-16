@@ -29,7 +29,7 @@ class DonutChart
      *     slices: list<array{label: string, count: int, percent: float, color: string}>
      * }
      */
-    public static function fromCounts(array $counts, int $maxSlices = 8): array
+    public static function fromCounts(array $counts, int $maxSlices = 6): array
     {
         $counts = array_filter($counts, fn (int $count) => $count > 0);
 

@@ -213,6 +213,7 @@ class AnalyticsController extends Controller
         $browserCounts = [];
         $countryCounts = [];
         $botCounts = ['Human' => 0, 'Bot' => 0];
+        $botNameCounts = [];
 
         foreach ($rows as $row) {
             if ($row->user_id) {
@@ -236,6 +237,8 @@ class AnalyticsController extends Controller
 
             if ($isBot) {
                 $botCounts['Bot']++;
+                $botName = $parsed['is_bot'] ? $parsed['browser'] : 'High-volume IP';
+                $botNameCounts[$botName] = ($botNameCounts[$botName] ?? 0) + 1;
             } else {
                 $botCounts['Human']++;
             }
@@ -265,6 +268,10 @@ class AnalyticsController extends Controller
             'bot' => array_merge(
                 ['title' => 'Bot vs human'],
                 DonutChart::fromCounts($botCounts, 2),
+            ),
+            'botName' => array_merge(
+                ['title' => 'Bot name'],
+                DonutChart::fromCounts($botNameCounts),
             ),
         ];
     }
