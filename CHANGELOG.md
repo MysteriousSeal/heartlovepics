@@ -7,6 +7,18 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
+## [1.0.37] - 2026-08-16
+
+### Added
+- Bot-name donut chart in admin analytics (`e918c29`)
+
+### Changed
+- Admin analytics charts grid set to 5 per row; all donut charts now cap
+  at top 5 slices + "Other" (was 8) (`e918c29`)
+- Bot burst-detection scan capped to the last 24h (was scanning the full
+  table on "All time"), with a matching `(ip_address, created_at)` index
+  on `site_visits` (`20605ba`)
+
 ## [1.0.36] - 2026-08-14
 
 ### Fixed
