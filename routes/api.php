@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnalyticsApiController;
 use App\Http\Controllers\Admin\ArtistApiController;
 use App\Http\Controllers\Admin\ImageApiController;
 use App\Http\Controllers\Admin\ParodyApiController;
@@ -20,4 +21,5 @@ Route::middleware('admin.api')->prefix('admin')->group(function () {
     Route::patch('/parodies/{name}', [ParodyApiController::class, 'update'])
         ->where('name', '.*')
         ->name('api.admin.parodies.update');
+    Route::get('/analytics', [AnalyticsApiController::class, 'index'])->name('api.admin.analytics.index');
 });
