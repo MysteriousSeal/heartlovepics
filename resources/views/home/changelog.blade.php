@@ -24,6 +24,22 @@
                 <div class="changelog-entry-marker" aria-hidden="true"></div>
                 <div class="changelog-entry-card">
                     <header class="changelog-entry-heading">
+                        <span class="changelog-version">v1.0.36</span>
+                        <time class="changelog-date" datetime="2026-08-14">August 14, 2026</time>
+                    </header>
+                    <ul class="changelog-list">
+                        <li>
+                            <span class="changelog-tag changelog-tag-fix">Fix</span>
+                            <span class="changelog-text">Bot traffic in admin analytics now shows the real crawler name instead of a generic "Bot" label.</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="changelog-entry">
+                <div class="changelog-entry-marker" aria-hidden="true"></div>
+                <div class="changelog-entry-card">
+                    <header class="changelog-entry-heading">
                         <span class="changelog-version">v1.0.35</span>
                         <time class="changelog-date" datetime="2026-08-14">August 14, 2026</time>
                     </header>

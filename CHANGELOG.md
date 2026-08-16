@@ -7,6 +7,17 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
+## [1.0.36] - 2026-08-14
+
+### Fixed
+- Bot name extraction in admin analytics: most crawlers announce as
+  `Mozilla/5.0 (compatible; SomeBot/1.2; +url)`, which the old parser read
+  as "Mozilla" (excluded) and fell back to a generic "Bot" label. Now pulls
+  the real name from inside `compatible; ...` (`df7d257`)
+
+### Added
+- `user_agent` field in the admin analytics API response (`df7d257`)
+
 ## [1.0.35] - 2026-08-14
 
 ### Added
