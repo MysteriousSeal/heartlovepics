@@ -7,6 +7,21 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
+## [1.0.38] - 2026-08-16
+
+### Added
+- Bot names for `meta-externalagent` ("Meta") and `serpstatbot` ("Serpstat")
+  in the admin analytics UA parser (`ec5f912`)
+
+### Changed
+- Admin analytics default range changed from "All time" to 7 days —
+  `buildCharts()`/`countDistinctVisitors()` pull every matching row into
+  PHP, and an unbounded scan on every plain page load was the main
+  remaining cause of slow loads (`ec5f912`)
+- Reworded the v1.0.36 public changelog entry, which had named "admin
+  analytics" directly — admin-only changes get a generic bullet by
+  convention (`resources/views/home/changelog.blade.php`)
+
 ## [1.0.37] - 2026-08-16
 
 ### Added
