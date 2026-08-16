@@ -180,6 +180,8 @@ class UserAgentParser
             'Bytespider' => 'bytespider',
             'GPTBot' => 'gptbot',
             'ClaudeBot' => 'claudebot',
+            'Meta' => 'meta-externalagent',
+            'Serpstat' => 'serpstatbot',
             'curl' => 'curl/',
             'Wget' => 'wget/',
             'Python' => 'python-requests',

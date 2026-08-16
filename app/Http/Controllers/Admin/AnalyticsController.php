@@ -124,7 +124,10 @@ class AnalyticsController extends Controller
 
     private function resolveRange(?string $range): string
     {
-        return array_key_exists((string) $range, self::RANGES) ? (string) $range : 'all';
+        // Default to 7d, not "All time" — buildCharts()/countDistinctVisitors()
+        // pull every matching row into PHP, and an unbounded scan on every
+        // plain page load is the main reason the page feels slow.
+        return array_key_exists((string) $range, self::RANGES) ? (string) $range : '7d';
     }
 
     private function sinceForRange(string $range): ?CarbonInterface
