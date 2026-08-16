@@ -158,8 +158,14 @@ class AnalyticsController extends Controller
      */
     private function burstyIps(?CarbonInterface $since): array
     {
+        // Bursts are a short-term signal — cap the scan to the last 24h even
+        // for the "All time" range, or this pulls and sorts the entire table
+        // on every page load.
+        $windowStart = Carbon::now()->subDay();
+        $effectiveSince = ($since !== null && $since->greaterThan($windowStart)) ? $since : $windowStart;
+
         $query = SiteVisit::query()->select(['ip_address', 'created_at'])->whereNotNull('ip_address');
-        $this->applyRange($query, $since);
+        $this->applyRange($query, $effectiveSince);
 
         $bursty = [];
         $currentIp = null;
