@@ -191,6 +191,20 @@ class UserAgentParser
             }
         }
 
+        // Most crawlers announce themselves as "Mozilla/5.0 (compatible;
+        // SomeBot/1.2; +https://...)" — the interesting name is inside the
+        // parens, not the leading "Mozilla" token the fallback below would
+        // otherwise return.
+        if (preg_match('/compatible;\s*([^;)]+)/i', $ua, $matches) === 1) {
+            return trim(preg_replace('#/.*$#', '', trim($matches[1])));
+        }
+
+        // Otherwise look for any token that names itself a bot/crawler/spider
+        // anywhere in the string (not just the first word).
+        if (preg_match('/([A-Za-z0-9_-]*(?:[Bb]ot|[Cc]rawl(?:er)?|[Ss]pider)[A-Za-z0-9_-]*)/', $ua, $matches) === 1) {
+            return $matches[1];
+        }
+
         if (preg_match('/^([A-Za-z0-9._-]{2,40})/', $ua, $matches) === 1) {
             $token = $matches[1];
 

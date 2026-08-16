@@ -36,6 +36,7 @@ class AnalyticsApiController extends Controller
             'path' => $visit->path,
             'referrer' => $visit->referrer,
             'ip_address' => $visit->ip_address,
+            'user_agent' => $visit->user_agent,
             'country' => $visit->country,
             'city' => $visit->city,
             'browser' => $visit->browser,
