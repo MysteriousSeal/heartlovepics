@@ -30,7 +30,7 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                            <span class="changelog-text">Cleaned up a few rough edges found during this round of testing.</span>
                         </li>
                     </ul>
                 </div>
@@ -46,7 +46,7 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                            <span class="changelog-text">Tuned a few behind-the-scenes details for reliability.</span>
                         </li>
                     </ul>
                 </div>
@@ -62,7 +62,7 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                            <span class="changelog-text">Ironed out a handful of inconsistencies spotted internally.</span>
                         </li>
                     </ul>
                 </div>
@@ -78,7 +78,7 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                            <span class="changelog-text">Minor internal touch-ups and polish.</span>
                         </li>
                     </ul>
                 </div>
@@ -94,7 +94,7 @@
                     <ul class="changelog-list">
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                            <span class="changelog-text">Straightened out a few edge cases behind the scenes.</span>
                         </li>
                     </ul>
                 </div>
@@ -130,7 +130,7 @@
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                            <span class="changelog-text">Small internal adjustments and cleanup.</span>
                         </li>
                     </ul>
                 </div>
@@ -158,7 +158,7 @@
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                            <span class="changelog-text">A handful of quiet fixes under the hood.</span>
                         </li>
                     </ul>
                 </div>
@@ -198,7 +198,7 @@
                         </li>
                         <li>
                             <span class="changelog-tag changelog-tag-fix">Fix</span>
-                            <span class="changelog-text">Resolved a short list of small bugs found during this round of testing.</span>
+                            <span class="changelog-text">Tidied up a few loose ends from recent work.</span>
                         </li>
                     </ul>
                 </div>
