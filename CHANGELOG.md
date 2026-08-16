@@ -7,6 +7,11 @@ end-user-facing rewrite of the same releases). This file instead follows the com
 history directly, so entries are more technical. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); dates are UTC commit dates.
 
+## [1.0.35] - 2026-08-14
+
+### Added
+- Admin API route to list all site visits, 50 per page (`0741252`)
+
 ## [1.0.34] - 2026-08-14
 
 ### Changed
